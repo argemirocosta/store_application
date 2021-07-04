@@ -1,25 +1,20 @@
-# Homefashion
+# Store Application
 
-Sales system for independent salespeople. 
+Sales system for stores. 
 
 ## Getting started
 
 Clone the project:
 
 ```shell
-git clone https://github.com/argemirocosta/homefashion
+git clone https://github.com/argemirocosta/store_application.git
 ```
 
 ## Description
 
 Software developed in Java, JSF, JDBC, Maven, design patterns ,clean code and unit tests with JUnit and Mock.
 
-To use the system, it is necessary to create a database home_fashion in Postgres, use the database.sql file for this.
-
-## Related projects
-
-- [Selenium Tests for Homefashion](https://github.com/argemirocosta/homefashion_selenium)
-- [JMeter tests with Blazemeter for Homefashion](https://github.com/argemirocosta/homefashion_jmeter)
+To use the system, it is necessary to create a database store_application in Postgres, use the database.sql file for this.
 
 ## Licensing
 
