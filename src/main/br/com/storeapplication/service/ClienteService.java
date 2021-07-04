@@ -38,4 +38,8 @@ public class ClienteService {
         return clienteDAO.listarClientes();
     }
 
+    public Boolean verificarClienteEhCadastrado(String telefone) {
+        return clienteDAO.verificarClienteCadastrado(telefone);
+    }
+
 }

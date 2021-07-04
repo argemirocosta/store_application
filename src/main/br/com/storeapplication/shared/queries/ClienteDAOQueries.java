@@ -30,4 +30,9 @@ public class ClienteDAOQueries {
 
     public static final String DELETAR_CLIENTE = "DELETE FROM vendas.clientes WHERE id=?";
 
+    public static final String SELECT_VERIFICAR_CLIENTE_CADASTRADO = "SELECT id " +
+            "FROM vendas.clientes c " +
+            "WHERE telefone1 = ? " +
+            "AND usuario = ?";
+
 }

@@ -36,7 +36,7 @@ public class ClienteMB {
         listarClientes();
     }
 
-    private void limparCampos() {
+    public void limparCampos() {
         cliente = new Cliente();
     }
 
@@ -49,16 +49,25 @@ public class ClienteMB {
         listaClientes = clienteService.buscarClientePorId(idCliente);
     }
 
+    public Boolean verificarClienteEhCadastrado(String telefone) {
+        return clienteService.verificarClienteEhCadastrado(telefone);
+    }
+
     public void inserirCliente() {
-        try {
-            clienteService.inserirCliente(cliente);
-            limparCampos();
-            buscarClientePorId();
-            SessaoUtil.retirarDaSessao("clienteCriado");
-            JSFUtil.fecharDialog(DIALOG_CADASTRAR_CLIENTE);
-            JSFUtil.adicionarMensagemSucesso(CLIENTE_CADASTRADO_SUCESSO, SUCESSO);
-        } catch (ProjetoException e) {
-            JSFUtil.adicionarMensagemErro(CLIENTE_CADASTRADO_ERRO, ERRO);
+        if(!verificarClienteEhCadastrado(cliente.getTelefone1())) {
+            try {
+                clienteService.inserirCliente(cliente);
+                limparCampos();
+                buscarClientePorId();
+                SessaoUtil.retirarDaSessao("clienteCriado");
+                JSFUtil.fecharDialog(DIALOG_CADASTRAR_CLIENTE);
+                JSFUtil.adicionarMensagemSucesso(CLIENTE_CADASTRADO_SUCESSO, SUCESSO);
+            } catch (ProjetoException e) {
+                JSFUtil.adicionarMensagemErro(CLIENTE_CADASTRADO_ERRO, ERRO);
+            }
+        }
+        else{
+            JSFUtil.adicionarMensagemErro(CLIENTE_JA_CADASTRADO_ERRO, ERRO);
         }
     }
 

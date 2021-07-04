@@ -47,7 +47,8 @@
                                  icon="limpar"/>
 
                 <p:commandButton value="Novo Cliente"
-                                 oncomplete="PF('dlgCadastrarCliente').show();" icon="novo"/>
+                                 oncomplete="PF('dlgCadastrarCliente').show();" icon="novo"
+                                 action="#{clienteMB.limparCampos}" update=":formCadastroCliente"/>
 
 
             </p:panelGrid>

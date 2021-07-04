@@ -364,4 +364,32 @@ public class ClienteDAO {
 		}
 	}
 
+	public Boolean verificarClienteCadastrado(String telefone) {
+
+		conexao = ConnectionFactory.getConnection();
+
+		Boolean retorno = false;
+
+		try {
+			PreparedStatement ps = conexao.prepareStatement(SELECT_VERIFICAR_CLIENTE_CADASTRADO);
+			ps.setString(1, telefone);
+			ps.setInt(2, usuarioSessao.getId());
+			ResultSet rs = ps.executeQuery();
+
+			if(rs.next()){
+				retorno = true;
+			}
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				conexao.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return retorno;
+	}
+
 }

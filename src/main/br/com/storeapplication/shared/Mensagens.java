@@ -14,6 +14,8 @@ public class Mensagens {
 
     public static final String CLIENTE_CADASTRADO_ERRO = "Erro ao cadastrar o cliente!";
 
+    public static final String CLIENTE_JA_CADASTRADO_ERRO = "Esse cliente já é cadastrado, busque pelo telefone!";
+
     public static final String CLIENTE_ALTERADO_SUCESSO = "Cliente alterado com sucesso!";
 
     public static final String CLIENTE_ALTERADO_ERRO = "Erro ao alterar o cliente!";
@@ -36,23 +38,9 @@ public class Mensagens {
 
     public static final String VENDA_ERRO = "Erro ao realizar Venda";
 
-    public static final String PAGAMENTO_MAIOR_QUE_VENDA = "Pagamento maior que a venda não é permitido!";
-
-    public static final String PAGAMENTO_SUCESSO = "Pagamento realizado com sucesso";
-
-    public static final String PAGAMENTO_ERRO = "Erro ao realizar pagamento!";
-
-    public static final String VENDA_JA_PAGA = "Essa venda já foi paga!";
-
     public static final String VENDA_CANCELADA_SUCESSO = "Venda cancelada com sucesso!";
 
     public static final String VENDA_CANCELADA_ERRO= "Erro ao cancelar venda!";
-
-    public static final String VENDA_JA_TEM_PAGAMENTO= "Essa venda tem pagamento e não pode ser cancelada!";
-
-    public static final String PAGAMENTO_CANCELADO_SUCESSO = "Pagamento cancelado com sucesso!";
-
-    public static final String PAGAMENTO_CANCELADO_ERRO= "Erro ao cancelar pagamento!";
 
     public static final String SENHA_INVALIDA = "Senha inválida!";
 
