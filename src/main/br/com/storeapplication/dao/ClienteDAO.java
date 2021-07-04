@@ -218,8 +218,6 @@ public class ClienteDAO {
 
 			SessaoUtil.adicionarNaSessao(idCliente, "clienteCriado");
 
-			ps.execute();
-
 			conexao.commit();
 
 		} catch (SQLException ex) {

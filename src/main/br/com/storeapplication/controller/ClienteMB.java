@@ -54,6 +54,7 @@ public class ClienteMB {
             clienteService.inserirCliente(cliente);
             limparCampos();
             buscarClientePorId();
+            SessaoUtil.retirarDaSessao("clienteCriado");
             JSFUtil.fecharDialog(DIALOG_CADASTRAR_CLIENTE);
             JSFUtil.adicionarMensagemSucesso(CLIENTE_CADASTRADO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
@@ -76,6 +77,7 @@ public class ClienteMB {
     public void deletarCliente() {
         try {
             clienteService.deletarCliente(cliente);
+            listarClientes();
             JSFUtil.fecharDialog(DIALOG_DELETAR_CLIENTE);
             JSFUtil.adicionarMensagemSucesso(CLIENTE_EXCLUIDO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
