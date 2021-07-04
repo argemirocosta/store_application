@@ -60,7 +60,7 @@ public class VendaMB {
         try {
             vendaService.inserirVenda(venda);
             limparCampos();
-            JSFUtil.fecharDialog(DIALOG_VENDER);
+            listarVendas();
             JSFUtil.adicionarMensagemSucesso(VENDA_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
             JSFUtil.adicionarMensagemErro(VENDA_ERRO, ERRO);
