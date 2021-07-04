@@ -103,59 +103,6 @@ public class VendaDAO {
         return listaVendas;
     }
 
-    public Double calcularValorEmAberto(Integer codvenda) {
-
-        conexao = ConnectionFactory.getConnection();
-
-        double valorEmAberto = 0.0;
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_CALCULAR_VALOR_EM_ABERTO);
-            ps.setInt(1, codvenda);
-            ps.setInt(2, usuarioSessao.getId());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                valorEmAberto = rs.getDouble("em_aberto");
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return valorEmAberto;
-    }
-
-    public Integer verificarSemPagamentos(Integer codvenda) {
-
-        conexao = ConnectionFactory.getConnection();
-
-        int valor = 0;
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_VERIFICAR_SEM_PAGAMENTOS);
-            ps.setInt(1, codvenda);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                valor = rs.getInt("qtd");
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return valor;
-    }
-
     public List<Venda> listarVendasPorCliente() {
 
         conexao = ConnectionFactory.getConnection();
@@ -246,105 +193,9 @@ public class VendaDAO {
         return valor;
     }
 
-    public Double calcularValorReceberGeral() {
-
-        conexao = ConnectionFactory.getConnection();
-
-        double valor = 0.0;
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_CALCULAR_VALOR_RECEBER_GERAL);
-            ps.setInt(1, usuarioSessao.getId());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-
-                valor = rs.getDouble("valor");
-
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return valor;
-    }
-
-    public List<Venda> listarValorAReceber() {
-
-        conexao = ConnectionFactory.getConnection();
-
-        List<Venda> listaValoresAReceber = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_LISTAR_VALOR_A_RECEBER);
-            ps.setInt(1, usuarioSessao.getId());
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Venda venda = new Venda();
-                venda.getCliente().setNome(rs.getString("nome"));
-                venda.setEmAberto(rs.getDouble("em_aberto"));
-                venda.setData(rs.getDate("data"));
-                venda.setValor(rs.getDouble("valor"));
-
-                listaValoresAReceber.add(venda);
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return listaValoresAReceber;
-    }
-
-    public Boolean verificarSeExistePagamentoParaVenda(Integer idVenda) {
-
-        conexao = ConnectionFactory.getConnection();
-
-        boolean retorno = false;
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_VERIFICAR_SE_EXISTE_PAGAMENTO_PARA_VENDA);
-            ps.setInt(1, idVenda);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                retorno = true;
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return retorno;
-    }
-
     public void cancelarVenda(Integer idVenda) {
         try {
             realizarCancelamento(idVenda, ALTERAR_CANCELAR_VENDA);
-        } catch (ProjetoException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void cancelarPagamento(Integer idPagamento) {
-        try {
-            realizarCancelamento(idPagamento, ALTERAR_CANCELAR_PAGAMENTO);
         } catch (ProjetoException e) {
             e.printStackTrace();
         }

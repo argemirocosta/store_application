@@ -28,8 +28,6 @@ public class VendaMB {
     private List<Venda> listaVendasPorCliente;
     private BuscaRelatorio busca;
     private Double totalVendidoNoPeriodo;
-    private Double valorReceberGeral;
-    private Double valorReceberGeralTotal;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
     private List<FormaPagamento> listaFormasPagamento;
@@ -67,11 +65,6 @@ public class VendaMB {
         totalVendidoNoPeriodo = vendaService.consultarVendasPorPeriodo(busca);
     }
 
-    private void somarGeralTotal() {
-        totalVendidoNoPeriodo = vendaService.calcularVendasTotal();
-        valorReceberGeralTotal = totalVendidoNoPeriodo - valorReceberGeral;
-    }
-
     public void listarRankingDosClientes() {
         listaVendasPorCliente = vendaService.listarRankingDosClientes();
     }
@@ -83,7 +76,7 @@ public class VendaMB {
     public void abrirDialogVender() {
         listarVendas();
         listarFormasPagamento();
-        JSFUtil.abrirDialog("dlgVender");
+        JSFUtil.abrirDialog(DIALOG_VENDER);
     }
 
     public void listarVendas() {
@@ -100,8 +93,6 @@ public class VendaMB {
         } catch (Exception ex) {
             JSFUtil.adicionarMensagemErro(VENDA_CANCELADA_ERRO, ERRO);
         }
-
-
     }
 
     //GETTERS E SETTERS
@@ -136,22 +127,6 @@ public class VendaMB {
 
     public void setBusca(BuscaRelatorio busca) {
         this.busca = busca;
-    }
-
-    public Double getValorReceberGeral() {
-        return valorReceberGeral;
-    }
-
-    public void setValorReceberGeral(Double valorReceberGeral) {
-        this.valorReceberGeral = valorReceberGeral;
-    }
-
-    public Double getValorReceberGeralTotal() {
-        return valorReceberGeralTotal;
-    }
-
-    public void setValorReceberGeralTotal(Double valorReceberGeralTotal) {
-        this.valorReceberGeralTotal = valorReceberGeralTotal;
     }
 
     public Double getTotalVendidoNoPeriodo() {

@@ -18,6 +18,4 @@ public class Dialogs {
 
     public static final String DIALOG_CANCELAR_VENDA = "dlgCancelarVenda";
 
-    public static final String DIALOG_CANCELAR_PAGAMENTO = "dlgCancelarPagamento";
-
 }

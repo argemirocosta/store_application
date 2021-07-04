@@ -26,16 +26,8 @@ public class VendaService {
         return vendaDAO.calcularVendasTotal();
     }
 
-    public Double calcularValorReceberGeral() {
-        return vendaDAO.calcularValorReceberGeral();
-    }
-
     public List<Venda> listarRankingDosClientes() {
         return vendaDAO.listarVendasPorCliente();
-    }
-
-    public List<Venda> listarValorAReceberPorPessoa() {
-        return vendaDAO.listarValorAReceber();
     }
 
     public List<Venda> listarVendas(Venda venda) {
