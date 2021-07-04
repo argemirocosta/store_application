@@ -420,16 +420,6 @@
                                      oncomplete="PF('dlgRelatorioRanking').show();"
                                      icon="ui-icon-star"/>
 
-                    <p:commandButton value="A receber por Pessoa"
-                                     action="#{vendaMB.listarValorAReceberPorPessoa()}"
-                                     update=":formRelatorioReceberPorPessoa:tabRelatorioReceberPorPessoa"
-                                     oncomplete="PF('dlgRelatorioReceberPorPessoa').show();"
-                                     icon="ui-icon-person"/>
-
-                    <p:commandButton value="A receber Geral"
-                                     action="#{vendaMB.calcularRecebidoGeral()}" update=":formRelatorioReceberGeral"
-                                     oncomplete="PF('dlgRelatorioReceberGeral').show();" icon="ui-icon-arrow-4-diag"/>
-
                     <p:commandButton value="Venda por Período"
                                      oncomplete="PF('dlgRelatorioVendaPorPeriodo').show();" icon="ui-icon-calendar"/>
 
@@ -494,71 +484,6 @@
             </h:form>
         </p:dialog>
 
-        <p:dialog widgetVar="dlgRelatorioReceberPorPessoa" header="Em Aberto" height="auto"
-                  position="top" width="auto" draggable="true" resizable="false"
-                  modal="true">
-            <h:form id="formRelatorioReceberPorPessoa">
-
-                <p:dataTable id="tabRelatorioReceberPorPessoa"
-                             value="#{vendaMB.listaVendasEmAberto}" var="var"
-                             emptyMessage="Nenhuma venda registrada" rows="15" paginator="true"
-                             paginatorPosition="bottom">
-
-                    <p:column headerText="Cliente" sortBy="#{var.cliente.nome}"
-                              filterBy="#{var.cliente.nome}">
-                        <p:outputLabel value="#{var.cliente.nome}"/>
-                    </p:column>
-
-                    <p:column headerText="Valor" sortBy="#{var.valor}">
-                        <p:outputLabel value="#{var.valor}">
-                            <f:convertNumber type="currency" currencySymbol="R$"/>
-                        </p:outputLabel>
-                    </p:column>
-
-                    <p:column headerText="Em Aberto" sortBy="#{var.emAberto}">
-                        <p:outputLabel value="#{var.emAberto}">
-                            <f:convertNumber type="currency" currencySymbol="R$"/>
-                        </p:outputLabel>
-                    </p:column>
-
-                    <p:column headerText="Data Compra" sortBy="#{var.data}">
-                        <p:outputLabel value="#{var.data}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
-                    </p:column>
-
-                </p:dataTable>
-
-                <p:panelGrid columns="4" styleClass="semBorda">
-
-                    <div align="center">
-                        <h3>Opções para Exportar:</h3>
-
-                        <h:commandLink>
-                            <p:graphicImage title="CSV" value="../imgs/csv.png" width="24"/>
-                            <p:dataExporter type="csv" target="tabRelatorioReceberPorPessoa"
-                                            fileName="ReceberPorPessoa"/>
-                        </h:commandLink>
-
-                        <h:commandLink>
-                            <p:graphicImage title="PDF" value="../imgs/pdf.png" width="24"/>
-                            <p:dataExporter type="pdf" target="tabRelatorioReceberPorPessoa"
-                                            fileName="ReceberPorPessoa"/>
-                        </h:commandLink>
-
-                        <h:commandLink>
-                            <p:graphicImage title="Excel" value="../imgs/excel.png" width="24"/>
-                            <p:dataExporter type="xls" target="tabRelatorioReceberPorPessoa"
-                                            fileName="ReceberPorPessoa"/>
-                        </h:commandLink>
-
-                    </div>
-
-                </p:panelGrid>
-
-            </h:form>
-        </p:dialog>
-
         <p:dialog widgetVar="dlgRelatorioVendaPorPeriodo" header="Vendas no Período"
                   height="140" width="460" draggable="true" resizable="false"
                   modal="true">
@@ -587,42 +512,6 @@
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
-
-            </h:form>
-        </p:dialog>
-
-
-        <p:dialog widgetVar="dlgRelatorioReceberGeral" header="Total a Receber"
-                  height="140" width="500" draggable="true" resizable="false"
-                  modal="true">
-            <h:form id="formRelatorioReceberGeral">
-                <p:panelGrid columns="2" styleClass="semBorda">
-
-                    <h:outputLabel value="TOTAL VENDIDO ATÉ HOJE: "
-                                   style="font-size: 14px;margin-left:20px"/>
-
-                    <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodo}"
-                                   style="font-size: 14px;color:red;margin-left:10px">
-                        <f:convertNumber type="currency" currencySymbol="R$"/>
-                    </h:outputLabel>
-
-                    <h:outputLabel value="TOTAL RECEBIDO ATÉ HOJE: "
-                                   style="font-size: 14px;margin-left:20px"/>
-
-                    <h:outputLabel value="#{vendaMB.valorReceberGeral}"
-                                   style="font-size: 14px;color:red;margin-left:10px">
-                        <f:convertNumber type="currency" currencySymbol="R$"/>
-                    </h:outputLabel>
-
-                    <h:outputLabel value="VALOR TOTAL A RECEBER: "
-                                   style="font-size: 20px;margin-left:20px"/>
-
-                    <h:outputLabel value="#{vendaMB.valorReceberGeralTotal}"
-                                   style="font-size: 20px;color:red;margin-left:10px">
-                        <f:convertNumber type="currency" currencySymbol="R$"/>
-                    </h:outputLabel>
-
-                </p:panelGrid>
 
             </h:form>
         </p:dialog>

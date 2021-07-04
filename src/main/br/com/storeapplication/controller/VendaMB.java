@@ -26,12 +26,10 @@ public class VendaMB {
     private Venda venda;
     private List<Venda> listaVendas;
     private List<Venda> listaVendasPorCliente;
-    private List<Venda> listaVendasEmAberto;
     private BuscaRelatorio busca;
     private Double totalVendidoNoPeriodo;
     private Double valorReceberGeral;
     private Double valorReceberGeralTotal;
-    private Double valorEmAbertoDaVenda;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
     private List<FormaPagamento> listaFormasPagamento;
@@ -44,8 +42,6 @@ public class VendaMB {
         busca.setPeriodoinicial(DataUtil.retornarDataAtual());
         busca.setPeriodofinal(DataUtil.retornarDataAtual());
         totalVendidoNoPeriodo = 0.0;
-        listaVendasEmAberto = new ArrayList<>();
-        valorEmAbertoDaVenda = 0.0;
         vendaService = new VendaService();
         formaPagamentoService = new FormaPagamentoService();
         listaFormasPagamento = new ArrayList<>();
@@ -76,21 +72,12 @@ public class VendaMB {
         valorReceberGeralTotal = totalVendidoNoPeriodo - valorReceberGeral;
     }
 
-    public void calcularRecebidoGeral() {
-        valorReceberGeral = vendaService.calcularValorReceberGeral();
-        somarGeralTotal();
-    }
-
     public void listarRankingDosClientes() {
         listaVendasPorCliente = vendaService.listarRankingDosClientes();
     }
 
     private void listarFormasPagamento() {
         listaFormasPagamento = formaPagamentoService.listarFormasPagamento();
-    }
-
-    public void listarValorAReceberPorPessoa() {
-        listaVendasEmAberto = vendaService.listarValorAReceberPorPessoa();
     }
 
     public void abrirDialogVender() {
@@ -151,14 +138,6 @@ public class VendaMB {
         this.busca = busca;
     }
 
-    public List<Venda> getListaVendasEmAberto() {
-        return listaVendasEmAberto;
-    }
-
-    public void setListaVendasEmAberto(List<Venda> listaVendasEmAberto) {
-        this.listaVendasEmAberto = listaVendasEmAberto;
-    }
-
     public Double getValorReceberGeral() {
         return valorReceberGeral;
     }
@@ -181,14 +160,6 @@ public class VendaMB {
 
     public void setTotalVendidoNoPeriodo(Double totalVendidoNoPeriodo) {
         this.totalVendidoNoPeriodo = totalVendidoNoPeriodo;
-    }
-
-    public Double getValorEmAbertoDaVenda() {
-        return valorEmAbertoDaVenda;
-    }
-
-    public void setValorEmAbertoDaVenda(Double valorEmAbertoDaVenda) {
-        this.valorEmAbertoDaVenda = valorEmAbertoDaVenda;
     }
 
     public List<FormaPagamento> getListaFormasPagamento() {
