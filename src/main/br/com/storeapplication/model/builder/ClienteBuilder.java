@@ -42,7 +42,7 @@ public class ClienteBuilder implements Builder {
         return this;
     }
 
-    public ClienteBuilder comTelefone1(Integer telefone1) {
+    public ClienteBuilder comTelefone1(String telefone1) {
         cliente.setTelefone1(telefone1);
         return this;
     }
@@ -68,7 +68,7 @@ public class ClienteBuilder implements Builder {
                 .comDataNascimento(rs.getDate("data_nascimento"))
                 .comCpf(rs.getString("cpf"))
                 .comRg(rs.getString("rg"))
-                .comTelefone1(rs.getInt("telefone1"))
+                .comTelefone1(rs.getString("telefone1"))
                 .comTelefone2(rs.getInt("telefone2"))
                 .comEndereco(new EnderecoBuilder().mapear(rs))
                 .construir();

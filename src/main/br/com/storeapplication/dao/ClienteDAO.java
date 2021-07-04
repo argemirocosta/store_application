@@ -56,7 +56,7 @@ public class ClienteDAO {
 		List<Cliente> listaClientes = new ArrayList<>();
 
 		try {
-			PreparedStatement ps = conexao.prepareStatement(SELECT_BUSCAR_CLIENTE_POR_NOME_OU_CPF);
+			PreparedStatement ps = conexao.prepareStatement(SELECT_BUSCAR_CLIENTE_POR_NOME_OU_TELEFONE);
 			ps.setString(1, "%" + campoBusca + "%");
 			ps.setString(2, "%" + campoBusca + "%");
 			ps.setInt(3, usuarioSessao.getId());
@@ -103,7 +103,7 @@ public class ClienteDAO {
 			if (VerificadorUtil.verificarSeObjetoNulo(cliente.getTelefone1())) {
 				ps.setNull(2, Types.NULL);
 			} else {
-				ps.setInt(2, cliente.getTelefone1());
+				ps.setString(2, cliente.getTelefone1());
 			}
 
 			if (VerificadorUtil.verificarSeObjetoNulo(cliente.getTelefone2())) {
@@ -211,7 +211,7 @@ public class ClienteDAO {
 				ps.setNull(2, Types.NULL);
 			}
 			else {
-				ps.setInt(2, cliente.getTelefone1());
+				ps.setString(2, cliente.getTelefone1());
 			}
 
 			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getTelefone2())){

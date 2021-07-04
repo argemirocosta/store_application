@@ -11,7 +11,7 @@ public class Cliente implements Serializable {
     private Date dataNascimento;
     private String cpf;
     private String rg;
-    private Integer telefone1;
+    private String telefone1;
     private Integer telefone2;
     private Endereco endereco;
 
@@ -35,11 +35,11 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public Integer getTelefone1() {
+    public String getTelefone1() {
         return telefone1;
     }
 
-    public void setTelefone1(Integer telefone1) {
+    public void setTelefone1(String telefone1) {
         this.telefone1 = telefone1;
     }
 
