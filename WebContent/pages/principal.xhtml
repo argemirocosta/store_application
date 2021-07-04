@@ -337,7 +337,7 @@
                     <p:panelGrid columns="2" styleClass="semBorda">
                         <p:commandButton value="Vender"
                                          action="#{vendaMB.inserirVenda()}"
-                                         update=":formVender"
+                                         update=":formVender, :formCadastroCliente, :formClientes, :formVender:pnlgridVender"
                                          icon="carrinho"/>
                         <p:commandButton value="Fechar" oncomplete="PF('dlgVender').hide();"
                                          icon="cancelar"/>
