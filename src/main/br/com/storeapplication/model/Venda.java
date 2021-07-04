@@ -17,6 +17,7 @@ public class Venda implements Serializable {
 
 	public Venda() {
 		cliente = new Cliente();
+		data = new Date();
 	}
 
 	public Integer getId() {
