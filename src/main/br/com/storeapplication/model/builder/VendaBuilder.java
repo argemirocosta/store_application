@@ -1,6 +1,7 @@
 package br.com.storeapplication.model.builder;
 
 import br.com.storeapplication.model.Cliente;
+import br.com.storeapplication.model.FormaPagamento;
 import br.com.storeapplication.model.Venda;
 import br.com.storeapplication.shared.Builder;
 
@@ -42,18 +43,8 @@ public class VendaBuilder implements Builder {
         return this;
     }
 
-    public VendaBuilder comTotalPago(Double totalPago){
-        venda.setTotalPago(totalPago);
-        return this;
-    }
-
-    public VendaBuilder comEmAberto(Double emAberto){
-        venda.setEmAberto(emAberto);
-        return this;
-    }
-
-    public VendaBuilder comSituacao(String situacao){
-        venda.setSituacao(situacao);
+    public VendaBuilder comFormaPagamento(FormaPagamento formaPagamento){
+        venda.setFormaPagamento(formaPagamento);
         return this;
     }
 
@@ -67,10 +58,8 @@ public class VendaBuilder implements Builder {
                 .comValor(rs.getDouble("valor"))
                 .comData(rs.getDate("data"))
                 .comQtd(rs.getInt("qtd"))
-                .comTotalPago(rs.getDouble("total_pago"))
-                .comEmAberto(rs.getDouble("em_aberto"))
-                .comSituacao(rs.getString("situacao"))
                 .comCliente(new ClienteBuilder().mapear(rs))
+                .comFormaPagamento(new FormaPagamentoBuilder().mapear(rs))
                 .construir();
     }
 }

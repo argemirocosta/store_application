@@ -3,11 +3,10 @@ package br.com.storeapplication.dao;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.factory.ConnectionFactory;
 import br.com.storeapplication.model.BuscaRelatorio;
-import br.com.storeapplication.model.Pagamento;
 import br.com.storeapplication.model.Usuario;
 import br.com.storeapplication.model.Venda;
 import br.com.storeapplication.model.builder.ClienteBuilder;
-import br.com.storeapplication.model.builder.PagamentoBuilder;
+import br.com.storeapplication.model.builder.FormaPagamentoBuilder;
 import br.com.storeapplication.model.builder.VendaBuilder;
 import br.com.storeapplication.util.DataUtil;
 import br.com.storeapplication.util.SessaoUtil;
@@ -39,6 +38,7 @@ public class VendaDAO {
             ps.setInt(3, venda.getQtd());
             ps.setDate(4, DataUtil.converterDateUtilParaDateSql(venda.getData()));
             ps.setInt(5, usuarioSessao.getId());
+            ps.setInt(6, venda.getFormaPagamento().getId());
 
             ps.execute();
 
@@ -92,10 +92,8 @@ public class VendaDAO {
                         .comData(rs.getDate("data"))
                         .comValor(rs.getDouble("valor"))
                         .comQtd(rs.getInt("qtd"))
-                        .comTotalPago(rs.getDouble("total_pago"))
-                        .comEmAberto(rs.getDouble("em_aberto"))
-                        .comSituacao(rs.getString("situacao"))
                         .comCliente(new ClienteBuilder().comId(rs.getInt("id_cliente")).comNome(rs.getString("nome")).construir())
+                        .comFormaPagamento(new FormaPagamentoBuilder().comId(rs.getInt("id_forma_pagamento")).comDescricao(rs.getString("descricao")).construir())
                         .construir());
             }
         } catch (SQLException e) {
@@ -103,78 +101,6 @@ public class VendaDAO {
         }
 
         return listaVendas;
-    }
-
-    public void inserirPagamento(Venda venda, Pagamento pagamento) throws ProjetoException {
-
-        conexao = ConnectionFactory.getConnection();
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(INSERIR_PAGAMENTOS);
-            ps.setInt(1, venda.getId());
-            ps.setDouble(2, pagamento.getValor());
-            ps.setDate(3, DataUtil.converterDateUtilParaDateSql(pagamento.getData()));
-            ps.setInt(4, usuarioSessao.getId());
-
-            ps.execute();
-
-            conexao.commit();
-
-        } catch (SQLException ex) {
-            throw new ProjetoException(ex);
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public List<Pagamento> listarPagamentos(Integer codcliente) {
-
-        conexao = ConnectionFactory.getConnection();
-
-        List<Pagamento> listaPagamentos = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_LISTAR_PAGAMENTOS);
-            ps.setInt(1, codcliente);
-            ResultSet rs = ps.executeQuery();
-
-            listaPagamentos = mapearResultSetListaPagamentos(rs);
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return listaPagamentos;
-    }
-
-    private List<Pagamento> mapearResultSetListaPagamentos(ResultSet rs) {
-
-        ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
-
-        try {
-            while (rs.next()) {
-                PagamentoBuilder pagamentoBuilder = new PagamentoBuilder();
-                listaPagamentos.add(pagamentoBuilder
-                        .comId(rs.getInt("id"))
-                        .comValor(rs.getDouble("valor_pago"))
-                        .comData(rs.getDate("data_pagamento"))
-                        .comVenda(new VendaBuilder().comId(rs.getInt("id")).comData(rs.getDate("data")).construir())
-                        .construir());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return listaPagamentos;
     }
 
     public Double calcularValorEmAberto(Integer codvenda) {

@@ -3,7 +3,6 @@ package br.com.storeapplication.controller;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
 import br.com.storeapplication.model.FormaPagamento;
-import br.com.storeapplication.model.Pagamento;
 import br.com.storeapplication.model.Venda;
 
 import java.util.ArrayList;
@@ -26,8 +25,6 @@ public class VendaMB {
 
     private Venda venda;
     private List<Venda> listaVendas;
-    private Pagamento pagamento;
-    private List<Pagamento> listaPagamentos;
     private List<Venda> listaVendasPorCliente;
     private List<Venda> listaVendasEmAberto;
     private BuscaRelatorio busca;
@@ -41,7 +38,6 @@ public class VendaMB {
 
     public VendaMB() {
         venda = new Venda();
-        pagamento = new Pagamento();
         listaVendas = new ArrayList<>();
         listaVendasPorCliente = new ArrayList<>();
         busca = new BuscaRelatorio();
@@ -71,37 +67,6 @@ public class VendaMB {
         }
     }
 
-    public void verificarParaInserirPagamento() {
-        int pagamentoVenda = vendaService.verificarSemPagamentos(venda.getId());
-
-        Double valorEmAberto = vendaService.calcularValorEmAbertoDaVenda(venda.getId());
-
-        if (pagamento.getValor() > valorEmAberto) {
-            JSFUtil.adicionarMensagemAdvertencia(PAGAMENTO_MAIOR_QUE_VENDA, AVISO);
-        } else if (valorEmAberto > 0 || pagamentoVenda == 0) {
-            inserirPagamento();
-
-        } else {
-            JSFUtil.adicionarMensagemAdvertencia(VENDA_JA_PAGA, AVISO);
-
-        }
-
-    }
-
-    private void inserirPagamento() {
-        try {
-            vendaService.inserirPagamento(venda, pagamento);
-            listarPagamentos();
-            listarVendas();
-            limparCampos();
-            JSFUtil.adicionarMensagemSucesso(PAGAMENTO_SUCESSO, SUCESSO);
-            calcularValorEmAbertoDaVenda();
-            pagamento.setValor(null);
-        } catch (ProjetoException e) {
-            JSFUtil.adicionarMensagemErro(PAGAMENTO_ERRO, ERRO);
-        }
-    }
-
     public void totalVendidoPeriodo() {
         totalVendidoNoPeriodo = vendaService.consultarVendasPorPeriodo(busca);
     }
@@ -120,16 +85,6 @@ public class VendaMB {
         listaVendasPorCliente = vendaService.listarRankingDosClientes();
     }
 
-    public void abrirTelaDePagamento() {
-        listarPagamentos();
-        calcularValorEmAbertoDaVenda();
-        JSFUtil.abrirDialog("dlgPagamentos");
-    }
-
-    private void listarPagamentos() {
-        listaPagamentos = vendaService.listarPagamentos(venda.getId());
-    }
-
     private void listarFormasPagamento() {
         listaFormasPagamento = formaPagamentoService.listarFormasPagamento();
     }
@@ -138,7 +93,7 @@ public class VendaMB {
         listaVendasEmAberto = vendaService.listarValorAReceberPorPessoa();
     }
 
-    public void abrirDialogVender(){
+    public void abrirDialogVender() {
         listarVendas();
         listarFormasPagamento();
         JSFUtil.abrirDialog("dlgVender");
@@ -150,54 +105,16 @@ public class VendaMB {
 
     public void cancelarVenda() {
 
-        if (verificarSeCancelamentoPodeSerRealizado()) {
-            try {
-                vendaService.cancelarVenda(venda.getId());
-                listarVendas();
-                JSFUtil.fecharDialog(DIALOG_CANCELAR_VENDA);
-                JSFUtil.adicionarMensagemSucesso(VENDA_CANCELADA_SUCESSO, SUCESSO);
-            } catch (Exception ex) {
-                JSFUtil.adicionarMensagemErro(VENDA_CANCELADA_ERRO, ERRO);
-            }
-        }
-
-    }
-
-    public void cancelarPagamento() {
         try {
-            vendaService.cancelarPagamento(pagamento.getId());
+            vendaService.cancelarVenda(venda.getId());
             listarVendas();
-            calcularValorEmAbertoDaVenda();
-            JSFUtil.fecharDialog(DIALOG_CANCELAR_PAGAMENTO);
-            JSFUtil.adicionarMensagemSucesso(PAGAMENTO_CANCELADO_SUCESSO, SUCESSO);
-            listarPagamentos();
+            JSFUtil.fecharDialog(DIALOG_CANCELAR_VENDA);
+            JSFUtil.adicionarMensagemSucesso(VENDA_CANCELADA_SUCESSO, SUCESSO);
         } catch (Exception ex) {
-            JSFUtil.adicionarMensagemErro(PAGAMENTO_CANCELADO_ERRO, ERRO);
-        }
-    }
-
-    private Boolean verificarSeExistePagamentoParaVenda() {
-        return vendaService.verificarSeExistePagamentoParaVenda(venda.getId());
-    }
-
-    private Boolean verificarSeCancelamentoPodeSerRealizado() {
-        boolean retorno = true;
-
-        if (venda.getSituacao().equals("PAGO")) {
-            JSFUtil.adicionarMensagemAdvertencia(VENDA_JA_PAGA, AVISO);
-            JSFUtil.fecharDialog(DIALOG_CANCELAR_VENDA);
-            retorno = false;
-        } else if (verificarSeExistePagamentoParaVenda()) {
-            JSFUtil.adicionarMensagemAdvertencia(VENDA_JA_TEM_PAGAMENTO, AVISO);
-            JSFUtil.fecharDialog(DIALOG_CANCELAR_VENDA);
-            retorno = false;
+            JSFUtil.adicionarMensagemErro(VENDA_CANCELADA_ERRO, ERRO);
         }
 
-        return retorno;
-    }
 
-    private void calcularValorEmAbertoDaVenda() {
-        valorEmAbertoDaVenda = vendaService.calcularValorEmAberto(venda.getId());
     }
 
     //GETTERS E SETTERS
@@ -216,22 +133,6 @@ public class VendaMB {
 
     public void setListaVendas(List<Venda> listaVendas) {
         this.listaVendas = listaVendas;
-    }
-
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-    public List<Pagamento> getListaPagamentos() {
-        return listaPagamentos;
-    }
-
-    public void setListaPagamentos(List<Pagamento> listaPagamentos) {
-        this.listaPagamentos = listaPagamentos;
     }
 
     public List<Venda> getListaVendasPorCliente() {

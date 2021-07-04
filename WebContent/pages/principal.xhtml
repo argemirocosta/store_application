@@ -351,19 +351,19 @@
                              emptyMessage="Nenhuma venda realizada para esse cliente" rows="9"
                              paginator="true" paginatorPosition="bottom">
 
-                    <p:column headerText="Número" width="8%">
+                    <p:column headerText="Código venda" width="11%">
                         <div align="center">
                             <p:outputLabel value="#{var.id}"/>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Cliente" width="26%">
+                    <p:column headerText="Cliente" width="31%">
                         <div align="center">
                             <p:outputLabel value="#{var.cliente.nome}"/>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Data" width="10%">
+                    <p:column headerText="Data" width="11%">
                         <div align="center">
                             <p:outputLabel value="#{var.data}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -371,7 +371,7 @@
                         </div>
                     </p:column>
 
-                    <p:column headerText="Valor Venda" width="9%">
+                    <p:column headerText="Valor Venda" width="11%">
                         <div align="center">
                             <p:outputLabel value="#{var.valor}">
                                 <f:convertNumber type="currency" currencySymbol="R$"/>
@@ -379,25 +379,10 @@
                         </div>
                     </p:column>
 
-                    <p:column headerText="Total Pago" width="9%">
+                    <p:column headerText="Forma de Pagamento" width="17%">
                         <div align="center">
-                            <p:outputLabel value="#{var.totalPago}">
+                            <p:outputLabel value="#{var.formaPagamento.descricao}">
                                 <f:convertNumber type="currency" currencySymbol="R$"/>
-                            </p:outputLabel>
-                        </div>
-                    </p:column>
-
-                    <p:column headerText="Em Aberto" width="9%">
-                        <div align="center">
-                            <p:outputLabel value="#{var.emAberto}">
-                                <f:convertNumber type="currency" currencySymbol="R$"/>
-                            </p:outputLabel>
-                        </div>
-                    </p:column>
-
-                    <p:column headerText="Situação" width="9%">
-                        <div align="center">
-                            <p:outputLabel value="#{var.situacao}">
                             </p:outputLabel>
                         </div>
                     </p:column>
@@ -408,23 +393,10 @@
                         </div>
                     </p:column>
 
-                    <p:column headerText="Pagar" width="6%">
-                        <div align="center">
-                            <p:commandButton icon="calculadora" process="@this"
-                                             immediate="true"
-                                             action="#{vendaMB.abrirTelaDePagamento()}"
-                                             update=":formPagamentos:tabPagamentos, :formPagamentos:outValorAberto">
-                                <f:setPropertyActionListener value="#{var}"
-                                                             target="#{vendaMB.venda}"/>
-                            </p:commandButton>
-                        </div>
-                    </p:column>
-
-                    <p:column headerText="Excluir" width="6%">
+                    <p:column headerText="Cancelar venda" width="11%">
                         <div align="center">
                             <p:commandButton oncomplete="PF('dlgCancelarVenda').show();"
                                              icon="cancelar" process="@this"
-                                             update=":formPagamentos:tabPagamentos"
                                              immediate="true">
                                 <f:setPropertyActionListener value="#{var}"
                                                              target="#{vendaMB.venda}"/>
@@ -436,113 +408,6 @@
 
             </h:form>
         </p:dialog>
-
-        <p:dialog widgetVar="dlgPagamentos" header="Inserir Pagamento"
-                  height="auto" width="auto" draggable="true" resizable="false"
-                  modal="true" position="top">
-            <h:form id="formPagamentos">
-                <p:growl id="msgPagamentos"/>
-                <p:panelGrid columns="2" styleClass="semBorda" id="pnlgridPagamentos">
-                    <p:outputLabel value="Valor: "/>
-                    <p:inputText value="#{vendaMB.pagamento.valor}"
-                                 maxlength="30" size="15" required="true"
-                                 requiredMessage="Insira o valor"/>
-
-                    <p:outputLabel value="Data: "/>
-                    <p:calendar value="#{vendaMB.pagamento.data}"
-                                showOn="button" required="true" requiredMessage="Insira a Data"
-                                size="15"/>
-
-                </p:panelGrid>
-
-                <p:separator/>
-
-                <p:outputPanel id="outValorAberto">
-
-                    <div align="center">
-
-                        <h:outputLabel value="VALOR EM ABERTO: "
-                                       style="font-size: 20px;margin-left:20px"/>
-
-                        <p:outputLabel value="#{vendaMB.valorEmAbertoDaVenda}"
-                                       style="font-size: 20px;color:red;margin-left:10px">
-                            <f:convertNumber type="currency" currencySymbol="R$"/>
-                        </p:outputLabel>
-
-                    </div>
-
-                </p:outputPanel>
-
-                <div align="center" class="altura30px">
-                    <p:panelGrid columns="2" styleClass="semBorda">
-                        <p:commandButton value="Pagar"
-                                         action="#{vendaMB.verificarParaInserirPagamento()}"
-                                         update=":formVender:tabVendas, :formPagamentos:tabPagamentos, msgPagamentos,
-                                         :formPagamentos:pnlgridPagamentos, outValorAberto"
-                                         icon="calculadorasifrao"/>
-                        <p:commandButton value="Fechar"
-                                         oncomplete="PF('dlgPagamentos').hide();" icon="cancelar"/>
-                    </p:panelGrid>
-                </div>
-
-                <p:separator/>
-
-                <p:outputPanel autoUpdate="true">
-                    <p:dataTable id="tabPagamentos" styleClass="altura30px"
-                                 value="#{vendaMB.listaPagamentos}" var="var"
-                                 emptyMessage="Nenhum Pagamento efetuado" rows="10" paginator="true"
-                                 paginatorPosition="bottom">
-                        <p:column headerText="Valor" width="25%">
-                            <div align="center">
-                                <p:outputLabel value="#{var.valor}">
-                                    <f:convertNumber type="currency" currencySymbol="R$"/>
-                                </p:outputLabel>
-                            </div>
-                        </p:column>
-
-                        <p:column headerText="Data Compra" width="25%">
-                            <div align="center">
-                                <p:outputLabel value="#{var.venda.data}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:outputLabel>
-                            </div>
-                        </p:column>
-
-                        <p:column headerText="Data Pagamento" width="25%">
-                            <div align="center">
-                                <p:outputLabel value="#{var.data}">
-                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                </p:outputLabel>
-                            </div>
-                        </p:column>
-
-                        <p:column headerText="Recibo" width="25%">
-                            <div align="center">
-                                <p:commandButton icon="relatorios" id="btnRecibo" ajax="false" immediate="true"
-                                actionListener="#{reportJasperMB.gerarRecibo(var.id)}">
-                                    <f:setPropertyActionListener value="#{var}"
-                                                                 target="#{vendaMB.pagamento}"/>
-                                </p:commandButton>
-                            </div>
-                        </p:column>
-
-                        <p:column headerText="Excluir" width="25%">
-                            <div align="center">
-                                <p:commandButton oncomplete="PF('dlgCancelarPagamento').show();"
-                                                 icon="cancelar" process="@this" update=":formPagamentos:tabPagamentos"
-                                                 immediate="true">
-                                    <f:setPropertyActionListener value="#{var}"
-                                                                 target="#{vendaMB.pagamento}"/>
-                                </p:commandButton>
-                            </div>
-                        </p:column>
-
-                    </p:dataTable>
-                </p:outputPanel>
-
-            </h:form>
-        </p:dialog>
-
 
         <p:dialog widgetVar="dlgRelatorios" header="Relatórios"
                   height="auto" width="auto" draggable="true" resizable="false"
@@ -780,31 +645,6 @@
                                          update=":formVender:tabVendas, :formClientes" icon="confirmar"/>
                         <p:commandButton value="Não"
                                          oncomplete="PF('dlgCancelarVenda').hide();" icon="cancelar"/>
-                    </p:panelGrid>
-                </div>
-
-            </h:form>
-        </p:dialog>
-
-        <p:dialog widgetVar="dlgCancelarPagamento" header="Cancelar Pagamento"
-                  height="auto" width="auto" draggable="true" resizable="false"
-                  modal="true">
-            <h:form id="formCancelarPagamento">
-                <p:panelGrid columns="2" styleClass="semBorda">
-                    <p:outputLabel value="Deseja realmente cancelar esse pagamento? "/>
-
-                </p:panelGrid>
-
-                <p:separator/>
-
-                <div align="center">
-                    <p:panelGrid columns="2" styleClass="semBorda">
-                        <p:commandButton value="Sim"
-                                         action="#{vendaMB.cancelarPagamento()}"
-                                         update=":formVender:tabVendas, :formPagamentos:tabPagamentos, :formPagamentos:msgPagamentos,
-                                         :formPagamentos:pnlgridPagamentos, :formPagamentos:outValorAberto" icon="confirmar"/>
-                        <p:commandButton value="Não"
-                                         oncomplete="PF('dlgCancelarPagamento').hide();" icon="cancelar"/>
                     </p:panelGrid>
                 </div>
 

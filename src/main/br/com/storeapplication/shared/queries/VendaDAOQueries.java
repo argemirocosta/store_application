@@ -5,19 +5,16 @@ public class VendaDAOQueries {
     private VendaDAOQueries() {
     }
 
-    public static final String INSERIR_VENDA = "INSERT INTO vendas.venda (id_cliente, valor, qtd, data, usuario) VALUES (?,?,?,?,?)";
+    public static final String INSERIR_VENDA = "INSERT INTO vendas.venda (id_cliente, valor, qtd, data, usuario, id_forma_pagamento) " +
+            "VALUES (?,?,?,?,?,?)";
 
-    public static final String SELECT_LISTAR_VENDAS = "SELECT v.id, v.id_cliente, c.nome, v.data, v.valor, v.qtd, "
-            + "COALESCE(sum(p.valor_pago),0) AS total_pago, COALESCE((v.valor - sum(p.valor_pago)),v.valor) AS em_aberto, "
-            + "CASE WHEN COALESCE((v.valor - sum(p.valor_pago)),v.valor) = 0 THEN 'PAGO' "
-            + "WHEN COALESCE((v.valor - sum(p.valor_pago)),v.valor) > 0 THEN 'ABERTO' "
-            + "END AS situacao "
-            + "FROM vendas.venda v "
-            + "LEFT JOIN vendas.clientes c ON (v.id_cliente = c.id) "
-            + "LEFT JOIN vendas.pagamentos p ON (v.id = p.id_venda AND p.cancelada IS NOT TRUE) "
-            + "WHERE v.id_cliente = ? AND v.cancelada IS NOT TRUE  "
-            + "GROUP BY v.id, v.id_cliente, c.nome, v.valor, v.qtd, v.data "
-            + "ORDER BY v.data DESC, v.id DESC";
+    public static final String SELECT_LISTAR_VENDAS = "SELECT v.id, v.id_cliente, c.nome, v.data, " +
+            "v.valor, v.qtd, v.id_forma_pagamento, fp.descricao " +
+            "FROM vendas.venda v " +
+            "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id)" +
+            "LEFT JOIN vendas.clientes c ON (v.id_cliente = c.id) " +
+            "WHERE v.id_cliente = ? AND v.cancelada IS NOT TRUE " +
+            "ORDER BY v.data DESC, v.id DESC";
 
     public static final String INSERIR_PAGAMENTOS = "INSERT INTO vendas.pagamentos (id_venda, valor_pago, data_pagamento, usuario) VALUES (?,?,?,?)";
 
