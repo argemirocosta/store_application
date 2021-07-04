@@ -1,0 +1,129 @@
+body {
+	font-size: 12px;
+	font-family: sans-serif;
+}
+
+.semBorda tr, .semBorda row, .semBorda td {
+	border: none !important;
+}
+
+.nomePrincipal {
+	font-size: 60px;
+	font-family:Arial;
+	font-weight: bold
+}
+
+.nomePrincipalParteSuperior {
+	font-size: 30px;
+	font-family:Arial;
+	font-weight: bold
+}
+
+.imagemPrincipal {
+	margin-top:40px;
+	margin-bottom:20px;
+	width:13%;
+	height:13%;
+}
+
+.altura50px {
+	margin-top:50px;
+}
+
+.altura30px {
+	margin-top:30px;
+}
+
+.altura10px {
+	margin-top:10px;
+}
+
+.ui-icon.novo {
+	background-image: url("../imgs/novo.png") !important;
+}
+
+.ui-icon.buscar {
+	background-image: url("../imgs/buscar.png") !important;
+}
+
+.ui-icon.cancelar {
+	background-image: url("../imgs/cancelar.png") !important;
+}
+
+.ui-icon.confirmar {
+	background-image: url("../imgs/confirmar.png") !important;
+}
+
+.ui-icon.alterar {
+	background-image: url("../imgs/alterar.png") !important;
+}
+
+.ui-icon.limpar {
+	background-image: url("../imgs/limpar.png") !important;
+}
+
+.ui-icon.relatorios {
+	background-image: url("../imgs/relatorios.png") !important;
+}
+
+.ui-icon.sifrao {
+	background-image: url("../imgs/sifrao.png") !important;
+}
+
+.ui-icon.sair {
+	background-image: url("../imgs/sair.png") !important;
+}
+
+.ui-icon.carrinho {
+	background-image: url("../imgs/carrinho.png") !important;
+}
+
+.ui-icon.calculadora {
+	background-image: url("../imgs/calculadora.png") !important;
+}
+
+.ui-icon.calculadorasifrao {
+	background-image: url("../imgs/calculadorasifrao.png") !important;
+}
+
+.ui-icon.pessoa {
+	background-image: url("../imgs/pessoa.png") !important;
+}
+
+.rowRed td {
+	background-color: rgba(218, 79, 73, 0.3);;
+}
+
+.rowRed td:hover {
+	background-color: rgba(218, 79, 73, 0.8);;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar {
+	padding: 7px 15px;
+	border-bottom: 1px solid #eee;
+	border: none !important;
+	background-color: #6bb9f1;
+	color: black
+}
+
+.ui-widget-header {
+	color: #ffffff;
+	font-weight: normal;
+}
+
+.ui-dialog.ui-widget-content
+.ui-dialog-title {
+	font-size: 1.5em;
+	border: none !important;
+}
+
+.ui-dialog.ui-widget-content
+.ui-dialog-titlebar-close {
+	margin-top: 0px;
+}
+
+.ui-widget-header {
+	color: black;
+	font-weight: normal;
+	font-weight: bolder;
+}

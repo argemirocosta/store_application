@@ -1,0 +1,853 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../template/template.xhtml">
+
+    <ui:define name="content">
+
+
+        <f:metadata>
+            <f:viewAction
+                    action="#{clienteMB.listarClientes()}"/>
+        </f:metadata>
+
+        <h:form id="formInicio">
+
+            <p:commandButton value="Sair do Sistema" icon="sair"
+                             action="#{usuarioMB.logout()}" style="float:right;"/>
+
+            <p:commandButton value="Dados Usuário" icon="pessoa"
+                             action="#{usuarioMB.carregarDadosUsuario()}"
+                             update=":formAlterarUsuario"
+                             oncomplete="PF('dlgAlterarUsuario').show();"
+                             style="float:right;margin-left:10px;margin-right:20px"/>
+
+            <p:commandButton value="Relatórios" icon="relatorios"
+                             oncomplete="PF('dlgRelatorios').show();"
+                             style="float:right;margin-left:10px;margin-right:20px"/>
+
+            <p:outputLabel value="Home Fashion" styleClass="nomePrincipalParteSuperior"/>
+
+            <p:separator/>
+
+            <br/>
+        </h:form>
+
+        <h:form id="formClientes">
+            <p:growl id="msgClientes"/>
+            <p:panelGrid columns="7" styleClass="semBorda">
+
+                <p:outputLabel value="Buscar: "/>
+
+                <p:inputText id="cpBuscaNome" value="#{clienteMB.campoBusca}"
+                             maxlength="30" size="35">
+                    <p:watermark for="cpBuscaNome" value="Digite o nome ou CPF do cliente"/>
+                </p:inputText>
+
+                <p:commandButton value="Pesquisar"
+                                 action="#{clienteMB.buscarClientePorNome()}" update=":formClientes"
+                                 icon="buscar"/>
+                <p:commandButton value="Limpar"
+                                 action="#{clienteMB.limparBusca()}" update=":formClientes"
+                                 icon="limpar"/>
+
+                <p:commandButton value="Novo Cliente"
+                                 oncomplete="PF('dlgCadastrarCliente').show();" icon="novo"/>
+
+
+            </p:panelGrid>
+
+            <br/>
+
+            <p:dataTable id="tabClientes" value="#{clienteMB.listaClientes}"
+                         var="var" emptyMessage="Nenhum Cliente encontrado" rows="20"
+                         paginator="true" paginatorPosition="bottom">
+                <p:column headerText="Código" width="9%">
+                    <div align="center">
+                        <p:outputLabel value="#{var.id}"/>
+                    </div>
+                </p:column>
+
+                <p:column headerText="Cliente" width="41%">
+                    <p:outputLabel value="#{var.nome}"/>
+                </p:column>
+
+                <p:column headerText="CPF" width="15%">
+                    <p:outputLabel value="#{var.cpf}"/>
+                </p:column>
+
+                <p:column headerText="Telefone 1" width="10%">
+                    <div align="center">
+                        <p:outputLabel value="#{var.telefone1}"/>
+                    </div>
+                </p:column>
+
+                <p:column headerText="Telefone 2" width="10%">
+                    <div align="center">
+                        <p:outputLabel value="#{var.telefone2}"/>
+                    </div>
+                </p:column>
+
+
+                <p:column headerText="Ações" width="15%">
+
+                    <div align="center">
+
+                        <p:commandButton oncomplete="PF('dlgAlterarCliente').show();"
+                                         update=":formClientes, :formAlterarCliente" icon="alterar">
+                            <f:setPropertyActionListener value="#{var}"
+                                                         target="#{clienteMB.cliente}"/>
+                        </p:commandButton>
+
+                        <p:commandButton oncomplete="PF('dlgDeletarCliente').show();"
+                                         update=":formClientes" icon="cancelar">
+                            <f:setPropertyActionListener value="#{var}"
+                                                         target="#{clienteMB.cliente}"/>
+                        </p:commandButton>
+
+                        <p:commandButton oncomplete="PF('dlgVender').show();" icon="sifrao"
+                                         action="#{vendaMB.listarVendas()}"
+                                         update=":formVender:tabVendas">
+                            <f:setPropertyActionListener value="#{var}"
+                                                         target="#{vendaMB.venda.cliente}"/>
+                        </p:commandButton>
+
+                    </div>
+
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+        <p:dialog widgetVar="dlgCadastrarCliente" header="Cadastrar Cliente"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formCadastroCliente">
+                <p:panelGrid columns="4" styleClass="semBorda">
+                    <p:outputLabel value="Nome: "/>
+                    <p:inputText value="#{clienteMB.cliente.nome}" id="nomeCadastro"
+                                 maxlength="30" size="25" required="true"
+                                 requiredMessage="Nome: Campo obrigatório!"/>
+
+                    <p:outputLabel value="Data Nascimento: "/>
+                    <p:calendar pattern="dd/MM/yyyy" mask="true" navigator="true" id="dataCadastro"
+                                yearRange="-111:+39" pages="1" showOn="button" size="15"
+                                value="#{clienteMB.cliente.dataNascimento}"
+                                locale="pt" styleClass="select-agendaEquipe2"/>
+
+                    <p:outputLabel value="CPF: "/>
+                    <p:inputMask mask="999.999.999-99"
+                                 value="#{clienteMB.cliente.cpf}"
+                                 styleClass="form-control select-agendaEquipe2" id="cpfCadastro"
+                                 required="false" validator="CPFValidator"
+                                 requiredMessage="CPF do Paciente: Campo obrigatório!"/>
+
+                    <p:outputLabel value="RG: "/>
+                    <p:inputText value="#{clienteMB.cliente.rg}" id="rgCadastro"
+                                 maxlength="30" size="25" required="false"
+                                 requiredMessage="Insira o nome"/>
+
+                    <p:outputLabel value="Telefone 1: "/>
+                    <p:inputText value="#{clienteMB.cliente.telefone1}" id="telefone1Cadastro"
+                                 maxlength="30" size="25" required="false"
+                                 requiredMessage="Insira ao menos 1 telefone"/>
+
+                    <p:outputLabel value="Telefone 2: "/>
+                    <p:inputText value="#{clienteMB.cliente.telefone2}" id="telefone2Cadastro"
+                                 maxlength="30" size="25" required="false"
+                                 requiredMessage="insira o nome"/>
+
+                    <p:outputLabel value="CEP:" />
+                    <p:inputMask mask="99999-999" id="cepCadastro"
+                                 value="#{clienteMB.cliente.endereco.cep}">
+                        <p:ajax listener="#{clienteMB.buscarEnderecoClientePorCEP()}"
+                                update="estadoCadastro, cidadeCadastro, ruaCadastro, bairroCadastro"
+                                global="false" event="blur"></p:ajax>
+                    </p:inputMask>
+
+                    <p:outputLabel value="Estado: "/>
+                    <p:selectOneMenu value="#{clienteMB.cliente.endereco.estado}" id="estadoCadastro">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{clienteMB.cliente.endereco.listaEstados}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Cidade: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.cidade}" id="cidadeCadastro"/>
+
+                    <p:outputLabel value="Rua: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.logradouro}" id="ruaCadastro"/>
+
+                    <p:outputLabel value="Bairro: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.bairro}" id="bairroCadastro"/>
+
+                    <p:outputLabel value="Número: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.numero}" id="numeroCadastro"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Cadastrar"
+                                         action="#{clienteMB.inserirCliente()}"
+                                         update=":formCadastroCliente, :formClientes" icon="confirmar"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgCadastrarCliente').hide();" icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgAlterarCliente" header="Alterar Cliente"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formAlterarCliente">
+                <p:panelGrid columns="4" styleClass="semBorda">
+                    <p:outputLabel value="Nome: "/>
+                    <p:inputText value="#{clienteMB.cliente.nome}"
+                                 maxlength="30" size="25" required="true"
+                                 requiredMessage="Insira o nome"/>
+
+                    <p:outputLabel value="Data Nascimento: "/>
+                    <p:calendar pattern="dd/MM/yyyy" mask="true" navigator="true"
+                                yearRange="-111:+39" pages="1" showOn="button" size="15"
+                                value="#{clienteMB.cliente.dataNascimento}"
+                                locale="pt" styleClass="select-agendaEquipe2"/>
+
+                    <p:outputLabel value="CPF: "/>
+                    <p:inputMask mask="999.999.999-99"
+                                 value="#{clienteMB.cliente.cpf}"
+                                 styleClass="form-control select-agendaEquipe2" id="cpf"
+                                 required="false" validator="CPFValidator"
+                                 requiredMessage="CPF do Paciente: Campo obrigatório!"/>
+
+                    <p:outputLabel value="RG: "/>
+                    <p:inputText value="#{clienteMB.cliente.rg}"
+                                 maxlength="30" size="25" required="false"
+                                 requiredMessage="Insira o nome"/>
+
+                    <p:outputLabel value="Telefone 1: "/>
+                    <p:inputText value="#{clienteMB.cliente.telefone1}"
+                                 maxlength="30" size="25" required="false"
+                                 requiredMessage="Insira ao menos 1 telefone"/>
+
+                    <p:outputLabel value="Telefone 2: "/>
+                    <p:inputText value="#{clienteMB.cliente.telefone2}"
+                                 maxlength="30" size="25" required="false"
+                                 requiredMessage="insira o nome"/>
+
+                    <p:outputLabel value="CEP:" />
+                    <p:inputMask mask="99999-999" id="cepAlteracao"
+                                 value="#{clienteMB.cliente.endereco.cep}">
+                        <p:ajax listener="#{clienteMB.buscarEnderecoClientePorCEP()}"
+                                update="estadoAlteracao, cidadeAlteracao, ruaAlteracao, bairroAlteracao"
+                                global="false" event="blur"></p:ajax>
+                    </p:inputMask>
+
+                    <p:outputLabel value="Estado: "/>
+                    <p:selectOneMenu value="#{clienteMB.cliente.endereco.estado}" id="estadoAlteracao">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{clienteMB.cliente.endereco.listaEstados}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Cidade: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.cidade}" id="cidadeAlteracao"/>
+
+                    <p:outputLabel value="Rua: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.logradouro}" id="ruaAlteracao"/>
+
+                    <p:outputLabel value="Bairro: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.bairro}" id="bairroAlteracao"/>
+
+                    <p:outputLabel value="Número: "/>
+                    <p:inputText value="#{clienteMB.cliente.endereco.numero}" id="numeroAlteracao"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Alterar"
+                                         action="#{clienteMB.alterarCliente()}"
+                                         update=":formAlterarCliente, :formClientes" icon="confirmar"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgAlterarCliente').hide();" icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgDeletarCliente" header="Deletar Cliente"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formDeletarCliente">
+                <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:outputLabel value="Deseja realmente deletar esse cliente? "/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Sim"
+                                         action="#{clienteMB.deletarCliente()}"
+                                         update=":formAlterarCliente, :formClientes" icon="confirmar"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgDeletarCliente').hide();" icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgVender" header="Realizar Vendas" height="auto"
+                  width="auto" draggable="true" resizable="false" modal="true"
+                  position="top">
+            <h:form id="formVender">
+                <p:panelGrid columns="2" styleClass="semBorda" id="pnlgridVender">
+                    <p:outputLabel value="Valor: "/>
+                    <p:inputText value="#{vendaMB.venda.valor}" maxlength="30"
+                                 size="15" required="true" requiredMessage="Insira o valor"/>
+
+                    <p:outputLabel value="Data: "/>
+                    <p:calendar value="#{vendaMB.venda.data}" showOn="button"
+                                required="true" requiredMessage="Insira a Data" size="15"/>
+
+                    <p:outputLabel value="Quantidade: "/>
+                    <p:inputText value="#{vendaMB.venda.qtd}" maxlength="30"
+                                 size="15" required="false" requiredMessage="Insira a quantidade"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Vender"
+                                         action="#{vendaMB.inserirVenda()}"
+                                         update=":formCadastroCliente, :formClientes, :formVender:pnlgridVender"
+                                         icon="carrinho"/>
+                        <p:commandButton value="Fechar" oncomplete="PF('dlgVender').hide();"
+                                         icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+                <p:separator/>
+
+                <p:dataTable id="tabVendas" value="#{vendaMB.listaVendas}"
+                             var="var" styleClass="altura10px"
+                             emptyMessage="Nenhuma venda realizada para esse cliente" rows="9"
+                             paginator="true" paginatorPosition="bottom"
+                             rowStyleClass="#{var.situacao == 'ABERTO' ? 'rowRed' : null} ">
+
+                    <p:column headerText="Número" width="8%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.id}"/>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Cliente" width="26%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.cliente.nome}"/>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Data" width="10%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.data}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Valor Venda" width="9%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.valor}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Total Pago" width="9%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.totalPago}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Em Aberto" width="9%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.emAberto}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Situação" width="9%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.situacao}">
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Quantidade" width="8%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.qtd}"/>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Pagar" width="6%">
+                        <div align="center">
+                            <p:commandButton icon="calculadora" process="@this"
+                                             immediate="true"
+                                             action="#{vendaMB.abrirTelaDePagamento()}"
+                                             update=":formPagamentos:tabPagamentos, :formPagamentos:outValorAberto">
+                                <f:setPropertyActionListener value="#{var}"
+                                                             target="#{vendaMB.venda}"/>
+                            </p:commandButton>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Excluir" width="6%">
+                        <div align="center">
+                            <p:commandButton oncomplete="PF('dlgCancelarVenda').show();"
+                                             icon="cancelar" process="@this"
+                                             update=":formPagamentos:tabPagamentos"
+                                             immediate="true">
+                                <f:setPropertyActionListener value="#{var}"
+                                                             target="#{vendaMB.venda}"/>
+                            </p:commandButton>
+                        </div>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgPagamentos" header="Inserir Pagamento"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true" position="top">
+            <h:form id="formPagamentos">
+                <p:growl id="msgPagamentos"/>
+                <p:panelGrid columns="2" styleClass="semBorda" id="pnlgridPagamentos">
+                    <p:outputLabel value="Valor: "/>
+                    <p:inputText value="#{vendaMB.pagamento.valor}"
+                                 maxlength="30" size="15" required="true"
+                                 requiredMessage="Insira o valor"/>
+
+                    <p:outputLabel value="Data: "/>
+                    <p:calendar value="#{vendaMB.pagamento.data}"
+                                showOn="button" required="true" requiredMessage="Insira a Data"
+                                size="15"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <p:outputPanel id="outValorAberto">
+
+                    <div align="center">
+
+                        <h:outputLabel value="VALOR EM ABERTO: "
+                                       style="font-size: 20px;margin-left:20px"/>
+
+                        <p:outputLabel value="#{vendaMB.valorEmAbertoDaVenda}"
+                                       style="font-size: 20px;color:red;margin-left:10px">
+                            <f:convertNumber type="currency" currencySymbol="R$"/>
+                        </p:outputLabel>
+
+                    </div>
+
+                </p:outputPanel>
+
+                <div align="center" class="altura30px">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Pagar"
+                                         action="#{vendaMB.verificarParaInserirPagamento()}"
+                                         update=":formVender:tabVendas, :formPagamentos:tabPagamentos, msgPagamentos,
+                                         :formPagamentos:pnlgridPagamentos, outValorAberto"
+                                         icon="calculadorasifrao"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgPagamentos').hide();" icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+                <p:separator/>
+
+                <p:outputPanel autoUpdate="true">
+                    <p:dataTable id="tabPagamentos" styleClass="altura30px"
+                                 value="#{vendaMB.listaPagamentos}" var="var"
+                                 emptyMessage="Nenhum Pagamento efetuado" rows="10" paginator="true"
+                                 paginatorPosition="bottom">
+                        <p:column headerText="Valor" width="25%">
+                            <div align="center">
+                                <p:outputLabel value="#{var.valor}">
+                                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                                </p:outputLabel>
+                            </div>
+                        </p:column>
+
+                        <p:column headerText="Data Compra" width="25%">
+                            <div align="center">
+                                <p:outputLabel value="#{var.venda.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                            </div>
+                        </p:column>
+
+                        <p:column headerText="Data Pagamento" width="25%">
+                            <div align="center">
+                                <p:outputLabel value="#{var.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                            </div>
+                        </p:column>
+
+                        <p:column headerText="Recibo" width="25%">
+                            <div align="center">
+                                <p:commandButton icon="relatorios" id="btnRecibo" ajax="false" immediate="true"
+                                actionListener="#{reportJasperMB.gerarRecibo(var.id)}">
+                                    <f:setPropertyActionListener value="#{var}"
+                                                                 target="#{vendaMB.pagamento}"/>
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+
+                        <p:column headerText="Excluir" width="25%">
+                            <div align="center">
+                                <p:commandButton oncomplete="PF('dlgCancelarPagamento').show();"
+                                                 icon="cancelar" process="@this" update=":formPagamentos:tabPagamentos"
+                                                 immediate="true">
+                                    <f:setPropertyActionListener value="#{var}"
+                                                                 target="#{vendaMB.pagamento}"/>
+                                </p:commandButton>
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:outputPanel>
+
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog widgetVar="dlgRelatorios" header="Relatórios"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorios">
+                <p:panelGrid columns="4" styleClass="semBorda">
+                    <p:commandButton value="Ranking por Cliente"
+                                     action="#{vendaMB.listarRankingDosClientes()}"
+                                     update=":formRelatorioRanking:tabRelatorioRanking"
+                                     oncomplete="PF('dlgRelatorioRanking').show();"
+                                     icon="ui-icon-star"/>
+
+                    <p:commandButton value="A receber por Pessoa"
+                                     action="#{vendaMB.listarValorAReceberPorPessoa()}"
+                                     update=":formRelatorioReceberPorPessoa:tabRelatorioReceberPorPessoa"
+                                     oncomplete="PF('dlgRelatorioReceberPorPessoa').show();"
+                                     icon="ui-icon-person"/>
+
+                    <p:commandButton value="A receber Geral"
+                                     action="#{vendaMB.calcularRecebidoGeral()}" update=":formRelatorioReceberGeral"
+                                     oncomplete="PF('dlgRelatorioReceberGeral').show();" icon="ui-icon-arrow-4-diag"/>
+
+                    <p:commandButton value="Venda por Período"
+                                     oncomplete="PF('dlgRelatorioVendaPorPeriodo').show();" icon="ui-icon-calendar"/>
+
+                </p:panelGrid>
+
+                <div align="center" class="altura30px">
+                    <p:commandButton value="Fechar"
+                                     oncomplete="PF('dlgRelatorios').hide();" icon="cancelar"/>
+                </div>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioRanking"
+                  header="Ranking de Vendas por Cliente" position="top" height="auto"
+                  width="auto" draggable="true" resizable="false" modal="true">
+            <h:form id="formRelatorioRanking">
+
+                <p:dataTable id="tabRelatorioRanking"
+                             value="#{vendaMB.listaVendasPorCliente}" var="var"
+                             emptyMessage="Nenhuma venda registrada" rows="15" paginator="true"
+                             paginatorPosition="bottom">
+                    <div align="center">
+                        <p:column headerText="Cliente">
+                            <p:outputLabel value="#{var.cliente.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Valor">
+                            <p:outputLabel value="#{var.valor}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </p:column>
+
+                    </div>
+
+                </p:dataTable>
+
+                <p:panelGrid columns="4" styleClass="semBorda">
+
+                    <div align="center">
+                        <h3>Opções para Exportar:</h3>
+
+                        <h:commandLink>
+                            <p:graphicImage title="CSV" value="../imgs/csv.png" width="24"/>
+                            <p:dataExporter type="csv" target="tabRelatorioRanking" fileName="Ranking"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage title="PDF" value="../imgs/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tabRelatorioRanking" fileName="Ranking"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage title="Excel" value="../imgs/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="tabRelatorioRanking" fileName="Ranking"/>
+                        </h:commandLink>
+
+                    </div>
+
+                </p:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioReceberPorPessoa" header="Em Aberto" height="auto"
+                  position="top" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioReceberPorPessoa">
+
+                <p:dataTable id="tabRelatorioReceberPorPessoa"
+                             value="#{vendaMB.listaVendasEmAberto}" var="var"
+                             emptyMessage="Nenhuma venda registrada" rows="15" paginator="true"
+                             paginatorPosition="bottom">
+
+                    <p:column headerText="Cliente" sortBy="#{var.cliente.nome}"
+                              filterBy="#{var.cliente.nome}">
+                        <p:outputLabel value="#{var.cliente.nome}"/>
+                    </p:column>
+
+                    <p:column headerText="Valor" sortBy="#{var.valor}">
+                        <p:outputLabel value="#{var.valor}">
+                            <f:convertNumber type="currency" currencySymbol="R$"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Em Aberto" sortBy="#{var.emAberto}">
+                        <p:outputLabel value="#{var.emAberto}">
+                            <f:convertNumber type="currency" currencySymbol="R$"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                    <p:column headerText="Data Compra" sortBy="#{var.data}">
+                        <p:outputLabel value="#{var.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:panelGrid columns="4" styleClass="semBorda">
+
+                    <div align="center">
+                        <h3>Opções para Exportar:</h3>
+
+                        <h:commandLink>
+                            <p:graphicImage title="CSV" value="../imgs/csv.png" width="24"/>
+                            <p:dataExporter type="csv" target="tabRelatorioReceberPorPessoa"
+                                            fileName="ReceberPorPessoa"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage title="PDF" value="../imgs/pdf.png" width="24"/>
+                            <p:dataExporter type="pdf" target="tabRelatorioReceberPorPessoa"
+                                            fileName="ReceberPorPessoa"/>
+                        </h:commandLink>
+
+                        <h:commandLink>
+                            <p:graphicImage title="Excel" value="../imgs/excel.png" width="24"/>
+                            <p:dataExporter type="xls" target="tabRelatorioReceberPorPessoa"
+                                            fileName="ReceberPorPessoa"/>
+                        </h:commandLink>
+
+                    </div>
+
+                </p:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioVendaPorPeriodo" header="Vendas no Período"
+                  height="140" width="460" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioVendaPorPeriodo">
+                <p:panelGrid columns="3" styleClass="semBorda">
+
+                    <p:calendar id="button"
+                                value="#{vendaMB.busca.periodoinicial}" size="12"
+                                pattern="dd/MM/yyyy" showOn="button"/>
+
+                    <h:outputText value="a" style="margin-left: 5px"/>
+
+                    <p:calendar value="#{vendaMB.busca.periodofinal}"
+                                style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
+                                showOn="button"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Buscar" action="#{vendaMB.totalVendidoPeriodo()}" styleClass="altura10px"
+                                 update=":formRelatorioVendaPorPeriodo" icon="buscar"/>
+
+                <h:outputLabel value="TOTAL VENDIDO NO PERÍODO: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodo}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog widgetVar="dlgRelatorioReceberGeral" header="Total a Receber"
+                  height="140" width="500" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioReceberGeral">
+                <p:panelGrid columns="2" styleClass="semBorda">
+
+                    <h:outputLabel value="TOTAL VENDIDO ATÉ HOJE: "
+                                   style="font-size: 14px;margin-left:20px"/>
+
+                    <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodo}"
+                                   style="font-size: 14px;color:red;margin-left:10px">
+                        <f:convertNumber type="currency" currencySymbol="R$"/>
+                    </h:outputLabel>
+
+                    <h:outputLabel value="TOTAL RECEBIDO ATÉ HOJE: "
+                                   style="font-size: 14px;margin-left:20px"/>
+
+                    <h:outputLabel value="#{vendaMB.valorReceberGeral}"
+                                   style="font-size: 14px;color:red;margin-left:10px">
+                        <f:convertNumber type="currency" currencySymbol="R$"/>
+                    </h:outputLabel>
+
+                    <h:outputLabel value="VALOR TOTAL A RECEBER: "
+                                   style="font-size: 20px;margin-left:20px"/>
+
+                    <h:outputLabel value="#{vendaMB.valorReceberGeralTotal}"
+                                   style="font-size: 20px;color:red;margin-left:10px">
+                        <f:convertNumber type="currency" currencySymbol="R$"/>
+                    </h:outputLabel>
+
+                </p:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgCancelarVenda" header="Cancelar Venda"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formCancelarVenda">
+                <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:outputLabel value="Deseja realmente cancelar essa venda? "/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Sim"
+                                         action="#{vendaMB.cancelarVenda()}"
+                                         update=":formVender:tabVendas, :formClientes" icon="confirmar"/>
+                        <p:commandButton value="Não"
+                                         oncomplete="PF('dlgCancelarVenda').hide();" icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgCancelarPagamento" header="Cancelar Pagamento"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formCancelarPagamento">
+                <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:outputLabel value="Deseja realmente cancelar esse pagamento? "/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Sim"
+                                         action="#{vendaMB.cancelarPagamento()}"
+                                         update=":formVender:tabVendas, :formPagamentos:tabPagamentos, :formPagamentos:msgPagamentos,
+                                         :formPagamentos:pnlgridPagamentos, :formPagamentos:outValorAberto" icon="confirmar"/>
+                        <p:commandButton value="Não"
+                                         oncomplete="PF('dlgCancelarPagamento').hide();" icon="cancelar"/>
+                    </p:panelGrid>
+                </div>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgAlterarUsuario" header="Alterar Usuário"
+                  height="auto" width="auto" resizable="false" modal="true">
+            <h:form id="formAlterarUsuario">
+
+                <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:outputLabel value="Nome:" />
+                    <p:inputText value="#{usuarioMB.usuario.nome}"
+                                 required="true" requiredMessage="Usuário: Campo obrigatório!" />
+
+                    <p:outputLabel value="Login:" />
+                    <p:inputText value="#{usuarioMB.usuario.login}"
+                                 required="true" requiredMessage="Login: Campo obrigatório!" />
+
+                    <p:outputLabel value="Senha Antiga:" />
+                    <p:password value="#{usuarioMB.senhaAtual}"
+                                required="true" requiredMessage="Senha Antiga: Campo obrigatório" />
+
+                    <p:outputLabel value="Senha Nova:" />
+                    <p:password value="#{usuarioMB.usuario.senha}"
+                                required="true" requiredMessage="Senha Nova: Campo obrigatório!" />
+                </p:panelGrid>
+
+                <p:separator styleClass="altura10px"/>
+
+                <div align="center">
+                    <p:commandButton value="Alterar" icon="confirmar"
+                                     action="#{usuarioMB.verificarSePodeAlterarUsuario()}"
+                                     update=":formClientes:msgClientes" />
+
+                    <p:commandButton value="Fechar" icon="cancelar"
+                                     style="margin-left:10px" oncomplete="PF('dlgAlterarUsuario').hide();" />
+                </div>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
+

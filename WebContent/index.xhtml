@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+	<title>Sempre Bella</title>
+	<div align="center">
+		<p:outputLabel value="Sempre Bella" styleClass="nomePrincipal" />
+	</div>
+
+	<link href="css/style.css" type="text/css" rel="stylesheet" />
+
+</h:head>
+
+<h:body>
+
+	<h:form id="form">
+
+		<p:growl id="growl" showDetail="true" />
+
+		<div align="center">
+
+			<p:graphicImage styleClass="imagemPrincipal"
+				value="imgs/semprebella.JPG"  />
+
+			<p:panel header="Acesse o sistema:" style="width:300px;">
+
+				<p:panelGrid columns="2" styleClass="semBorda">
+					<p:outputLabel value="Usuário:" />
+					<p:inputText value="#{usuarioMB.usuario.login}"
+						required="true" requiredMessage="Informe o usuário." />
+					<p:outputLabel value="Senha:" />
+					<p:password value="#{usuarioMB.usuario.senha}"
+						required="true" requiredMessage="Informe a senha." />
+				</p:panelGrid>
+
+				<p:separator />
+				<p:commandButton value="Entrar" icon="confirmar"
+                                 action="#{usuarioMB.login()}" update="growl" />
+			</p:panel>
+
+		</div>
+	</h:form>
+
+	<h:form id="formBtnCadastro" styleClass="altura50px" >
+
+		<div align="center">
+			<h3>Não é cadastrado? Clique abaixo!</h3>
+			<p:commandButton value="Cadastrar" icon="pessoa"
+				oncomplete="PF('dlgCadastroUsuario').show();" />
+		</div>
+
+	</h:form>
+
+	<p:dialog widgetVar="dlgCadastroUsuario" header="Cadastro de Usuário"
+		height="auto" width="auto" resizable="false" modal="true">
+		<h:form id="formCadastro">
+
+			<p:panelGrid columns="2" styleClass="semBorda">
+				<p:outputLabel value="Nome:" />
+				<p:inputText value="#{usuarioMB.usuario.nome}"
+					required="true" requiredMessage="Informe o usuário." />
+
+				<p:outputLabel value="Login:" />
+				<p:inputText value="#{usuarioMB.usuario.login}"
+					required="true" requiredMessage="Informe o usuário." />
+
+				<p:outputLabel value="Senha:" />
+				<p:password value="#{usuarioMB.usuario.senha}"
+					required="true" requiredMessage="Informe a senha." />
+			</p:panelGrid>
+
+			<p:separator styleClass="altura10px"/>
+
+			<div align="center">
+				<p:commandButton value="Cadastrar" icon="confirmar"
+					action="#{usuarioMB.inserirUsuario()}"
+					update=":form:growl, :formCadastro" />
+
+				<p:commandButton value="Fechar" icon="cancelar"
+					style="margin-left:10px" oncomplete="PF('dlgCadastroUsuario').hide();" />
+			</div>
+
+		</h:form>
+
+	</p:dialog>
+
+</h:body>
+</html>
+
