@@ -76,6 +76,32 @@ public class ClienteDAO {
 		return listaClientes;
 	}
 
+	public List<Cliente> buscarClientePorId(int idCliente) {
+
+		conexao = ConnectionFactory.getConnection();
+
+		List<Cliente> listaClientes = new ArrayList<>();
+
+		try {
+			PreparedStatement ps = conexao.prepareStatement(SELECT_BUSCAR_CLIENTE_POR_ID);
+			ps.setInt(1, idCliente);
+			ps.setInt(2, usuarioSessao.getId());
+			ResultSet rs = ps.executeQuery();
+
+			listaClientes = mapearResultSetIniciarListaClientes(rs);
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			try {
+				conexao.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		return listaClientes;
+	}
+
 	private ArrayList<Cliente> mapearResultSetIniciarListaClientes(ResultSet rs) {
 
 		ArrayList<Cliente> listaClientes = new ArrayList<>();
@@ -183,6 +209,14 @@ public class ClienteDAO {
 			else {
 				ps.setInt(14, cliente.getEndereco().getCodIBGE());
 			}
+
+			ResultSet rs = ps.executeQuery();
+			Integer idCliente = null;
+			if (rs.next()) {
+				idCliente = rs.getInt("id");
+			}
+
+			SessaoUtil.adicionarNaSessao(idCliente, "clienteCriado");
 
 			ps.execute();
 

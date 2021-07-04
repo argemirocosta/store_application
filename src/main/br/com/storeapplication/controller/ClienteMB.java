@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import br.com.storeapplication.service.ClienteService;
 import br.com.storeapplication.util.CEPUtil;
 import br.com.storeapplication.util.JSFUtil;
+import br.com.storeapplication.util.SessaoUtil;
 
 import static br.com.storeapplication.shared.Dialogs.*;
 import static br.com.storeapplication.shared.Mensagens.*;
@@ -43,11 +44,16 @@ public class ClienteMB {
         listaClientes = clienteService.buscarClientePorNome(campoBusca);
     }
 
+    public void buscarClientePorId() {
+        Integer idCliente = (Integer) SessaoUtil.resgatarDaSessao("clienteCriado");
+        listaClientes = clienteService.buscarClientePorId(idCliente);
+    }
+
     public void inserirCliente() {
         try {
             clienteService.inserirCliente(cliente);
             limparCampos();
-            listarClientes();
+            buscarClientePorId();
             JSFUtil.fecharDialog(DIALOG_CADASTRAR_CLIENTE);
             JSFUtil.adicionarMensagemSucesso(CLIENTE_CADASTRADO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {

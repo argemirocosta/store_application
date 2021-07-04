@@ -18,6 +18,10 @@ public class ClienteService {
         return clienteDAO.buscarClientePorNome(campoBusca);
     }
 
+    public List<Cliente> buscarClientePorId(int idCliente) {
+        return clienteDAO.buscarClientePorId(idCliente);
+    }
+
     public void inserirCliente(Cliente cliente) throws ProjetoException {
         clienteDAO.inserirCliente(cliente);
     }
