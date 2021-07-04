@@ -44,48 +44,6 @@
 		</div>
 	</h:form>
 
-	<h:form id="formBtnCadastro" styleClass="altura50px" >
-
-		<div align="center">
-			<h3>Não é cadastrado? Clique abaixo!</h3>
-			<p:commandButton value="Cadastrar" icon="pessoa"
-				oncomplete="PF('dlgCadastroUsuario').show();" />
-		</div>
-
-	</h:form>
-
-	<p:dialog widgetVar="dlgCadastroUsuario" header="Cadastro de Usuário"
-		height="auto" width="auto" resizable="false" modal="true">
-		<h:form id="formCadastro">
-
-			<p:panelGrid columns="2" styleClass="semBorda">
-				<p:outputLabel value="Nome:" />
-				<p:inputText value="#{usuarioMB.usuario.nome}"
-					required="true" requiredMessage="Informe o usuário." />
-
-				<p:outputLabel value="Login:" />
-				<p:inputText value="#{usuarioMB.usuario.login}"
-					required="true" requiredMessage="Informe o usuário." />
-
-				<p:outputLabel value="Senha:" />
-				<p:password value="#{usuarioMB.usuario.senha}"
-					required="true" requiredMessage="Informe a senha." />
-			</p:panelGrid>
-
-			<p:separator styleClass="altura10px"/>
-
-			<div align="center">
-				<p:commandButton value="Cadastrar" icon="confirmar"
-					action="#{usuarioMB.inserirUsuario()}"
-					update=":form:growl, :formCadastro" />
-
-				<p:commandButton value="Fechar" icon="cancelar"
-					style="margin-left:10px" oncomplete="PF('dlgCadastroUsuario').hide();" />
-			</div>
-
-		</h:form>
-
-	</p:dialog>
 
 </h:body>
 </html>
