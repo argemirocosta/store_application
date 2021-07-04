@@ -7,7 +7,6 @@
 
     <ui:define name="content">
 
-
         <f:metadata>
             <f:viewAction
                     action="#{clienteMB.listarClientes()}"/>
@@ -423,6 +422,9 @@
                     <p:commandButton value="Venda por Período"
                                      oncomplete="PF('dlgRelatorioVendaPorPeriodo').show();" icon="ui-icon-calendar"/>
 
+                    <p:commandButton value="Cálculo de Estoque"
+                                     oncomplete="PF('dlgRelatorioCalculoEstoque').show();" icon="ui-icon-suitcase"/>
+
                 </p:panelGrid>
 
                 <div align="center" class="altura30px">
@@ -509,6 +511,25 @@
                                style="font-size: 14px;margin-left:20px"/>
 
                 <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodo}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioCalculoEstoque" header="Cálculo Estoque"
+                  height="140" width="460" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioCalculoEstoque">
+
+                <p:commandButton value="Calcular" action="#{vendaMB.calcularEstoque()}" styleClass="altura10px"
+                                 update=":formRelatorioCalculoEstoque" icon="buscar"/>
+
+                <h:outputLabel value="Valor estoque: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.valorEstoque}"
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>

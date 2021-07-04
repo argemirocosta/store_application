@@ -28,6 +28,7 @@ public class VendaMB {
     private List<Venda> listaVendasPorCliente;
     private BuscaRelatorio busca;
     private Double totalVendidoNoPeriodo;
+    private Double valorEstoque;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
     private List<FormaPagamento> listaFormasPagamento;
@@ -40,6 +41,7 @@ public class VendaMB {
         busca.setPeriodoinicial(DataUtil.retornarDataAtual());
         busca.setPeriodofinal(DataUtil.retornarDataAtual());
         totalVendidoNoPeriodo = 0.0;
+        valorEstoque = 0.0;
         vendaService = new VendaService();
         formaPagamentoService = new FormaPagamentoService();
         listaFormasPagamento = new ArrayList<>();
@@ -63,6 +65,10 @@ public class VendaMB {
 
     public void totalVendidoPeriodo() {
         totalVendidoNoPeriodo = vendaService.consultarVendasPorPeriodo(busca);
+    }
+
+    public void calcularEstoque() {
+        valorEstoque = vendaService.calcularEstoque();
     }
 
     public void listarRankingDosClientes() {
@@ -144,4 +150,13 @@ public class VendaMB {
     public void setListaFormasPagamento(List<FormaPagamento> listaFormasPagamento) {
         this.listaFormasPagamento = listaFormasPagamento;
     }
+
+    public Double getValorEstoque() {
+        return valorEstoque;
+    }
+
+    public void setValorEstoque(Double valorEstoque) {
+        this.valorEstoque = valorEstoque;
+    }
+
 }

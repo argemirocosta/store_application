@@ -193,6 +193,35 @@ public class VendaDAO {
         return valor;
     }
 
+    public Double calcularEstoque() {
+
+        conexao = ConnectionFactory.getConnection();
+
+        double valor = 0.0;
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CALCULAR_ESTOQUE);
+            ps.setInt(1, usuarioSessao.getId());
+            ps.setInt(2, usuarioSessao.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                valor = rs.getDouble("valor_estoque");
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return valor;
+    }
+
     public void cancelarVenda(Integer idVenda) {
         try {
             realizarCancelamento(idVenda, ALTERAR_CANCELAR_VENDA);

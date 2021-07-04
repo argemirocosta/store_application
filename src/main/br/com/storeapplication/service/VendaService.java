@@ -26,6 +26,10 @@ public class VendaService {
         return vendaDAO.calcularVendasTotal();
     }
 
+    public Double calcularEstoque() {
+        return vendaDAO.calcularEstoque();
+    }
+
     public List<Venda> listarRankingDosClientes() {
         return vendaDAO.listarVendasPorCliente();
     }
