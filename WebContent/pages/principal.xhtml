@@ -101,9 +101,9 @@
                                                          target="#{clienteMB.cliente}"/>
                         </p:commandButton>
 
-                        <p:commandButton oncomplete="PF('dlgVender').show();" icon="sifrao"
-                                         action="#{vendaMB.listarVendas()}"
-                                         update=":formVender:tabVendas">
+                        <p:commandButton icon="sifrao"
+                                         action="#{vendaMB.abrirDialogVender()}"
+                                         update=":formVender">
                             <f:setPropertyActionListener value="#{var}"
                                                          target="#{vendaMB.venda.cliente}"/>
                         </p:commandButton>
@@ -319,7 +319,15 @@
 
                     <p:outputLabel value="Quantidade: "/>
                     <p:inputText value="#{vendaMB.venda.qtd}" maxlength="30"
-                                 size="15" required="false" requiredMessage="Insira a quantidade"/>
+                                 size="15" required="true" requiredMessage="Insira a quantidade"/>
+
+                    <p:outputLabel value="Forma de Pagamento: "/>
+                    <p:selectOneMenu value="#{vendaMB.venda.formaPagamento.id}"
+                                     id="formapagamento" required="true" requiredMessage="Escolha a forma de pagamento">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItems value="#{vendaMB.listaFormasPagamento}" var="formas"
+                        itemLabel="#{formas.descricao}" itemValue="#{formas.id}"/>
+                    </p:selectOneMenu>
 
                 </p:panelGrid>
 

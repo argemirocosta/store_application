@@ -14,10 +14,12 @@ public class Venda implements Serializable {
 	private Double totalPago;
 	private Double emAberto;
 	private String situacao;
+	private FormaPagamento formaPagamento;
 
 	public Venda() {
 		cliente = new Cliente();
 		data = new Date();
+		formaPagamento = new FormaPagamento();
 	}
 
 	public Integer getId() {
@@ -84,24 +86,25 @@ public class Venda implements Serializable {
 		this.situacao = situacao;
 	}
 
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Venda venda = (Venda) o;
-		return Objects.equals(id, venda.id) &&
-				Objects.equals(valor, venda.valor) &&
-				Objects.equals(data, venda.data) &&
-				Objects.equals(qtd, venda.qtd) &&
-				Objects.equals(cliente, venda.cliente) &&
-				Objects.equals(totalPago, venda.totalPago) &&
-				Objects.equals(emAberto, venda.emAberto) &&
-				Objects.equals(situacao, venda.situacao);
+		return Objects.equals(id, venda.id) && Objects.equals(valor, venda.valor) && Objects.equals(data, venda.data) && Objects.equals(qtd, venda.qtd) && Objects.equals(cliente, venda.cliente) && Objects.equals(totalPago, venda.totalPago) && Objects.equals(emAberto, venda.emAberto) && Objects.equals(situacao, venda.situacao) && Objects.equals(formaPagamento, venda.formaPagamento);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, valor, data, qtd, cliente, totalPago, emAberto, situacao);
+		return Objects.hash(id, valor, data, qtd, cliente, totalPago, emAberto, situacao, formaPagamento);
 	}
 
 	@Override
@@ -115,6 +118,7 @@ public class Venda implements Serializable {
 				", totalPago=" + totalPago +
 				", emAberto=" + emAberto +
 				", situacao='" + situacao + '\'' +
+				", formaPagamento=" + formaPagamento +
 				'}';
 	}
 }

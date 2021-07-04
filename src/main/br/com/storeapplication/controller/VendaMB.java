@@ -2,6 +2,7 @@ package br.com.storeapplication.controller;
 
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
+import br.com.storeapplication.model.FormaPagamento;
 import br.com.storeapplication.model.Pagamento;
 import br.com.storeapplication.model.Venda;
 
@@ -14,6 +15,7 @@ import javax.faces.bean.ViewScoped;
 import static br.com.storeapplication.shared.Dialogs.*;
 import static br.com.storeapplication.shared.Mensagens.*;
 
+import br.com.storeapplication.service.FormaPagamentoService;
 import br.com.storeapplication.service.VendaService;
 import br.com.storeapplication.util.DataUtil;
 import br.com.storeapplication.util.JSFUtil;
@@ -34,6 +36,8 @@ public class VendaMB {
     private Double valorReceberGeralTotal;
     private Double valorEmAbertoDaVenda;
     private VendaService vendaService;
+    private FormaPagamentoService formaPagamentoService;
+    private List<FormaPagamento> listaFormasPagamento;
 
     public VendaMB() {
         venda = new Venda();
@@ -47,6 +51,8 @@ public class VendaMB {
         listaVendasEmAberto = new ArrayList<>();
         valorEmAbertoDaVenda = 0.0;
         vendaService = new VendaService();
+        formaPagamentoService = new FormaPagamentoService();
+        listaFormasPagamento = new ArrayList<>();
     }
 
     private void limparCampos() {
@@ -124,8 +130,18 @@ public class VendaMB {
         listaPagamentos = vendaService.listarPagamentos(venda.getId());
     }
 
+    private void listarFormasPagamento() {
+        listaFormasPagamento = formaPagamentoService.listarFormasPagamento();
+    }
+
     public void listarValorAReceberPorPessoa() {
         listaVendasEmAberto = vendaService.listarValorAReceberPorPessoa();
+    }
+
+    public void abrirDialogVender(){
+        listarVendas();
+        listarFormasPagamento();
+        JSFUtil.abrirDialog("dlgVender");
     }
 
     public void listarVendas() {
@@ -272,5 +288,13 @@ public class VendaMB {
 
     public void setValorEmAbertoDaVenda(Double valorEmAbertoDaVenda) {
         this.valorEmAbertoDaVenda = valorEmAbertoDaVenda;
+    }
+
+    public List<FormaPagamento> getListaFormasPagamento() {
+        return listaFormasPagamento;
+    }
+
+    public void setListaFormasPagamento(List<FormaPagamento> listaFormasPagamento) {
+        this.listaFormasPagamento = listaFormasPagamento;
     }
 }
