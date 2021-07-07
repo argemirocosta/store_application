@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.storeapplication</groupId>
 	<artifactId>store_application</artifactId>
-	<version>1.1-202006132113</version>
+	<version>1.0-202107072047</version>
 	<packaging>war</packaging>
 	<name>StoreApplication</name>
 	<description>Sistema para lojas</description>
