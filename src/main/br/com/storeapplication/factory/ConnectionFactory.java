@@ -23,7 +23,7 @@ public class ConnectionFactory {
 			Conexoes conexoes = ConexaoBuilder.carregarDadosConexao();
 			conexao = DriverManager.getConnection(conexoes.getUrlBanco(), conexoes.getUsuario(), conexoes.getSenha());
 			conexao.setAutoCommit(false);
-		} catch (SQLException | URISyntaxException ex) {
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
 		return conexao;
