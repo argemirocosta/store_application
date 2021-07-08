@@ -6,6 +6,7 @@ public class Propriedades {
 
     public enum Conexoes {
         LOCALHOST,
+        DEPLOY,
         PRODUCAO;
     }
 

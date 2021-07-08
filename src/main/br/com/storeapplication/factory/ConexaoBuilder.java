@@ -1,11 +1,9 @@
 package br.com.storeapplication.factory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class ConexaoBuilder {
 
-    public static Conexoes carregarDadosConexao() throws URISyntaxException {
+    public static Conexoes carregarDadosConexao() {
 
         Propriedades propriedades = new Propriedades();
 
@@ -15,11 +13,15 @@ public class ConexaoBuilder {
             conexoes.setUsuario("postgres");
             conexoes.setSenha("post");
         }
+        else if(propriedades.Conexao.equals(Propriedades.Conexoes.DEPLOY)){
+            conexoes.setUrlBanco("jdbc:postgresql://10.100.33.197:5432/store_application");
+            conexoes.setUsuario("webadmin");
+            conexoes.setSenha("MKOpat83336");
+        }
         else if(propriedades.Conexao.equals(Propriedades.Conexoes.PRODUCAO)){
-            URI dbUri = new URI(System.getenv("DATABASE_URL"));
-            conexoes.setUrlBanco("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require");
-            conexoes.setUsuario(dbUri.getUserInfo().split(":")[0]);
-            conexoes.setSenha(dbUri.getUserInfo().split(":")[1]);
+            conexoes.setUrlBanco("jdbc:postgresql://node73163-env-7907985.jelastic.saveincloud.net:11965/store_application");
+            conexoes.setUsuario("webadmin");
+            conexoes.setSenha("MKOpat83336");
         }
 
         return conexoes;
