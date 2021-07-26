@@ -316,11 +316,6 @@
                   modal="true">
             <h:form id="formRelatorios">
                 <p:panelGrid columns="4" styleClass="semBorda">
-                    <p:commandButton value="Ranking por Cliente"
-                                     action="#{vendaMB.listarRankingDosClientes()}"
-                                     update=":formRelatorioRanking:tabRelatorioRanking"
-                                     oncomplete="PF('dlgRelatorioRanking').show();"
-                                     icon="ui-icon-star"/>
 
                     <p:commandButton value="Venda no Período"
                                      oncomplete="PF('dlgRelatorioVendaNoPeriodo').show();" icon="ui-icon-calendar"/>
@@ -337,57 +332,6 @@
                     <p:commandButton value="Fechar"
                                      oncomplete="PF('dlgRelatorios').hide();" icon="cancelar"/>
                 </div>
-
-            </h:form>
-        </p:dialog>
-
-        <p:dialog widgetVar="dlgRelatorioRanking"
-                  header="Ranking de Vendas por Cliente" position="top" height="auto"
-                  width="auto" draggable="true" resizable="false" modal="true">
-            <h:form id="formRelatorioRanking">
-
-                <p:dataTable id="tabRelatorioRanking"
-                             value="#{vendaMB.listaVendasPorCliente}" var="var"
-                             emptyMessage="Nenhuma venda registrada" rows="15" paginator="true"
-                             paginatorPosition="bottom">
-                    <div align="center">
-                        <p:column headerText="Cliente">
-                            <p:outputLabel value="#{var.cliente.nome}"/>
-                        </p:column>
-
-                        <p:column headerText="Valor">
-                            <p:outputLabel value="#{var.valor}">
-                                <f:convertNumber type="currency" currencySymbol="R$"/>
-                            </p:outputLabel>
-                        </p:column>
-
-                    </div>
-
-                </p:dataTable>
-
-                <p:panelGrid columns="4" styleClass="semBorda">
-
-                    <div align="center">
-                        <h3>Opções para Exportar:</h3>
-
-                        <h:commandLink>
-                            <p:graphicImage title="CSV" value="../imgs/csv.png" width="24"/>
-                            <p:dataExporter type="csv" target="tabRelatorioRanking" fileName="Ranking"/>
-                        </h:commandLink>
-
-                        <h:commandLink>
-                            <p:graphicImage title="PDF" value="../imgs/pdf.png" width="24"/>
-                            <p:dataExporter type="pdf" target="tabRelatorioRanking" fileName="Ranking"/>
-                        </h:commandLink>
-
-                        <h:commandLink>
-                            <p:graphicImage title="Excel" value="../imgs/excel.png" width="24"/>
-                            <p:dataExporter type="xls" target="tabRelatorioRanking" fileName="Ranking"/>
-                        </h:commandLink>
-
-                    </div>
-
-                </p:panelGrid>
 
             </h:form>
         </p:dialog>

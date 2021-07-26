@@ -71,10 +71,6 @@ public class VendaMB {
         valorEstoque = vendaService.calcularEstoque();
     }
 
-    public void listarRankingDosClientes() {
-        listaVendasPorCliente = vendaService.listarRankingDosClientes();
-    }
-
     private void listarFormasPagamento() {
         listaFormasPagamento = formaPagamentoService.listarFormasPagamento();
     }

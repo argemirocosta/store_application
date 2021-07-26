@@ -16,13 +16,6 @@ public class VendaDAOQueries {
             "WHERE v.id_cliente = ? AND v.cancelada IS NOT TRUE " +
             "ORDER BY v.data DESC, v.id DESC";
 
-    public static final String SELECT_LISTAR_VENDAS_POR_CLIENTE = "SELECT v.id_cliente, c.nome, sum(v.valor) AS total "
-            + "FROM vendas.venda v "
-            + "LEFT JOIN vendas.clientes c ON (v.id_cliente = c.id) "
-            + "WHERE v.usuario = ? AND v.cancelada IS NOT TRUE "
-            + "GROUP BY v.id_cliente, c.nome "
-            + "ORDER BY total DESC";
-
     public static final String SELECT_CONSULTAR_VENDAS_POR_PERIODO = "SELECT sum(valor) AS soma FROM vendas.venda WHERE DATA BETWEEN ? AND ? AND usuario = ? "
             + "AND cancelada IS NOT TRUE";
 
