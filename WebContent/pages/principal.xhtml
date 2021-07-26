@@ -322,8 +322,11 @@
                                      oncomplete="PF('dlgRelatorioRanking').show();"
                                      icon="ui-icon-star"/>
 
-                    <p:commandButton value="Venda por Período"
-                                     oncomplete="PF('dlgRelatorioVendaPorPeriodo').show();" icon="ui-icon-calendar"/>
+                    <p:commandButton value="Venda no Período"
+                                     oncomplete="PF('dlgRelatorioVendaNoPeriodo').show();" icon="ui-icon-calendar"/>
+
+                    <p:commandButton value="Venda por Dia"
+                                     oncomplete="PF('dlgRelatorioVendaPorDia').show();" icon="ui-icon-calendar"/>
 
                     <p:commandButton value="Cálculo de Estoque"
                                      oncomplete="PF('dlgRelatorioCalculoEstoque').show();" icon="ui-icon-suitcase"/>
@@ -389,7 +392,7 @@
             </h:form>
         </p:dialog>
 
-        <p:dialog widgetVar="dlgRelatorioVendaPorPeriodo" header="Vendas no Período"
+        <p:dialog widgetVar="dlgRelatorioVendaNoPeriodo" header="Vendas no Período"
                   height="140" width="460" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioVendaPorPeriodo">
@@ -417,6 +420,33 @@
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioVendaPorDia" header="Vendas por Dia"
+                  height="140" width="560" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioVendaPorDia">
+                <p:panelGrid columns="4" styleClass="semBorda">
+
+                    <p:calendar id="buttonPorDia"
+                                value="#{vendaMB.busca.periodoinicial}" size="12"
+                                pattern="dd/MM/yyyy" showOn="button"/>
+
+                    <h:outputText value="a" style="margin-left: 5px"/>
+
+                    <p:calendar value="#{vendaMB.busca.periodofinal}"
+                                style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
+                                showOn="button"/>
+
+                    <p:commandButton value="Gerar relatório" icon="relatorios"
+                                     id="btnVendaPorDia" ajax="false"
+                                     actionListener="#{reportJasperMB.gerarReportVendaPorDia(
+                                 vendaMB.busca.periodoinicial, vendaMB.busca.periodofinal)}">
+                    </p:commandButton>
+
+                </p:panelGrid>
 
             </h:form>
         </p:dialog>
