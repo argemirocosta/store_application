@@ -215,8 +215,9 @@
                     <p:inputText value="#{vendaMB.venda.valor}" maxlength="30"
                                  size="15" required="true" requiredMessage="Insira o valor"/>
 
-                    <p:outputLabel value="Data: " rendered="false"/>
-                    <p:calendar value="#{vendaMB.venda.data}" showOn="button" rendered="false"
+                    <p:outputLabel value="Data: " />
+                    <p:calendar value="#{vendaMB.venda.data}" showOn="button"
+                                pattern="dd/MM/yyyy" locale="pt"
                                 required="true" requiredMessage="Insira a Data" size="15"/>
 
                     <p:outputLabel value="Quantidade: "/>
