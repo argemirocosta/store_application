@@ -323,6 +323,9 @@
                     <p:commandButton value="Venda por Dia"
                                      oncomplete="PF('dlgRelatorioVendaPorDia').show();" icon="ui-icon-calendar"/>
 
+                    <p:commandButton value="Venda por Forma de Pagamento"
+                                     oncomplete="PF('dlgRelatorioVendaPorFormaDePagamento').show();" icon="ui-icon-cart"/>
+
                     <p:commandButton value="Cálculo de Estoque"
                                      oncomplete="PF('dlgRelatorioCalculoEstoque').show();" icon="ui-icon-suitcase"/>
 
@@ -387,6 +390,33 @@
                     <p:commandButton value="Gerar relatório" icon="relatorios"
                                      id="btnVendaPorDia" ajax="false"
                                      actionListener="#{reportJasperMB.gerarReportVendaPorDia(
+                                 vendaMB.busca.periodoinicial, vendaMB.busca.periodofinal)}">
+                    </p:commandButton>
+
+                </p:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioVendaPorFormaDePagamento" header="Vendas por Forma de Pagamento"
+                  height="140" width="560" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioVendaPorFormaDePagamento">
+                <p:panelGrid columns="4" styleClass="semBorda">
+
+                    <p:calendar id="buttonPorFormaDePagamento"
+                                value="#{vendaMB.busca.periodoinicial}" size="12"
+                                pattern="dd/MM/yyyy" showOn="button"/>
+
+                    <h:outputText value="a" style="margin-left: 5px"/>
+
+                    <p:calendar value="#{vendaMB.busca.periodofinal}"
+                                style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
+                                showOn="button"/>
+
+                    <p:commandButton value="Gerar relatório" icon="relatorios"
+                                     id="btnVendaPorFormaDePagamento" ajax="false"
+                                     actionListener="#{reportJasperMB.gerarReportVendaPorFormaDePagamento(
                                  vendaMB.busca.periodoinicial, vendaMB.busca.periodofinal)}">
                     </p:commandButton>
 

@@ -28,4 +28,15 @@ public class ReportJasperMB {
         RelatorioUtil.executeReport(relatorio, map, "Vendas por dia.pdf");
     }
 
+    public void gerarReportVendaPorFormaDePagamento(Date dataInicio, Date dataFinal) throws IOException {
+        String caminho = "/WEB-INF/relatorios/";
+        String relatorio = caminho + "vendas_por_forma_de_pagamento.jasper";
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("datainicio", new java.sql.Date(dataInicio.getTime()));
+        map.put("datafim", new java.sql.Date(dataFinal.getTime()));
+        map.put("REPORT_LOCALE", new Locale("pt", "BR"));
+        RelatorioUtil.executeReport(relatorio, map, "Vendas por forma de pagamento.pdf");
+    }
+
 }

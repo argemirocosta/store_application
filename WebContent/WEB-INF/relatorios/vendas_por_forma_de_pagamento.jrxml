@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vendas_por_forma_de_pagamento" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="969e9a54-e1c4-4905-9a27-7119883c9978">
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="625"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="361"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Store Applicatio - prod"/>
+	<parameter name="datainicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="datafim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT fp.descricao, sum(valor) AS total
+FROM vendas.venda v 
+INNER JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id)
+WHERE v."data" >=  $P{datainicio}  AND v."data" <=  $P{datafim} 
+AND v.cancelada IS NOT TRUE
+GROUP BY fp.descricao 
+ORDER BY fp.descricao]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="forma_pagamento"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<variable name="SOMA_TOTAL" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="309" y="68" width="76" height="20" uuid="423ef899-30af-4e31-97a8-10d14a4f1529"/>
+				<textElement>
+					<font fontName="Arial" size="10" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{datainicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="414" y="68" width="100" height="20" uuid="45b50d52-8a18-4837-b74c-bb950dc285fc"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{datafim}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="230" y="68" width="79" height="20" uuid="89337aad-afb5-44fb-afa2-1481db411b66"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[De:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="68" width="29" height="20" uuid="78976ab9-6f91-4d96-ade1-5e85637251b8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="11" width="752" height="20" uuid="f50efb6a-d5cc-4743-82be-d5681d699465"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENDAS POR FORMA DE PAGAMENTO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="210" y="1" width="178" height="24" uuid="bd3ba12e-b957-4233-8a82-cfe8d38f958e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Forma de Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="1" width="70" height="24" uuid="bd3ba12e-b957-4233-8a82-cfe8d38f958e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="25" width="750" height="1" uuid="72ae5a46-0c3a-4a02-a233-e067042fb55b"/>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="750" height="1" uuid="90ab054e-12b5-4601-90dd-19bbc4489555"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField pattern="R$ #,##0.00">
+				<reportElement x="452" y="0" width="128" height="20" uuid="cd2faa28-65b1-4043-829d-14326e3813ae"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="210" y="0" width="178" height="20" uuid="8be409aa-c73f-4f39-a1d8-efa2ffd74ce6"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="¤#,##0.00;¤-#,##0.00">
+				<reportElement x="450" y="9" width="200" height="30" uuid="f5900c70-068c-467a-8053-41fe901ae9d3"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SOMA_TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="11" width="63" height="24" uuid="7e7d18e9-07a5-4046-a1f6-89b6e0d1f1bc"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
