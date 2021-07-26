@@ -103,37 +103,6 @@ public class VendaDAO {
         return listaVendas;
     }
 
-    public List<Venda> listarVendasPorCliente() {
-
-        conexao = ConnectionFactory.getConnection();
-
-        List<Venda> listaVendasPorCliente = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_LISTAR_VENDAS_POR_CLIENTE);
-            ps.setInt(1, usuarioSessao.getId());
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Venda venda = new Venda();
-                venda.getCliente().setNome(rs.getString("nome"));
-                venda.setValor(rs.getDouble("total"));
-
-                listaVendasPorCliente.add(venda);
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return listaVendasPorCliente;
-    }
-
     public Double consultarVendasPorPeriodo(BuscaRelatorio busca) {
 
         conexao = ConnectionFactory.getConnection();

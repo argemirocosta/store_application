@@ -30,10 +30,6 @@ public class VendaService {
         return vendaDAO.calcularEstoque();
     }
 
-    public List<Venda> listarRankingDosClientes() {
-        return vendaDAO.listarVendasPorCliente();
-    }
-
     public List<Venda> listarVendas(Venda venda) {
         return vendaDAO.listarVendas(venda);
     }
