@@ -346,7 +346,7 @@
             <h:form id="formRelatorioVendaPorPeriodo">
                 <p:panelGrid columns="3" styleClass="semBorda">
 
-                    <p:calendar id="button"
+                    <p:calendar id="button" locale="pt"
                                 value="#{vendaMB.busca.periodoinicial}" size="12"
                                 pattern="dd/MM/yyyy" showOn="button"/>
 
@@ -354,7 +354,7 @@
 
                     <p:calendar value="#{vendaMB.busca.periodofinal}"
                                 style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
-                                showOn="button"/>
+                                showOn="button" locale="pt"/>
 
                 </p:panelGrid>
 
@@ -378,7 +378,7 @@
             <h:form id="formRelatorioVendaPorDia">
                 <p:panelGrid columns="4" styleClass="semBorda">
 
-                    <p:calendar id="buttonPorDia"
+                    <p:calendar id="buttonPorDia" locale="pt"
                                 value="#{vendaMB.busca.periodoinicial}" size="12"
                                 pattern="dd/MM/yyyy" showOn="button"/>
 
@@ -386,7 +386,7 @@
 
                     <p:calendar value="#{vendaMB.busca.periodofinal}"
                                 style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
-                                showOn="button"/>
+                                showOn="button" locale="pt"/>
 
                     <p:commandButton value="Gerar relatório" icon="relatorios"
                                      id="btnVendaPorDia" ajax="false"
@@ -405,7 +405,7 @@
             <h:form id="formRelatorioVendaPorFormaDePagamento">
                 <p:panelGrid columns="4" styleClass="semBorda">
 
-                    <p:calendar id="buttonPorFormaDePagamento"
+                    <p:calendar id="buttonPorFormaDePagamento" locale="pt"
                                 value="#{vendaMB.busca.periodoinicial}" size="12"
                                 pattern="dd/MM/yyyy" showOn="button"/>
 
@@ -413,7 +413,7 @@
 
                     <p:calendar value="#{vendaMB.busca.periodofinal}"
                                 style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
-                                showOn="button"/>
+                                showOn="button" locale="pt"/>
 
                     <p:commandButton value="Gerar relatório" icon="relatorios"
                                      id="btnVendaPorFormaDePagamento" ajax="false"
