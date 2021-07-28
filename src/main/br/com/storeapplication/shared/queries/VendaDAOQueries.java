@@ -23,8 +23,17 @@ public class VendaDAOQueries {
 
     public static final String ALTERAR_CANCELAR_VENDA = "UPDATE vendas.venda SET cancelada = TRUE, data_hora_cancelamento = CURRENT_TIMESTAMP WHERE id=?";
 
-    public static final String SELECT_CALCULAR_ESTOQUE = "SELECT sum(valor) - " +
-            "((SELECT sum(valor) FROM vendas.venda v WHERE usuario = ? AND cancelada IS NOT TRUE) / 2) " +
+    public static final String SELECT_CALCULAR_ESTOQUE = "SELECT sum(valor) " +
+            "- " +
+            "((SELECT sum(valor) " +
+            "FROM vendas.venda v " +
+            "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id) " +
+            "WHERE usuario = ? AND cancelada IS NOT TRUE AND fp.credito IS NOT TRUE) / 2) " +
+            "- " +
+            "((SELECT sum(valor)/100*90  " +
+            "FROM vendas.venda v " +
+            "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id) " +
+            "WHERE usuario = ? AND cancelada IS NOT TRUE AND fp.credito IS TRUE) / 2) " +
             "AS valor_estoque " +
             "FROM vendas.estoque e " +
             "WHERE usuario = ?";
