@@ -172,6 +172,7 @@ public class VendaDAO {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CALCULAR_ESTOQUE);
             ps.setInt(1, usuarioSessao.getId());
             ps.setInt(2, usuarioSessao.getId());
+            ps.setInt(3, usuarioSessao.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
