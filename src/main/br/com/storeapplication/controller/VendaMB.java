@@ -28,6 +28,7 @@ public class VendaMB {
     private List<Venda> listaVendasPorCliente;
     private BuscaRelatorio busca;
     private Double totalVendidoNoPeriodo;
+    private Double mediaDiaria;
     private Double valorEstoque;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
@@ -41,6 +42,7 @@ public class VendaMB {
         busca.setPeriodoinicial(DataUtil.retornarDataAtual());
         busca.setPeriodofinal(DataUtil.retornarDataAtual());
         totalVendidoNoPeriodo = 0.0;
+        mediaDiaria = 0.0;
         valorEstoque = 0.0;
         vendaService = new VendaService();
         formaPagamentoService = new FormaPagamentoService();
@@ -65,6 +67,10 @@ public class VendaMB {
 
     public void totalVendidoPeriodo() {
         totalVendidoNoPeriodo = vendaService.consultarVendasPorPeriodo(busca);
+    }
+
+    public void calcularMediaDiaria() {
+        mediaDiaria = vendaService.consultarMediaDiaria(busca);
     }
 
     public void calcularEstoque() {
@@ -137,6 +143,14 @@ public class VendaMB {
 
     public void setTotalVendidoNoPeriodo(Double totalVendidoNoPeriodo) {
         this.totalVendidoNoPeriodo = totalVendidoNoPeriodo;
+    }
+
+    public Double getMediaDiaria() {
+        return mediaDiaria;
+    }
+
+    public void setMediaDiaria(Double mediaDiaria) {
+        this.mediaDiaria = mediaDiaria;
     }
 
     public List<FormaPagamento> getListaFormasPagamento() {

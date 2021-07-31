@@ -38,4 +38,15 @@ public class VendaDAOQueries {
             "FROM vendas.estoque e " +
             "WHERE usuario = ?";
 
+    public static final String SELECT_CONSULTAR_MEDIA_DIARIA = "SELECT sum(dias.total)/count(dias.datas) AS media_diaria " +
+            "FROM ( " +
+            "SELECT v.\"data\" AS datas, sum(valor) AS total " +
+            "FROM vendas.venda v " +
+            "WHERE v.\"data\" >= ? AND v.\"data\" <= ? " +
+            "AND v.cancelada IS NOT TRUE " +
+            "AND v.usuario = ? " +
+            "GROUP BY v.\"data\" " +
+            "ORDER BY \"data\" " +
+            ") dias";
+
 }
