@@ -25,7 +25,6 @@ public class VendaMB {
 
     private Venda venda;
     private List<Venda> listaVendas;
-    private List<Venda> listaVendasPorCliente;
     private BuscaRelatorio busca;
     private Double totalVendidoNoPeriodo;
     private Double mediaDiaria;
@@ -37,7 +36,6 @@ public class VendaMB {
     public VendaMB() {
         venda = new Venda();
         listaVendas = new ArrayList<>();
-        listaVendasPorCliente = new ArrayList<>();
         busca = new BuscaRelatorio();
         busca.setPeriodoinicial(DataUtil.retornarDataAtual());
         busca.setPeriodofinal(DataUtil.retornarDataAtual());
@@ -119,14 +117,6 @@ public class VendaMB {
 
     public void setListaVendas(List<Venda> listaVendas) {
         this.listaVendas = listaVendas;
-    }
-
-    public List<Venda> getListaVendasPorCliente() {
-        return listaVendasPorCliente;
-    }
-
-    public void setListaVendasPorCliente(List<Venda> listaVendasPorCliente) {
-        this.listaVendasPorCliente = listaVendasPorCliente;
     }
 
     public BuscaRelatorio getBusca() {

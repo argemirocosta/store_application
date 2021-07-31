@@ -19,8 +19,6 @@ public class VendaDAOQueries {
     public static final String SELECT_CONSULTAR_VENDAS_POR_PERIODO = "SELECT sum(valor) AS soma FROM vendas.venda WHERE DATA BETWEEN ? AND ? AND usuario = ? "
             + "AND cancelada IS NOT TRUE";
 
-    public static final String SELECT_CALCULAR_VENDAS_TOTAL = "SELECT sum(valor) AS soma FROM vendas.venda WHERE usuario = ? AND cancelada IS NOT TRUE";
-
     public static final String ALTERAR_CANCELAR_VENDA = "UPDATE vendas.venda SET cancelada = TRUE, data_hora_cancelamento = CURRENT_TIMESTAMP WHERE id=?";
 
     public static final String SELECT_CALCULAR_ESTOQUE = "SELECT sum(valor) " +

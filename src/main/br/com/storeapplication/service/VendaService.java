@@ -26,10 +26,6 @@ public class VendaService {
         return vendaDAO.consultarMediaDiaria(busca);
     }
 
-    public Double calcularVendasTotal() {
-        return vendaDAO.calcularVendasTotal();
-    }
-
     public Double calcularEstoque() {
         return vendaDAO.calcularEstoque();
     }
