@@ -14,28 +14,33 @@ import java.util.Map;
 @ManagedBean
 public class ReportJasperMB {
 
+    Map<String, Object> map;
+
     public ReportJasperMB() {
+    }
+
+    public void prepararHashMapReport(){
+        map = new HashMap<>();
+        map.put("REPORT_LOCALE", new Locale("pt", "BR"));
     }
 
     public void gerarReportVendaPorDia(Date dataInicio, Date dataFinal) throws IOException {
         String caminho = "/WEB-INF/relatorios/";
         String relatorio = caminho + "vendas_por_dia.jasper";
-        Map<String, Object> map = new HashMap<>();
 
+        prepararHashMapReport();
         map.put("datainicio", new java.sql.Date(dataInicio.getTime()));
         map.put("datafim", new java.sql.Date(dataFinal.getTime()));
-        map.put("REPORT_LOCALE", new Locale("pt", "BR"));
         RelatorioUtil.executeReport(relatorio, map, "Vendas por dia.pdf");
     }
 
     public void gerarReportVendaPorFormaDePagamento(Date dataInicio, Date dataFinal) throws IOException {
         String caminho = "/WEB-INF/relatorios/";
         String relatorio = caminho + "vendas_por_forma_de_pagamento.jasper";
-        Map<String, Object> map = new HashMap<>();
 
+        prepararHashMapReport();
         map.put("datainicio", new java.sql.Date(dataInicio.getTime()));
         map.put("datafim", new java.sql.Date(dataFinal.getTime()));
-        map.put("REPORT_LOCALE", new Locale("pt", "BR"));
         RelatorioUtil.executeReport(relatorio, map, "Vendas por forma de pagamento.pdf");
     }
 
