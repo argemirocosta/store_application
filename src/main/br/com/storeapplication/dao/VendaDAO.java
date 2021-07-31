@@ -165,34 +165,6 @@ public class VendaDAO {
         return valor;
     }
 
-    public Double calcularVendasTotal() {
-
-        conexao = ConnectionFactory.getConnection();
-
-        double valor = 0.0;
-
-        try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_CALCULAR_VENDAS_TOTAL);
-            ps.setInt(1, usuarioSessao.getId());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-
-                valor = rs.getDouble("soma");
-
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                conexao.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return valor;
-    }
-
     public Double calcularEstoque() {
 
         conexao = ConnectionFactory.getConnection();
