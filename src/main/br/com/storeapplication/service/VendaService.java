@@ -22,6 +22,10 @@ public class VendaService {
         return vendaDAO.consultarVendasPorPeriodo(busca);
     }
 
+    public Double consultarMediaDiaria(BuscaRelatorio busca) {
+        return vendaDAO.consultarMediaDiaria(busca);
+    }
+
     public Double calcularVendasTotal() {
         return vendaDAO.calcularVendasTotal();
     }
