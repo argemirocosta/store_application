@@ -29,6 +29,7 @@ public class VendaMB {
     private Double totalVendidoNoPeriodo;
     private Double mediaDiaria;
     private Double valorEstoque;
+    private Double valorMercadoriaParaRepor;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
     private List<FormaPagamento> listaFormasPagamento;
@@ -42,6 +43,7 @@ public class VendaMB {
         totalVendidoNoPeriodo = 0.0;
         mediaDiaria = 0.0;
         valorEstoque = 0.0;
+        valorMercadoriaParaRepor = 0.0;
         vendaService = new VendaService();
         formaPagamentoService = new FormaPagamentoService();
         listaFormasPagamento = new ArrayList<>();
@@ -73,6 +75,10 @@ public class VendaMB {
 
     public void calcularEstoque() {
         valorEstoque = vendaService.calcularEstoque();
+    }
+
+    public void calcularValorMercadoriaParaRepor() {
+        valorMercadoriaParaRepor = vendaService.consultarValorMercadoriaParaRepor(busca);
     }
 
     private void listarFormasPagamento() {
@@ -159,4 +165,11 @@ public class VendaMB {
         this.valorEstoque = valorEstoque;
     }
 
+    public Double getValorMercadoriaParaRepor() {
+        return valorMercadoriaParaRepor;
+    }
+
+    public void setValorMercadoriaParaRepor(Double valorMercadoriaParaRepor) {
+        this.valorMercadoriaParaRepor = valorMercadoriaParaRepor;
+    }
 }

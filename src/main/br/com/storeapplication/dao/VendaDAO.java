@@ -226,4 +226,39 @@ public class VendaDAO {
         }
     }
 
+    public Double consultarValorMercadoriaParaRepor(BuscaRelatorio busca) {
+
+        conexao = ConnectionFactory.getConnection();
+
+        double valor = 0.0;
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VALOR_A_REPOR_MERCADORIA);
+            ps.setInt(1, usuarioSessao.getId());
+            ps.setDate(2,
+                    new java.sql.Date(busca.getPeriodoinicial().getTime()));
+            ps.setDate(3, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));
+            ps.setInt(4, usuarioSessao.getId());
+            ps.setDate(5,
+                    new java.sql.Date(busca.getPeriodoinicial().getTime()));
+            ps.setDate(6, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                valor = rs.getDouble("repor_mercadoria");
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return valor;
+    }
+
 }

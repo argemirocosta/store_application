@@ -47,4 +47,18 @@ public class VendaDAOQueries {
             "ORDER BY \"data\" " +
             ") dias";
 
+    public static final String SELECT_CONSULTAR_VALOR_A_REPOR_MERCADORIA = "SELECT " +
+            "((SELECT sum(valor) " +
+            "FROM vendas.venda v " +
+            "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id) " +
+            "WHERE usuario = ? AND v.\"data\" >= ? AND v.\"data\" <= ? " +
+            "AND cancelada IS NOT TRUE AND fp.credito IS NOT TRUE) / 2) " +
+            "+ " +
+            "((SELECT sum(valor)/100*90  " +
+            "FROM vendas.venda v " +
+            "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id) " +
+            "WHERE usuario = ? AND v.\"data\" >= ? AND v.\"data\" <= ? " +
+            "AND cancelada IS NOT TRUE AND fp.credito IS TRUE) / 2) " +
+            "AS repor_mercadoria ";
+
 }
