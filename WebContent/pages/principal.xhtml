@@ -316,7 +316,7 @@
                   height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorios">
-                <p:panelGrid columns="5" styleClass="semBorda">
+                <p:panelGrid columns="3" styleClass="semBorda">
 
                     <p:commandButton value="Venda no Período"
                                      oncomplete="PF('dlgRelatorioVendaNoPeriodo').show();" icon="ui-icon-calendar"/>
@@ -324,11 +324,14 @@
                     <p:commandButton value="Venda por Dia"
                                      oncomplete="PF('dlgRelatorioVendaPorDia').show();" icon="ui-icon-calendar"/>
 
-                    <p:commandButton value="Venda por Forma de Pagamento"
+                    <p:commandButton value="Venda por Forma Pag."
                                      oncomplete="PF('dlgRelatorioVendaPorFormaDePagamento').show();" icon="ui-icon-cart"/>
 
                     <p:commandButton value="Média diária"
                                      oncomplete="PF('dlgRelatorioMediaDiaria').show();" icon="ui-icon-calculator"/>
+
+                    <p:commandButton value="Valor à repor"
+                                     oncomplete="PF('dlgRelatorioValorReport').show();" icon="ui-icon-suitcase"/>
 
                     <p:commandButton value="Cálculo de Estoque"
                                      oncomplete="PF('dlgRelatorioCalculoEstoque').show();" icon="ui-icon-suitcase"/>
@@ -368,6 +371,38 @@
                                style="font-size: 14px;margin-left:20px"/>
 
                 <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodo}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioValorReport" header="Valor à repor de mercadoria"
+                  height="140" width="460" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioValorReport">
+                <p:panelGrid columns="3" styleClass="semBorda">
+
+                    <p:calendar locale="pt"
+                                value="#{vendaMB.busca.periodoinicial}" size="12"
+                                pattern="dd/MM/yyyy" showOn="button"/>
+
+                    <h:outputText value="a" style="margin-left: 5px"/>
+
+                    <p:calendar value="#{vendaMB.busca.periodofinal}"
+                                style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
+                                showOn="button" locale="pt"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Buscar" action="#{vendaMB.calcularValorMercadoriaParaRepor()}" styleClass="altura10px"
+                                 update=":formRelatorioValorReport" icon="buscar"/>
+
+                <h:outputLabel value="TOTAL VENDIDO NO PERÍODO: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.valorMercadoriaParaRepor}"
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>

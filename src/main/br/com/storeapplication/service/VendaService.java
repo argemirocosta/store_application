@@ -37,4 +37,8 @@ public class VendaService {
     public void cancelarVenda(Integer codVenda) {
         vendaDAO.cancelarVenda(codVenda);
     }
+
+    public Double consultarValorMercadoriaParaRepor(BuscaRelatorio busca) {
+        return vendaDAO.consultarValorMercadoriaParaRepor(busca);
+    }
 }
