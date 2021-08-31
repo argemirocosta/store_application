@@ -24,7 +24,7 @@ public class ReportJasperMB {
         map.put("REPORT_LOCALE", new Locale("pt", "BR"));
     }
 
-    public void gerarReportVendaPorDia(Date dataInicio, Date dataFinal) throws IOException {
+    public void gerarReportVendaPorDiaArquivoDownload(Date dataInicio, Date dataFinal) throws IOException {
         String caminho = "/WEB-INF/relatorios/";
         String relatorio = caminho + "vendas_por_dia.jasper";
 
@@ -34,7 +34,27 @@ public class ReportJasperMB {
         RelatorioUtil.executeReport(relatorio, map, "Vendas por dia.pdf");
     }
 
-    public void gerarReportVendaPorFormaDePagamento(Date dataInicio, Date dataFinal) throws IOException {
+    public void gerarReportVendaPorDia(Date dataInicio, Date dataFinal) {
+        String caminho = "/WEB-INF/relatorios/";
+        String relatorio = caminho + "vendas_por_dia.jasper";
+
+        prepararHashMapReport();
+        map.put("datainicio", new java.sql.Date(dataInicio.getTime()));
+        map.put("datafim", new java.sql.Date(dataFinal.getTime()));
+        RelatorioUtil.executeReportNewTab(relatorio, map, "Vendas por dia.pdf");
+    }
+
+    public void gerarReportVendaPorFormaDePagamento(Date dataInicio, Date dataFinal) {
+        String caminho = "/WEB-INF/relatorios/";
+        String relatorio = caminho + "vendas_por_forma_de_pagamento.jasper";
+
+        prepararHashMapReport();
+        map.put("datainicio", new java.sql.Date(dataInicio.getTime()));
+        map.put("datafim", new java.sql.Date(dataFinal.getTime()));
+        RelatorioUtil.executeReportNewTab(relatorio, map, "Vendas por forma de pagamento.pdf");
+    }
+
+    public void gerarReportVendaPorFormaDePagamentoArquivoDownload(Date dataInicio, Date dataFinal) throws IOException {
         String caminho = "/WEB-INF/relatorios/";
         String relatorio = caminho + "vendas_por_forma_de_pagamento.jasper";
 

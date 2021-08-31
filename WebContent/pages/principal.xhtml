@@ -459,7 +459,7 @@
                                 showOn="button" locale="pt"/>
 
                     <p:commandButton value="Gerar relatório" icon="relatorios"
-                                     id="btnVendaPorDia" ajax="false"
+                                     id="btnVendaPorDia" ajax="false" onclick="this.form.target='_blank'"
                                      actionListener="#{reportJasperMB.gerarReportVendaPorDia(
                                  vendaMB.busca.periodoinicial, vendaMB.busca.periodofinal)}">
                     </p:commandButton>
@@ -486,7 +486,7 @@
                                 showOn="button" locale="pt"/>
 
                     <p:commandButton value="Gerar relatório" icon="relatorios"
-                                     id="btnVendaPorFormaDePagamento" ajax="false"
+                                     id="btnVendaPorFormaDePagamento" ajax="false" onclick="this.form.target='_blank'"
                                      actionListener="#{reportJasperMB.gerarReportVendaPorFormaDePagamento(
                                  vendaMB.busca.periodoinicial, vendaMB.busca.periodofinal)}">
                     </p:commandButton>

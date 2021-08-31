@@ -1,7 +1,8 @@
 package br.com.storeapplication.util;
 
 import br.com.storeapplication.factory.ConnectionFactory;
-import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class RelatorioUtil implements Serializable {
@@ -45,6 +47,47 @@ public class RelatorioUtil implements Serializable {
         getFacesContext().responseComplete();
         servletOutputStream.flush();
         servletOutputStream.close();
+    }
+
+    public static void executeReportNewTab(String relatorio, Map map, String filename) {
+
+        Connection connection = null;
+        ServletOutputStream outputStream = null;
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        InputStream relatorioStream = context.getExternalContext().getResourceAsStream(relatorio);
+
+        try {
+            connection = ConnectionFactory.getConnection();
+            JasperPrint print = JasperFillManager.fillReport(relatorioStream, map, connection);
+
+            JRExporter exportador = new JRPdfExporter();
+            exportador.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
+            exportador.setParameter(JRExporterParameter.JASPER_PRINT, print);
+
+            response.setContentType("application/pdf");
+            response.setHeader("Content-disposition", "inline; filename=arquivo.pdf");
+            ServletOutputStream servletOutputStream = response.getOutputStream();
+
+            exportador.exportReport();
+            servletOutputStream.flush();
+            servletOutputStream.close();
+            context.renderResponse();
+            context.responseComplete();
+        } catch (JRException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private static FacesContext getFacesContext() {
