@@ -50,7 +50,7 @@ public class VendaMB {
     }
 
     private void limparCampos() {
-        venda.setQtd(null);
+        venda.setQtd(1);
         venda.setValor(null);
     }
 

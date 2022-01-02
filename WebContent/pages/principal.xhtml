@@ -221,8 +221,8 @@
                                 required="true" requiredMessage="Insira a Data" size="15"/>
 
                     <p:outputLabel value="Quantidade: "/>
-                    <p:inputText value="#{vendaMB.venda.qtd}" maxlength="30"
-                                 size="15" required="true" requiredMessage="Insira a quantidade"/>
+                    <p:spinner value="#{vendaMB.venda.qtd}" size="5"
+                                 required="true" requiredMessage="Insira a quantidade"/>
 
                     <p:outputLabel value="Forma de Pagamento: "/>
                     <p:selectOneMenu value="#{vendaMB.venda.formaPagamento.id}"
