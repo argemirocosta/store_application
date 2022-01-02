@@ -20,6 +20,7 @@ public class Venda implements Serializable {
 		cliente = new Cliente();
 		data = new Date();
 		formaPagamento = new FormaPagamento();
+		qtd = 1;
 	}
 
 	public Integer getId() {
