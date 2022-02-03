@@ -5,11 +5,12 @@ public class VendaDAOQueries {
     private VendaDAOQueries() {
     }
 
-    public static final String INSERIR_VENDA = "INSERT INTO vendas.venda (id_cliente, valor, qtd, data, usuario, id_forma_pagamento) " +
-            "VALUES (?,?,?,?,?,?)";
+    public static final String INSERIR_VENDA = "INSERT INTO vendas.venda (id_cliente, valor, qtd, data, usuario, " +
+            "id_forma_pagamento, desconto, percentual_desconto) " +
+            "VALUES (?,?,?,?,?,?,?,?)";
 
     public static final String SELECT_LISTAR_VENDAS = "SELECT v.id, v.id_cliente, c.nome, v.data, " +
-            "v.valor, v.qtd, v.id_forma_pagamento, fp.descricao " +
+            "v.valor, v.qtd, v.id_forma_pagamento, fp.descricao, desconto, percentual_desconto " +
             "FROM vendas.venda v " +
             "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id)" +
             "LEFT JOIN vendas.clientes c ON (v.id_cliente = c.id) " +

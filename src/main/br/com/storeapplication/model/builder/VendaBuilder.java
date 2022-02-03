@@ -48,6 +48,16 @@ public class VendaBuilder implements Builder {
         return this;
     }
 
+    public VendaBuilder comDesconto(Boolean desconto) {
+        venda.setDesconto(desconto);
+        return this;
+    }
+
+    public VendaBuilder comPercentualDesconto(Double percentualDesconto) {
+        venda.setPercentualDesconto(percentualDesconto);
+        return this;
+    }
+
     public Venda construir() {
         return this.venda;
     }
@@ -60,6 +70,8 @@ public class VendaBuilder implements Builder {
                 .comQtd(rs.getInt("qtd"))
                 .comCliente(new ClienteBuilder().mapear(rs))
                 .comFormaPagamento(new FormaPagamentoBuilder().mapear(rs))
+                .comDesconto(rs.getBoolean("desconto"))
+                .comPercentualDesconto(rs.getDouble("percentual_desconto"))
                 .construir();
     }
 }

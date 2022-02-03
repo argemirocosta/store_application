@@ -15,12 +15,16 @@ public class Venda implements Serializable {
 	private Double emAberto;
 	private String situacao;
 	private FormaPagamento formaPagamento;
+	private Boolean desconto;
+	private Double percentualDesconto;
 
 	public Venda() {
 		cliente = new Cliente();
 		data = new Date();
 		formaPagamento = new FormaPagamento();
 		qtd = 1;
+		desconto = false;
+		percentualDesconto = 0.0;
 	}
 
 	public Integer getId() {
@@ -95,17 +99,33 @@ public class Venda implements Serializable {
 		this.formaPagamento = formaPagamento;
 	}
 
+	public Boolean getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Boolean desconto) {
+		this.desconto = desconto;
+	}
+
+	public Double getPercentualDesconto() {
+		return percentualDesconto;
+	}
+
+	public void setPercentualDesconto(Double percentualDesconto) {
+		this.percentualDesconto = percentualDesconto;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Venda venda = (Venda) o;
-		return Objects.equals(id, venda.id) && Objects.equals(valor, venda.valor) && Objects.equals(data, venda.data) && Objects.equals(qtd, venda.qtd) && Objects.equals(cliente, venda.cliente) && Objects.equals(totalPago, venda.totalPago) && Objects.equals(emAberto, venda.emAberto) && Objects.equals(situacao, venda.situacao) && Objects.equals(formaPagamento, venda.formaPagamento);
+		return Objects.equals(id, venda.id) && Objects.equals(valor, venda.valor) && Objects.equals(data, venda.data) && Objects.equals(qtd, venda.qtd) && Objects.equals(cliente, venda.cliente) && Objects.equals(totalPago, venda.totalPago) && Objects.equals(emAberto, venda.emAberto) && Objects.equals(situacao, venda.situacao) && Objects.equals(formaPagamento, venda.formaPagamento) && Objects.equals(desconto, venda.desconto) && Objects.equals(percentualDesconto, venda.percentualDesconto);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, valor, data, qtd, cliente, totalPago, emAberto, situacao, formaPagamento);
+		return Objects.hash(id, valor, data, qtd, cliente, totalPago, emAberto, situacao, formaPagamento, desconto, percentualDesconto);
 	}
 
 	@Override
@@ -120,6 +140,8 @@ public class Venda implements Serializable {
 				", emAberto=" + emAberto +
 				", situacao='" + situacao + '\'' +
 				", formaPagamento=" + formaPagamento +
+				", desconto=" + desconto +
+				", percentualDesconto=" + percentualDesconto +
 				'}';
 	}
 }
