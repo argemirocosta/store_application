@@ -78,6 +78,8 @@ CREATE TABLE vendas.venda (
                               cancelada bool NULL,
                               data_hora_cancelamento timestamp NULL,
                               id_forma_pagamento int4 NULL,
+                              desconto bool NULL,
+                              percentual_desconto float8 NULL,
                               CONSTRAINT venda_pkey PRIMARY KEY (id),
                               CONSTRAINT venda_fk FOREIGN KEY (id_forma_pagamento) REFERENCES vendas.forma_pagamento(id),
                               CONSTRAINT venda_id_cliente_fkey FOREIGN KEY (id_cliente) REFERENCES vendas.clientes(id),
