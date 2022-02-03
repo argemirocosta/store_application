@@ -215,14 +215,14 @@
                     <p:inputText value="#{vendaMB.venda.valor}" maxlength="30"
                                  size="15" required="true" requiredMessage="Insira o valor"/>
 
-                    <p:outputLabel value="Data: " />
+                    <p:outputLabel value="Data: "/>
                     <p:calendar value="#{vendaMB.venda.data}" showOn="button"
                                 pattern="dd/MM/yyyy" locale="pt"
                                 required="true" requiredMessage="Insira a Data" size="15"/>
 
                     <p:outputLabel value="Quantidade: "/>
                     <p:spinner value="#{vendaMB.venda.qtd}" size="5"
-                                 required="true" requiredMessage="Insira a quantidade"/>
+                               required="true" requiredMessage="Insira a quantidade"/>
 
                     <p:outputLabel value="Forma de Pagamento: "/>
                     <p:selectOneMenu value="#{vendaMB.venda.formaPagamento.id}"
@@ -231,6 +231,17 @@
                         <f:selectItems value="#{vendaMB.listaFormasPagamento}" var="formas"
                                        itemLabel="#{formas.descricao}" itemValue="#{formas.id}"/>
                     </p:selectOneMenu>
+
+                    <p:selectBooleanCheckbox value="#{vendaMB.venda.desconto}" itemLabel="Desconto">
+                        <p:ajax update="percentualDesconto" />
+                    </p:selectBooleanCheckbox>
+
+                    <p:outputPanel id="percentualDesconto">
+                        <p:outputLabel value="Percentual desconto:" rendered="#{vendaMB.venda.desconto}"/>
+                        <p:inputText value="#{vendaMB.venda.percentualDesconto}" maxlength="30"
+                                     rendered="#{vendaMB.venda.desconto}" size="15"
+                                     required="#{vendaMB.venda.desconto}" requiredMessage="Insira o percentual do desconto"/>
+                    </p:outputPanel>
 
                 </p:panelGrid>
 
@@ -325,7 +336,8 @@
                                      oncomplete="PF('dlgRelatorioVendaPorDia').show();" icon="ui-icon-calendar"/>
 
                     <p:commandButton value="Venda por Forma Pag."
-                                     oncomplete="PF('dlgRelatorioVendaPorFormaDePagamento').show();" icon="ui-icon-cart"/>
+                                     oncomplete="PF('dlgRelatorioVendaPorFormaDePagamento').show();"
+                                     icon="ui-icon-cart"/>
 
                     <p:commandButton value="Média diária"
                                      oncomplete="PF('dlgRelatorioMediaDiaria').show();" icon="ui-icon-calculator"/>
@@ -396,7 +408,8 @@
 
                 </p:panelGrid>
 
-                <p:commandButton value="Buscar" action="#{vendaMB.calcularValorMercadoriaParaRepor()}" styleClass="altura10px"
+                <p:commandButton value="Buscar" action="#{vendaMB.calcularValorMercadoriaParaRepor()}"
+                                 styleClass="altura10px"
                                  update=":formRelatorioValorReport" icon="buscar"/>
 
                 <h:outputLabel value="TOTAL VENDIDO NO PERÍODO: "

@@ -39,6 +39,8 @@ public class VendaDAO {
             ps.setDate(4, DataUtil.converterDateUtilParaDateSql(venda.getData()));
             ps.setInt(5, usuarioSessao.getId());
             ps.setInt(6, venda.getFormaPagamento().getId());
+            ps.setBoolean(7, venda.getDesconto());
+            ps.setDouble(8, venda.getPercentualDesconto());
 
             ps.execute();
 
@@ -92,6 +94,8 @@ public class VendaDAO {
                         .comData(rs.getDate("data"))
                         .comValor(rs.getDouble("valor"))
                         .comQtd(rs.getInt("qtd"))
+                        .comDesconto(rs.getBoolean("desconto"))
+                        .comPercentualDesconto(rs.getDouble("percentual_desconto"))
                         .comCliente(new ClienteBuilder().comId(rs.getInt("id_cliente")).comNome(rs.getString("nome")).construir())
                         .comFormaPagamento(new FormaPagamentoBuilder().comId(rs.getInt("id_forma_pagamento")).comDescricao(rs.getString("descricao")).construir())
                         .construir());

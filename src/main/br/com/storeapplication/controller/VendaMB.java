@@ -52,6 +52,8 @@ public class VendaMB {
     private void limparCampos() {
         venda.setQtd(1);
         venda.setValor(null);
+        venda.setDesconto(false);
+        venda.setPercentualDesconto(0.0);
     }
 
     public void inserirVenda() {
