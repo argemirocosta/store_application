@@ -1,5 +1,6 @@
 package br.com.storeapplication.dao;
 
+import br.com.storeapplication.dto.VendasComDescontoDTO;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.factory.ConnectionFactory;
 import br.com.storeapplication.model.BuscaRelatorio;
@@ -107,14 +108,14 @@ public class VendaDAO {
         return listaVendas;
     }
 
-    public Double consultarVendasPorPeriodo(BuscaRelatorio busca) {
+    public Double consultarVendasPorPeriodoSemDesconto(BuscaRelatorio busca) {
 
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
 
         try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VENDAS_POR_PERIODO);
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VENDAS_POR_PERIODO_SEM_DESCONTO);
             ps.setDate(1,
                     new java.sql.Date(busca.getPeriodoinicial().getTime()));
             ps.setDate(2, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));
@@ -136,6 +137,38 @@ public class VendaDAO {
             }
         }
         return valor;
+    }
+
+    public ArrayList<VendasComDescontoDTO> consultarVendasPorPeriodoComDesconto(BuscaRelatorio busca) {
+
+        conexao = ConnectionFactory.getConnection();
+
+        ArrayList<VendasComDescontoDTO> listaVendas = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VENDAS_POR_PERIODO_COM_DESCONTO);
+            ps.setDate(1,
+                    new java.sql.Date(busca.getPeriodoinicial().getTime()));
+            ps.setDate(2, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));
+            ps.setInt(3, usuarioSessao.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                VendasComDescontoDTO vendasComDescontoDTO = new VendasComDescontoDTO();
+                vendasComDescontoDTO.setSoma(rs.getDouble("soma"));
+                vendasComDescontoDTO.setPercentualDesconto(rs.getDouble("percentual_desconto"));
+                listaVendas.add(vendasComDescontoDTO);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaVendas;
     }
 
     public Double consultarMediaDiaria(BuscaRelatorio busca) {
