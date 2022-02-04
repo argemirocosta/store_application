@@ -17,8 +17,13 @@ public class VendaDAOQueries {
             "WHERE v.id_cliente = ? AND v.cancelada IS NOT TRUE " +
             "ORDER BY v.data DESC, v.id DESC";
 
-    public static final String SELECT_CONSULTAR_VENDAS_POR_PERIODO = "SELECT sum(valor) AS soma FROM vendas.venda WHERE DATA BETWEEN ? AND ? AND usuario = ? "
-            + "AND cancelada IS NOT TRUE";
+    public static final String SELECT_CONSULTAR_VENDAS_POR_PERIODO_SEM_DESCONTO =
+            "SELECT sum(valor) AS soma FROM vendas.venda WHERE DATA BETWEEN ? AND ? AND usuario = ? "
+            + "AND cancelada IS NOT TRUE AND desconto IS NOT TRUE";
+
+    public static final String SELECT_CONSULTAR_VENDAS_POR_PERIODO_COM_DESCONTO =
+            "SELECT sum(valor) AS soma, percentual_desconto FROM vendas.venda WHERE DATA BETWEEN ? AND ? AND usuario = ? "
+                    + "AND cancelada IS NOT TRUE AND desconto IS TRUE GROUP BY percentual_desconto";
 
     public static final String ALTERAR_CANCELAR_VENDA = "UPDATE vendas.venda SET cancelada = TRUE, data_hora_cancelamento = CURRENT_TIMESTAMP WHERE id=?";
 

@@ -233,14 +233,15 @@
                     </p:selectOneMenu>
 
                     <p:selectBooleanCheckbox value="#{vendaMB.venda.desconto}" itemLabel="Desconto">
-                        <p:ajax update="percentualDesconto" />
+                        <p:ajax update="percentualDesconto"/>
                     </p:selectBooleanCheckbox>
 
                     <p:outputPanel id="percentualDesconto">
                         <p:outputLabel value="Percentual desconto:" rendered="#{vendaMB.venda.desconto}"/>
                         <p:inputText value="#{vendaMB.venda.percentualDesconto}" maxlength="30"
                                      rendered="#{vendaMB.venda.desconto}" size="15"
-                                     required="#{vendaMB.venda.desconto}" requiredMessage="Insira o percentual do desconto"/>
+                                     required="#{vendaMB.venda.desconto}"
+                                     requiredMessage="Insira o percentual do desconto"/>
                     </p:outputPanel>
 
                 </p:panelGrid>
@@ -359,10 +360,10 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioVendaNoPeriodo" header="Vendas no Período"
-                  height="140" width="460" draggable="true" resizable="false"
+                  height="250" width="600" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioVendaPorPeriodo">
-                <p:panelGrid columns="3" styleClass="semBorda">
+                <p:panelGrid columns="4" styleClass="semBorda">
 
                     <p:calendar id="button" locale="pt"
                                 value="#{vendaMB.busca.periodoinicial}" size="12"
@@ -374,18 +375,40 @@
                                 style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
                                 showOn="button" locale="pt"/>
 
+                    <p:commandButton value="Buscar" action="#{vendaMB.carregarVendasNoPeriodo()}"
+                                     styleClass="altura10px"
+                                     update=":formRelatorioVendaPorPeriodo,tabVendasComDesconto" icon="buscar"/>
+
                 </p:panelGrid>
 
-                <p:commandButton value="Buscar" action="#{vendaMB.totalVendidoPeriodo()}" styleClass="altura10px"
-                                 update=":formRelatorioVendaPorPeriodo" icon="buscar"/>
+                <br></br>
 
-                <h:outputLabel value="TOTAL VENDIDO NO PERÍODO: "
+                <h:outputLabel value="TOTAL VENDIDO NO PERÍODO SEM DESCONTO: "
                                style="font-size: 14px;margin-left:20px"/>
 
-                <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodo}"
+                <h:outputLabel value="#{vendaMB.totalVendidoNoPeriodoSemDesconto}"
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
+
+                <p:dataTable id="tabVendasComDesconto" value="#{vendaMB.listaVendasComDesconto}"
+                             var="var" emptyMessage="Nenhuma venda com desconto nesse período" rows="20"
+                             paginator="true" paginatorPosition="bottom">
+                    <p:column headerText="Soma" width="50%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.soma}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Percentual de desconto" width="50%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.percentualDesconto}"/>
+                        </div>
+                    </p:column>
+
+                </p:dataTable>
 
             </h:form>
         </p:dialog>

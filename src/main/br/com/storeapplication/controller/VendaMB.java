@@ -1,5 +1,6 @@
 package br.com.storeapplication.controller;
 
+import br.com.storeapplication.dto.VendasComDescontoDTO;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
 import br.com.storeapplication.model.FormaPagamento;
@@ -26,13 +27,14 @@ public class VendaMB {
     private Venda venda;
     private List<Venda> listaVendas;
     private BuscaRelatorio busca;
-    private Double totalVendidoNoPeriodo;
+    private Double totalVendidoNoPeriodoSemDesconto;
     private Double mediaDiaria;
     private Double valorEstoque;
     private Double valorMercadoriaParaRepor;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
     private List<FormaPagamento> listaFormasPagamento;
+    private ArrayList<VendasComDescontoDTO> listaVendasComDesconto;
 
     public VendaMB() {
         venda = new Venda();
@@ -40,13 +42,14 @@ public class VendaMB {
         busca = new BuscaRelatorio();
         busca.setPeriodoinicial(DataUtil.retornarDataAtual());
         busca.setPeriodofinal(DataUtil.retornarDataAtual());
-        totalVendidoNoPeriodo = 0.0;
+        totalVendidoNoPeriodoSemDesconto = 0.0;
         mediaDiaria = 0.0;
         valorEstoque = 0.0;
         valorMercadoriaParaRepor = 0.0;
         vendaService = new VendaService();
         formaPagamentoService = new FormaPagamentoService();
         listaFormasPagamento = new ArrayList<>();
+        listaVendasComDesconto = new ArrayList<>();
     }
 
     private void limparCampos() {
@@ -67,8 +70,17 @@ public class VendaMB {
         }
     }
 
-    public void totalVendidoPeriodo() {
-        totalVendidoNoPeriodo = vendaService.consultarVendasPorPeriodo(busca);
+    public void carregarVendasNoPeriodo(){
+        totalVendidoPeriodoSemDesconto();
+        totalVendidoPeriodoComDesconto();
+    }
+
+    private void totalVendidoPeriodoSemDesconto() {
+        totalVendidoNoPeriodoSemDesconto = vendaService.consultarVendasPorPeriodoSemDesconto(busca);
+    }
+
+    private void totalVendidoPeriodoComDesconto() {
+        listaVendasComDesconto = vendaService.consultarVendasPorPeriodoComDesconto(busca);
     }
 
     public void calcularMediaDiaria() {
@@ -135,12 +147,12 @@ public class VendaMB {
         this.busca = busca;
     }
 
-    public Double getTotalVendidoNoPeriodo() {
-        return totalVendidoNoPeriodo;
+    public Double getTotalVendidoNoPeriodoSemDesconto() {
+        return totalVendidoNoPeriodoSemDesconto;
     }
 
-    public void setTotalVendidoNoPeriodo(Double totalVendidoNoPeriodo) {
-        this.totalVendidoNoPeriodo = totalVendidoNoPeriodo;
+    public void setTotalVendidoNoPeriodoSemDesconto(Double totalVendidoNoPeriodoSemDesconto) {
+        this.totalVendidoNoPeriodoSemDesconto = totalVendidoNoPeriodoSemDesconto;
     }
 
     public Double getMediaDiaria() {
@@ -173,5 +185,13 @@ public class VendaMB {
 
     public void setValorMercadoriaParaRepor(Double valorMercadoriaParaRepor) {
         this.valorMercadoriaParaRepor = valorMercadoriaParaRepor;
+    }
+
+    public ArrayList<VendasComDescontoDTO> getListaVendasComDesconto() {
+        return listaVendasComDesconto;
+    }
+
+    public void setListaVendasComDesconto(ArrayList<VendasComDescontoDTO> listaVendasComDesconto) {
+        this.listaVendasComDesconto = listaVendasComDesconto;
     }
 }

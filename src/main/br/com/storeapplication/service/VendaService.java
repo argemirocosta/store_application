@@ -1,10 +1,12 @@
 package br.com.storeapplication.service;
 
 import br.com.storeapplication.dao.VendaDAO;
+import br.com.storeapplication.dto.VendasComDescontoDTO;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
 import br.com.storeapplication.model.Venda;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VendaService {
@@ -18,8 +20,12 @@ public class VendaService {
         vendaDAO.inserirVenda(venda);
     }
 
-    public Double consultarVendasPorPeriodo(BuscaRelatorio busca) {
-        return vendaDAO.consultarVendasPorPeriodo(busca);
+    public Double consultarVendasPorPeriodoSemDesconto(BuscaRelatorio busca) {
+        return vendaDAO.consultarVendasPorPeriodoSemDesconto(busca);
+    }
+
+    public ArrayList<VendasComDescontoDTO> consultarVendasPorPeriodoComDesconto(BuscaRelatorio busca) {
+        return vendaDAO.consultarVendasPorPeriodoComDesconto(busca);
     }
 
     public Double consultarMediaDiaria(BuscaRelatorio busca) {
