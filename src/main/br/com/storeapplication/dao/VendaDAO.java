@@ -213,6 +213,7 @@ public class VendaDAO {
             ps.setInt(1, usuarioSessao.getId());
             ps.setInt(2, usuarioSessao.getId());
             ps.setInt(3, usuarioSessao.getId());
+            ps.setInt(4, usuarioSessao.getId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 

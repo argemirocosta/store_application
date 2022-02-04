@@ -32,12 +32,18 @@ public class VendaDAOQueries {
             "((SELECT sum(valor) " +
             "FROM vendas.venda v " +
             "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id) " +
-            "WHERE usuario = ? AND cancelada IS NOT TRUE AND fp.credito IS NOT TRUE) / 2) " +
+            "WHERE usuario = ? AND cancelada IS NOT TRUE " +
+            "AND v.desconto IS NOT TRUE AND fp.credito IS NOT TRUE) / 2) " +
             "- " +
-            "((SELECT sum(valor)/100*90  " +
+            "((SELECT sum(valor)/100*90 " +
             "FROM vendas.venda v " +
             "JOIN vendas.forma_pagamento fp ON (v.id_forma_pagamento = fp.id) " +
-            "WHERE usuario = ? AND cancelada IS NOT TRUE AND fp.credito IS TRUE) / 2) " +
+            "WHERE usuario = ? AND cancelada IS NOT TRUE " +
+            "AND v.desconto IS NOT TRUE AND fp.credito IS TRUE) / 2) " +
+            "- " +
+            "(SELECT sum(valor) FROM vendas.venda v " +
+            "WHERE usuario = ? AND cancelada IS NOT TRUE " +
+            "AND v.desconto IS TRUE) " +
             "AS valor_estoque " +
             "FROM vendas.estoque e " +
             "WHERE usuario = ?";
