@@ -266,19 +266,19 @@
                              emptyMessage="Nenhuma venda realizada para esse cliente" rows="9"
                              paginator="true" paginatorPosition="bottom">
 
-                    <p:column headerText="Código venda" width="11%">
+                    <p:column headerText="Código venda" width="9%">
                         <div align="center">
                             <p:outputLabel value="#{var.id}"/>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Cliente" width="31%">
+                    <p:column headerText="Cliente" width="25%">
                         <div align="center">
                             <p:outputLabel value="#{var.cliente.nome}"/>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Data" width="11%">
+                    <p:column headerText="Data" width="10%">
                         <div align="center">
                             <p:outputLabel value="#{var.data}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -286,10 +286,17 @@
                         </div>
                     </p:column>
 
-                    <p:column headerText="Valor Venda" width="11%">
+                    <p:column headerText="Valor Venda" width="10%">
                         <div align="center">
                             <p:outputLabel value="#{var.valor}">
                                 <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Desconto" width="10%">
+                        <div align="center">
+                            <p:outputLabel value="#{var.percentualDesconto}%">
                             </p:outputLabel>
                         </div>
                     </p:column>
