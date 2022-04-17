@@ -28,7 +28,8 @@ public class VendaMB {
     private List<Venda> listaVendas;
     private BuscaRelatorio busca;
     private Double totalVendidoNoPeriodoSemDesconto;
-    private Double mediaDiaria;
+    private Double mediaDiariaColecao;
+    private Double mediaDiariaPromocao;
     private Double valorEstoque;
     private Double valorMercadoriaParaRepor;
     private VendaService vendaService;
@@ -43,7 +44,8 @@ public class VendaMB {
         busca.setPeriodoinicial(DataUtil.retornarDataAtual());
         busca.setPeriodofinal(DataUtil.retornarDataAtual());
         totalVendidoNoPeriodoSemDesconto = 0.0;
-        mediaDiaria = 0.0;
+        mediaDiariaColecao = 0.0;
+        mediaDiariaPromocao = 0.0;
         valorEstoque = 0.0;
         valorMercadoriaParaRepor = 0.0;
         vendaService = new VendaService();
@@ -84,7 +86,16 @@ public class VendaMB {
     }
 
     public void calcularMediaDiaria() {
-        mediaDiaria = vendaService.consultarMediaDiaria(busca);
+        calcularMediaDiariaColecao();
+        calcularMediaDiariaPromocao();
+    }
+
+    private void calcularMediaDiariaColecao() {
+        mediaDiariaColecao = vendaService.consultarMediaDiariaColecao(busca);
+    }
+
+    private void calcularMediaDiariaPromocao() {
+        mediaDiariaPromocao = vendaService.consultarMediaDiariaPromocao(busca);
     }
 
     public void calcularEstoque() {
@@ -155,12 +166,20 @@ public class VendaMB {
         this.totalVendidoNoPeriodoSemDesconto = totalVendidoNoPeriodoSemDesconto;
     }
 
-    public Double getMediaDiaria() {
-        return mediaDiaria;
+    public Double getMediaDiariaColecao() {
+        return mediaDiariaColecao;
     }
 
-    public void setMediaDiaria(Double mediaDiaria) {
-        this.mediaDiaria = mediaDiaria;
+    public void setMediaDiariaColecao(Double mediaDiariaColecao) {
+        this.mediaDiariaColecao = mediaDiariaColecao;
+    }
+
+    public Double getMediaDiariaPromocao() {
+        return mediaDiariaPromocao;
+    }
+
+    public void setMediaDiariaPromocao(Double mediaDiariaPromocao) {
+        this.mediaDiariaPromocao = mediaDiariaPromocao;
     }
 
     public List<FormaPagamento> getListaFormasPagamento() {

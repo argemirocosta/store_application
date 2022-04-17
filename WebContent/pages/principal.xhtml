@@ -476,10 +476,22 @@
                 <p:commandButton value="Buscar" action="#{vendaMB.calcularMediaDiaria()}" styleClass="altura10px"
                                  update=":formRelatorioMediaDiaria" icon="buscar"/>
 
-                <h:outputLabel value="MÉDIA DIÁRIA: "
+                <br></br>
+
+                <h:outputLabel value="Média diária Coleção: "
                                style="font-size: 14px;margin-left:20px"/>
 
-                <h:outputLabel value="#{vendaMB.mediaDiaria}"
+                <h:outputLabel value="#{vendaMB.mediaDiariaColecao}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+                <br></br>
+
+                <h:outputLabel value="Média diária Promoção: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.mediaDiariaPromocao}"
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
