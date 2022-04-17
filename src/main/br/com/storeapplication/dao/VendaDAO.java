@@ -171,14 +171,45 @@ public class VendaDAO {
         return listaVendas;
     }
 
-    public Double consultarMediaDiaria(BuscaRelatorio busca) {
+    public Double consultarMediaDiariaColecao(BuscaRelatorio busca) {
 
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
 
         try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_MEDIA_DIARIA);
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_MEDIA_DIARIA_COLECAO);
+            ps.setDate(1,
+                    new java.sql.Date(busca.getPeriodoinicial().getTime()));
+            ps.setDate(2, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));
+            ps.setInt(3, usuarioSessao.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                valor = rs.getDouble("media_diaria");
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return valor;
+    }
+
+    public Double consultarMediaDiariaPromocao(BuscaRelatorio busca) {
+
+        conexao = ConnectionFactory.getConnection();
+
+        double valor = 0.0;
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_MEDIA_DIARIA_PROMOCAO);
             ps.setDate(1,
                     new java.sql.Date(busca.getPeriodoinicial().getTime()));
             ps.setDate(2, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));

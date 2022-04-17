@@ -28,8 +28,12 @@ public class VendaService {
         return vendaDAO.consultarVendasPorPeriodoComDesconto(busca);
     }
 
-    public Double consultarMediaDiaria(BuscaRelatorio busca) {
-        return vendaDAO.consultarMediaDiaria(busca);
+    public Double consultarMediaDiariaColecao(BuscaRelatorio busca) {
+        return vendaDAO.consultarMediaDiariaColecao(busca);
+    }
+
+    public Double consultarMediaDiariaPromocao(BuscaRelatorio busca) {
+        return vendaDAO.consultarMediaDiariaPromocao(busca);
     }
 
     public Double calcularEstoque() {
