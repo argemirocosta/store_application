@@ -13,7 +13,7 @@ convention when adding to existing files.
 ## Common commands
 
 ```bash
-# Run the full test suite (JUnit 4 + Mockito, with JaCoCo coverage)
+# Run the full test suite (JUnit 5 + Mockito, with JaCoCo coverage)
 mvn test
 
 # Run a single test class
@@ -94,17 +94,17 @@ so data stays scoped to the current user.
 
 ## Tests
 
-JUnit 4 + Mockito (`mockito-all` 1.10.19), located under `src/test/br/com/storeapplication`,
+JUnit 5 (Jupiter) + Mockito (`mockito-core` 4.x), located under `src/test/br/com/storeapplication`,
 mirroring the main package structure:
 
-- `dao/*Test` — DAO behavior tests using `mock(XxxDAO.class)` and Mockito `verify`/`when`
-  (no real DB connection).
-- `builders/*Test` — test data factories for model objects, e.g. `ClienteBuilderTest` exposes
-  static methods like `umClienteTeste1()`/`umClienteTeste2()` that other tests reuse to build
-  fixtures via the fluent `model.builder.*Builder` API.
+- `model/builder/*Test` — `*Builder` tests covering both halves of the `shared.Builder` contract:
+  `mapear(ResultSet)` (using `mock(ResultSet.class)` and Mockito `when`, no real DB connection)
+  and the fluent `construir()` API.
+- `validator/*Test` — pure validator tests, e.g. `CPFValidatorTest` calls `CPFValidator.validate`
+  directly (its body never touches `FacesContext`/`UIComponent`, so no JSF mocking is needed).
 - `util/*Test` — pure unit tests for the `util` helpers.
-- `suites/*` — JUnit `@Suite.SuiteClasses` groupings (e.g. `SuitePackageUtil` runs the `util`
-  tests together).
+- `suites/*` — JUnit Platform `@Suite`/`@SelectClasses` groupings (e.g. `SuitePackageUtil` runs
+  the `util` tests together).
 
 When adding tests for a new entity, follow the existing pattern: add a `*BuilderTest` with
 `umXxxTeste1()`/`umXxxTeste2()` fixture factories, then reference those from the corresponding

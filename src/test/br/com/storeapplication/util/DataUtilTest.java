@@ -1,26 +1,31 @@
 package br.com.storeapplication.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DataUtilTest {
 
     @Test
     public void converterDateUtilParaDateSql(){
-        Date dataSql = DataUtil.converterDateUtilParaDateSql(new java.util.Date());
+        java.util.Date dataUtilOriginal = new java.util.Date(1700000000000L);
 
-        Date dataEsperada = new java.sql.Date(new java.util.Date().getTime());
+        Date dataSql = DataUtil.converterDateUtilParaDateSql(dataUtilOriginal);
 
-        assertEquals(dataEsperada.toString(), dataSql.toString());
+        assertEquals(dataUtilOriginal.getTime(), dataSql.getTime());
     }
 
     @Test
     public void retornarDataAtual(){
-        assertThat(DataUtil.retornarDataAtual(), is(new java.util.Date()));
+        long antes = System.currentTimeMillis();
+
+        java.util.Date dataAtual = DataUtil.retornarDataAtual();
+
+        long depois = System.currentTimeMillis();
+
+        assertTrue(dataAtual.getTime() >= antes && dataAtual.getTime() <= depois);
     }
 }
