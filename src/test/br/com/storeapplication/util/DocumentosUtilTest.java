@@ -1,43 +1,35 @@
 package br.com.storeapplication.util;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(Parameterized.class)
 public class DocumentosUtilTest {
 
-    @Parameterized.Parameter
-    public String cpf;
-
-    @Parameterized.Parameter(value = 1)
-    public String cenario;
-
-    @Parameterized.Parameters(name = "{1}")
-    public static Collection parametros() {
+    static Stream<Arguments> parametros() {
         String cpf1Correto = "25623561527";
         String cpf2Correto = "41329663217";
         String cpf1Errado = "11111111111";
         String cpf2Errado = "12345678912";
-        return Arrays.asList(new Object[][] {
-                {cpf1Errado, "Número Iguais"},
-                {cpf2Errado, "CPF Errado"},
-                {cpf1Correto, "CPF Correto"},
-                {cpf2Correto, "CPF Correto"}
-        });
+        String cpfTamanhoInvalido = "123456789";
+        String cpfComLetras = "2562356152A";
+        return Stream.of(
+                Arguments.of(cpf1Errado, "Número Iguais", false),
+                Arguments.of(cpf2Errado, "CPF Errado", false),
+                Arguments.of(cpf1Correto, "CPF Correto", true),
+                Arguments.of(cpf2Correto, "CPF Correto", true),
+                Arguments.of(cpfTamanhoInvalido, "Tamanho Inválido", false),
+                Arguments.of(cpfComLetras, "Caracteres Não Numéricos", false)
+        );
     }
 
-    @Test
-    public void testarSeCpfEhValido() {
-        if(cenario.contains("Correto"))
-            assertThat(DocumentosUtil.validaCPF(cpf), is(true));
-        else
-            assertThat(DocumentosUtil.validaCPF(cpf), is(false));
+    @ParameterizedTest(name = "{1}")
+    @MethodSource("parametros")
+    public void testarSeCpfEhValido(String cpf, String cenario, boolean esperado) {
+        assertEquals(esperado, DocumentosUtil.validaCPF(cpf));
     }
 }
