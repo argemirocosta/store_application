@@ -4,6 +4,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.xml.sax.SAXException;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -49,8 +50,11 @@ class CEPWebService {
 		}
 	}
 
-	private Document getDocumento(URL url) throws DocumentException {
+	private Document getDocumento(URL url) throws DocumentException, SAXException {
 		SAXReader reader = new SAXReader();
+		reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 
 		return reader.read(url);
 	}
