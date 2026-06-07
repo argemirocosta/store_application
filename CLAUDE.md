@@ -73,7 +73,7 @@ controller (*MB)  →  service (*Service)  →  dao (*DAO)  →  PostgreSQL (raw
   `urlBanco`/`usuario`/`senha` from per-environment variables —
   `DB_URL_DEPLOY`/`DB_USUARIO_DEPLOY`/`DB_SENHA_DEPLOY` and
   `DB_URL_PRODUCAO`/`DB_USUARIO_PRODUCAO`/`DB_SENHA_PRODUCAO` respectively — via
-  `ConexaoBuilder.obterVariavelAmbiente`. These must be set on the hosting platform; the app
+  `util.AmbienteUtil.obterVariavelAmbiente`. These must be set on the hosting platform; the app
   fails fast with `IllegalStateException` if the relevant ones are missing when connecting.
 - **`shared`** — cross-cutting constants/helpers: `Sessao` (session attribute keys),
   `Mensagens` (user-facing message keys), `Paginas` (page/navigation constants), `Dialogs`
