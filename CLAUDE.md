@@ -66,10 +66,15 @@ controller (*MB)  →  service (*Service)  →  dao (*DAO)  →  PostgreSQL (raw
   map `ResultSet` rows to model objects for the DAO layer — look here when changing what columns
   a DAO reads/writes.
 - **`factory`** — `ConnectionFactory` opens JDBC connections using credentials selected by
-  `Propriedades.Conexao` (`LOCALHOST` / `DEPLOY` / `PRODUCAO`, hardcoded in `ConexaoBuilder`).
+  `Propriedades.Conexao` (`LOCALHOST` / `DEPLOY` / `PRODUCAO`) in `ConexaoBuilder`.
   **`Propriedades.Conexao` currently points at `PRODUCAO`** — switch it to `LOCALHOST` for local
-  development and switch it back before committing/deploying. Treat the hardcoded credentials in
-  `ConexaoBuilder` as sensitive; don't propagate or expose them further.
+  development and switch it back before committing/deploying. `LOCALHOST` still uses hardcoded,
+  non-sensitive dev defaults (`postgres`/`post` on `localhost`); `DEPLOY` and `PRODUCAO` read
+  `urlBanco`/`usuario`/`senha` from per-environment variables —
+  `DB_URL_DEPLOY`/`DB_USUARIO_DEPLOY`/`DB_SENHA_DEPLOY` and
+  `DB_URL_PRODUCAO`/`DB_USUARIO_PRODUCAO`/`DB_SENHA_PRODUCAO` respectively — via
+  `ConexaoBuilder.obterVariavelAmbiente`. These must be set on the hosting platform; the app
+  fails fast with `IllegalStateException` if the relevant ones are missing when connecting.
 - **`shared`** — cross-cutting constants/helpers: `Sessao` (session attribute keys),
   `Mensagens` (user-facing message keys), `Paginas` (page/navigation constants), `Dialogs`
   (PrimeFaces dialog widget IDs), `Builder` (interface for `model.builder.*`).
