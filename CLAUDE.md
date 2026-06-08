@@ -71,8 +71,8 @@ controller (*MB)  →  service (*Service)  →  dao (*DAO)  →  PostgreSQL (raw
   development and switch it back before committing/deploying. `LOCALHOST` still uses hardcoded,
   non-sensitive dev defaults (`postgres`/`post` on `localhost`); `DEPLOY` and `PRODUCAO` read
   `urlBanco`/`usuario`/`senha` from per-environment variables —
-  `DB_URL_DEPLOY`/`DB_USUARIO_DEPLOY`/`DB_SENHA_DEPLOY` and
-  `DB_URL_PRODUCAO`/`DB_USUARIO_PRODUCAO`/`DB_SENHA_PRODUCAO` respectively — via
+  `STORE_DB_URL_DEPLOY`/`DB_USUARIO_DEPLOY`/`DB_SENHA_DEPLOY` and
+  `STORE_DB_URL_PRODUCAO`/`DB_USUARIO_PRODUCAO`/`DB_SENHA_PRODUCAO` respectively — via
   `util.AmbienteUtil.obterVariavelAmbiente`. These must be set on the hosting platform; the app
   fails fast with `IllegalStateException` if the relevant ones are missing when connecting.
 - **`shared`** — cross-cutting constants/helpers: `Sessao` (session attribute keys),
