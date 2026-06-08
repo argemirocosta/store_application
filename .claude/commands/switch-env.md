@@ -1,6 +1,6 @@
 ---
-name: switch-env
-description: Switches the database connection environment (LOCALHOST/DEPLOY/PRODUCAO) configured in Propriedades.java, builds the project with Maven, and copies the generated WAR file to the Downloads directory. Use when asked to switch/change/toggle the connection environment, or to point Propriedades.Conexao at localhost, deploy, or producao and produce a build.
+description: Switches the database connection environment (LOCALHOST/DEPLOY/PRODUCAO) in Propriedades.java, builds the project with Maven, and copies the WAR to Downloads
+argument-hint: localhost|deploy|producao
 allowed-tools: Read Edit Bash(mvn *) Bash(cp *) Bash(ls *) Bash(find *)
 ---
 
@@ -10,8 +10,7 @@ Switch the active database connection environment for this project (`Propriedade
 
 Target environment: $ARGUMENTS — accepts `localhost`, `deploy`, or `producao`/`production`
 (case-insensitive), mapping to the `Conexoes` enum constants `LOCALHOST`, `DEPLOY`, `PRODUCAO`.
-If no argument was given, or it doesn't match one of these, ask the user which environment to
-switch to before doing anything else.
+If no argument was given, or it doesn't match one of these, default the target to `DEPLOY`.
 
 Steps:
 
@@ -33,7 +32,8 @@ Steps:
    in `~/Downloads`.
 
 Notes:
-- This skill does not commit or push anything — it only edits the working tree, builds, and
+- This command does not commit or push anything — it only edits the working tree, builds, and
   copies the artifact.
 - Switching to `PRODUCAO` is the checked-in default; switching to `LOCALHOST` is typically for
   local development/testing builds.
+- When no environment is specified, the default target is `DEPLOY`.
