@@ -15,12 +15,12 @@ public class ConexaoBuilder {
             conexoes.setSenha("post");
         }
         else if(propriedades.Conexao.equals(Propriedades.Conexoes.DEPLOY)){
-            conexoes.setUrlBanco(AmbienteUtil.obterVariavelAmbiente("DB_URL_DEPLOY"));
+            conexoes.setUrlBanco(AmbienteUtil.obterVariavelAmbiente("STORE_DB_URL_DEPLOY"));
             conexoes.setUsuario(AmbienteUtil.obterVariavelAmbiente("DB_USUARIO_DEPLOY"));
             conexoes.setSenha(AmbienteUtil.obterVariavelAmbiente("DB_SENHA_DEPLOY"));
         }
         else if(propriedades.Conexao.equals(Propriedades.Conexoes.PRODUCAO)){
-            conexoes.setUrlBanco(AmbienteUtil.obterVariavelAmbiente("DB_URL_PRODUCAO"));
+            conexoes.setUrlBanco(AmbienteUtil.obterVariavelAmbiente("STORE_DB_URL_PRODUCAO"));
             conexoes.setUsuario(AmbienteUtil.obterVariavelAmbiente("DB_USUARIO_PRODUCAO"));
             conexoes.setSenha(AmbienteUtil.obterVariavelAmbiente("DB_SENHA_PRODUCAO"));
         }
