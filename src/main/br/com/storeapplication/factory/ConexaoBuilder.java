@@ -1,5 +1,6 @@
 package br.com.storeapplication.factory;
 
+import br.com.storeapplication.util.AmbienteUtil;
 
 public class ConexaoBuilder {
 
@@ -14,14 +15,14 @@ public class ConexaoBuilder {
             conexoes.setSenha("post");
         }
         else if(propriedades.Conexao.equals(Propriedades.Conexoes.DEPLOY)){
-            conexoes.setUrlBanco("***REMOVED***");
-            conexoes.setUsuario("***REMOVED***");
-            conexoes.setSenha("***REMOVED***");
+            conexoes.setUrlBanco(AmbienteUtil.obterVariavelAmbiente("DB_URL_DEPLOY"));
+            conexoes.setUsuario(AmbienteUtil.obterVariavelAmbiente("DB_USUARIO_DEPLOY"));
+            conexoes.setSenha(AmbienteUtil.obterVariavelAmbiente("DB_SENHA_DEPLOY"));
         }
         else if(propriedades.Conexao.equals(Propriedades.Conexoes.PRODUCAO)){
-            conexoes.setUrlBanco("***REMOVED***");
-            conexoes.setUsuario("***REMOVED***");
-            conexoes.setSenha("***REMOVED***");
+            conexoes.setUrlBanco(AmbienteUtil.obterVariavelAmbiente("DB_URL_PRODUCAO"));
+            conexoes.setUsuario(AmbienteUtil.obterVariavelAmbiente("DB_USUARIO_PRODUCAO"));
+            conexoes.setSenha(AmbienteUtil.obterVariavelAmbiente("DB_SENHA_PRODUCAO"));
         }
 
         return conexoes;
