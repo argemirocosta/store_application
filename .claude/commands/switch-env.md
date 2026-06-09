@@ -28,8 +28,11 @@ Steps:
 5. Locate the generated WAR under `target/` (e.g. `target/store_application-*.war` — the exact
    name includes the project version from `pom.xml`).
 6. Copy it to the user's Downloads directory: `cp target/<warfile>.war ~/Downloads/`.
-7. Confirm to the user which environment is now active and the full path of the copied WAR file
-   in `~/Downloads`.
+7. If the target environment was not already `PRODUCAO`, revert `Propriedades.java` back to
+   `PRODUCAO`: edit the same line to `public static Conexoes Conexao = Conexoes.PRODUCAO;`.
+   This keeps the working tree clean — `PRODUCAO` is always the checked-in default.
+8. Confirm to the user which environment was used to build, the full path of the copied WAR file
+   in `~/Downloads`, and that `Propriedades.java` has been restored to `PRODUCAO`.
 
 Notes:
 - This command does not commit or push anything — it only edits the working tree, builds, and
@@ -37,3 +40,5 @@ Notes:
 - Switching to `PRODUCAO` is the checked-in default; switching to `LOCALHOST` is typically for
   local development/testing builds.
 - When no environment is specified, the default target is `DEPLOY`.
+- The revert to `PRODUCAO` in step 7 ensures the source never stays committed with a non-production
+  connection profile after the build.
