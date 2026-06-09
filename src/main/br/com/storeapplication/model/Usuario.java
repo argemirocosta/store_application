@@ -78,7 +78,6 @@ public class Usuario implements Serializable {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", login='" + login + '\'' +
-                ", senha='" + senha + '\'' +
                 ", ativo=" + ativo +
                 '}';
     }
