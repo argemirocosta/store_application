@@ -16,19 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.storeapplication.shared.queries.ClienteDAOQueries.*;
-import static br.com.storeapplication.shared.Sessao.*;
 
 public class ClienteDAO {
 
 	private Connection conexao = null;
-
-	private Usuario usuarioSessao = (Usuario) SessaoUtil.resgatarDaSessao(USUARIO_SESSAO);
 
 	public List<Cliente> listarClientes() {
 
 		conexao = ConnectionFactory.getConnection();
 
 		List<Cliente> listaClientes = new ArrayList<>();
+		Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
 		try {
 			PreparedStatement ps = conexao.prepareStatement(SELECT_LISTAR_CLIENTES);
@@ -54,6 +52,7 @@ public class ClienteDAO {
 		conexao = ConnectionFactory.getConnection();
 
 		List<Cliente> listaClientes = new ArrayList<>();
+		Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
 		try {
 			PreparedStatement ps = conexao.prepareStatement(SELECT_BUSCAR_CLIENTE_POR_NOME_OU_TELEFONE);
@@ -81,6 +80,7 @@ public class ClienteDAO {
 		conexao = ConnectionFactory.getConnection();
 
 		List<Cliente> listaClientes = new ArrayList<>();
+		Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
 		try {
 			PreparedStatement ps = conexao.prepareStatement(SELECT_BUSCAR_CLIENTE_POR_ID);
@@ -121,6 +121,7 @@ public class ClienteDAO {
 	public void inserirCliente(Cliente cliente) throws ProjetoException {
 
 		conexao = ConnectionFactory.getConnection();
+		Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
 		try {
 			PreparedStatement ps = conexao.prepareStatement(INSERIR_CLIENTE);
@@ -369,6 +370,7 @@ public class ClienteDAO {
 		conexao = ConnectionFactory.getConnection();
 
 		Boolean retorno = false;
+		Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
 		try {
 			PreparedStatement ps = conexao.prepareStatement(SELECT_VERIFICAR_CLIENTE_CADASTRADO);
