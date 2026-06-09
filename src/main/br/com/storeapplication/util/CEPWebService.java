@@ -20,8 +20,11 @@ class CEPWebService {
 	@SuppressWarnings("rawtypes")
 	CEPWebService(String cep) {
 		try {
-			URL url = new URL(
-					"http://viacep.com.br/ws/" + cep.replaceAll("[^0-9]", "") + "/xml/");
+			String cepNumerico = cep.replaceAll("[^0-9]", "");
+			if (cepNumerico.length() != 8) {
+				return;
+			}
+			URL url = new URL("https://viacep.com.br/ws/" + cepNumerico + "/xml/");
 
 			Document document = getDocumento(url);
 
