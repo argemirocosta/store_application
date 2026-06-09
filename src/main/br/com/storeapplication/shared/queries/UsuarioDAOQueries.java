@@ -5,7 +5,7 @@ public class UsuarioDAOQueries {
     private UsuarioDAOQueries() {
     }
 
-    public static final String SELECT_LOGIN = "SELECT id, nome, login, senha, ativo FROM vendas.usuario WHERE login ilike ? AND senha ilike ?";
+    public static final String SELECT_LOGIN = "SELECT id, nome, login, senha, ativo FROM vendas.usuario WHERE login = ? AND senha = ?";
 
     public static final String SELECT_ALTERAR_SENHA = "SELECT id FROM vendas.usuario WHERE id = ? AND senha = ?";
 
