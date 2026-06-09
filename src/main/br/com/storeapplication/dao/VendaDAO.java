@@ -20,17 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static br.com.storeapplication.shared.queries.VendaDAOQueries.*;
-import static br.com.storeapplication.shared.Sessao.*;
 
 public class VendaDAO {
 
     private Connection conexao = null;
 
-    private Usuario usuarioSessao = (Usuario) SessaoUtil.resgatarDaSessao(USUARIO_SESSAO);
-
     public void inserirVenda(Venda venda) throws ProjetoException {
 
         conexao = ConnectionFactory.getConnection();
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(INSERIR_VENDA);
@@ -113,6 +111,7 @@ public class VendaDAO {
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VENDAS_POR_PERIODO_SEM_DESCONTO);
@@ -144,6 +143,7 @@ public class VendaDAO {
         conexao = ConnectionFactory.getConnection();
 
         ArrayList<VendasComDescontoDTO> listaVendas = new ArrayList<>();
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VENDAS_POR_PERIODO_COM_DESCONTO);
@@ -176,6 +176,7 @@ public class VendaDAO {
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_MEDIA_DIARIA_COLECAO);
@@ -207,6 +208,7 @@ public class VendaDAO {
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_MEDIA_DIARIA_PROMOCAO);
@@ -238,6 +240,7 @@ public class VendaDAO {
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CALCULAR_ESTOQUE);
@@ -300,6 +303,7 @@ public class VendaDAO {
         conexao = ConnectionFactory.getConnection();
 
         double valor = 0.0;
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
             PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_VALOR_A_REPOR_MERCADORIA);
