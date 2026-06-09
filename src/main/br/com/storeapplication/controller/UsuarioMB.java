@@ -42,7 +42,7 @@ public class UsuarioMB {
     }
 
     public String logout() {
-        SessaoUtil.retirarDaSessao(USUARIO_SESSAO);
+        javax.faces.context.FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return RedirecionarUtil.redirectPagina(INDEX);
     }
 
