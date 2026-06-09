@@ -15,11 +15,11 @@
         <h:form id="formInicio">
 
             <p:commandButton value="Sair do Sistema" icon="sair"
-                             action="#{usuarioMB.logout()}" style="float:right;"/>
+                             action="#{usuarioMB.logout()}" styleClass="btnCabecalho" style="float:right;"/>
 
             <p:commandButton value="Relatórios" icon="relatorios"
                              oncomplete="PF('dlgRelatorios').show();"
-                             style="float:right;margin-left:10px;margin-right:20px"/>
+                             styleClass="btnCabecalho" style="float:right;margin-left:10px;margin-right:20px"/>
 
             <p:outputLabel value="Sempre Bella" styleClass="nomePrincipalParteSuperior"/>
 
@@ -367,7 +367,7 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioVendaNoPeriodo" header="Vendas no Período"
-                  height="250" width="600" draggable="true" resizable="false"
+                  height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioVendaPorPeriodo">
                 <p:panelGrid columns="4" styleClass="semBorda">
@@ -423,7 +423,7 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioValorReport" header="Valor à repor de mercadoria"
-                  height="140" width="460" draggable="true" resizable="false"
+                  height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioValorReport">
                 <p:panelGrid columns="3" styleClass="semBorda">
@@ -456,7 +456,7 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioMediaDiaria" header="Média diária"
-                  height="140" width="460" draggable="true" resizable="false"
+                  height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioMediaDiaria">
                 <p:panelGrid columns="3" styleClass="semBorda">
@@ -500,7 +500,7 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioVendaPorDia" header="Vendas por Dia"
-                  height="140" width="560" draggable="true" resizable="false"
+                  height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioVendaPorDia">
                 <p:panelGrid columns="4" styleClass="semBorda">
@@ -527,7 +527,7 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioVendaPorFormaDePagamento" header="Vendas por Forma de Pagamento"
-                  height="140" width="560" draggable="true" resizable="false"
+                  height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioVendaPorFormaDePagamento">
                 <p:panelGrid columns="4" styleClass="semBorda">
@@ -554,7 +554,7 @@
         </p:dialog>
 
         <p:dialog widgetVar="dlgRelatorioCalculoEstoque" header="Cálculo Estoque"
-                  height="140" width="460" draggable="true" resizable="false"
+                  height="auto" width="auto" draggable="true" resizable="false"
                   modal="true">
             <h:form id="formRelatorioCalculoEstoque">
 

@@ -127,3 +127,66 @@ body {
 	font-weight: normal;
 	font-weight: bolder;
 }
+
+
+/* Responsividade para celular */
+@media screen and (max-width: 768px) {
+
+	body {
+		font-size: 14px;
+	}
+
+	.imagemPrincipal {
+		width: 55% !important;
+		height: auto !important;
+		margin-top: 20px;
+	}
+
+	.nomePrincipal {
+		font-size: 36px;
+	}
+
+	.nomePrincipalParteSuperior {
+		font-size: 20px;
+	}
+
+	/* Botões do cabeçalho em mobile */
+	.btnCabecalho {
+		float: none !important;
+		display: block !important;
+		width: 100% !important;
+		margin: 4px 0 !important;
+	}
+
+	/* Diálogos ocupam quase toda a tela */
+	.ui-dialog {
+		width: 96vw !important;
+		max-width: 96vw !important;
+		left: 2vw !important;
+	}
+
+	/* Scroll horizontal nas tabelas */
+	.ui-datatable-tablewrapper {
+		overflow-x: auto !important;
+	}
+
+	/* Campos de formulário em largura total */
+	.semBorda .ui-panelgrid-cell {
+		display: block !important;
+		width: 100% !important;
+		box-sizing: border-box;
+	}
+
+	.semBorda .ui-inputtext,
+	.semBorda .ui-inputfield,
+	.semBorda .ui-selectonemenu {
+		width: 100% !important;
+		box-sizing: border-box;
+	}
+
+	/* Botão de login em largura total */
+	#form .ui-panel {
+		width: 90% !important;
+		max-width: 320px !important;
+	}
+}
