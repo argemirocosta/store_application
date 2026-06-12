@@ -10,6 +10,10 @@ PrimeFaces 6.1, raw JDBC against PostgreSQL, packaged as a WAR, and deployed via
 (see `Procfile`). All code, comments and commit messages are in Portuguese (pt-BR) — match that
 convention when adding to existing files.
 
+## Regras de segurança
+
+@.claude/rules.md
+
 ## Common commands
 
 ```bash
