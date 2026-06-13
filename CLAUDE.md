@@ -31,6 +31,10 @@ mvn package
 
 # Run locally (after `mvn package`)
 java -jar target/dependency/webapp-runner.jar --port 8080 target/*.war
+
+# Run the business-focused integration tests (*IT) against a real Postgres
+# (Testcontainers spins up postgres:15-alpine, requires Docker running)
+mvn verify -P integration-tests
 ```
 
 There is no linter configured. Java source/target level is 1.8.
@@ -103,8 +107,8 @@ so data stays scoped to the current user.
 
 ## Tests
 
-JUnit 5 (Jupiter) + Mockito (`mockito-core` 4.x), located under `src/test/br/com/storeapplication`,
-mirroring the main package structure:
+JUnit 5 (Jupiter) + Mockito (`mockito-inline` 4.x — needed for `Mockito.mockStatic`), located
+under `src/test/br/com/storeapplication`, mirroring the main package structure:
 
 - `model/builder/*Test` — `*Builder` tests covering both halves of the `shared.Builder` contract:
   `mapear(ResultSet)` (using `mock(ResultSet.class)` and Mockito `when`, no real DB connection)
@@ -116,8 +120,26 @@ mirroring the main package structure:
   the `util` tests together).
 
 When adding tests for a new entity, follow the existing pattern: add a `*BuilderTest` with
-`umXxxTeste1()`/`umXxxTeste2()` fixture factories, then reference those from the corresponding
-`*DAOTest`.
+`umXxxTeste1()`/`umXxxTeste2()` fixture factories. These run via `mvn test` and never touch a
+real database.
+
+### Integration tests (`*IT`)
+
+`dao/*IT` classes (e.g. `VendaDAOIT`, `ClienteDAOIT`) test real business rules — stock
+calculation, discount aggregation, client normalization, multi-tenancy isolation — against a
+real PostgreSQL instance:
+
+- Run via `mvn verify -P integration-tests` (maven-failsafe-plugin, separate non-default
+  profile). `mvn test`/`mvn package` skip them entirely and need no Docker.
+- Requires Docker running: Testcontainers starts a `postgres:15-alpine` container, loads the
+  `vendas` schema from `database.sql`, and points `Propriedades.Conexao` at it
+  (`LOCALHOST`) for the duration of the JVM. The container is ephemeral and torn down
+  automatically — nothing is written to a real database.
+- Extend `integration.PostgresIntegrationTestBase`, which wires up the container and a mocked
+  `FacesContext`/session (`integration.FacesContextTestSupport`).
+- Each test creates its own user via `integration.UsuarioFixture.criarUsuario()` and calls
+  `loginComoUsuario(usuario)`. Since `Cliente`/`Venda` queries filter by `usuario = ?`, each
+  test's data is naturally isolated — no rollback or cleanup needed.
 
 ## Versioning convention
 
