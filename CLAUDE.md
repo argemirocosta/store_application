@@ -141,6 +141,33 @@ real PostgreSQL instance:
   `loginComoUsuario(usuario)`. Since `Cliente`/`Venda` queries filter by `usuario = ?`, each
   test's data is naturally isolated — no rollback or cleanup needed.
 
+## Revisão de PRs
+
+Quando o usuário pedir para "revisar"/"revisar o PR"/"revisar a branch atual", siga
+este processo de três partes:
+
+1. Rode em paralelo (via Agent tool) os dois agents do projeto:
+   - `revisor-padrao` — aderência aos padrões de backend/frontend/SQL (skills
+     `backend-pattern`/`frontend-pattern`/`sql-pattern`) e às regras de segurança em
+     `.claude/rules.md`.
+   - `qa` — `mvn test` + `mvn verify -P integration-tests` + cobertura JaCoCo do
+     código novo/alterado via `.claude/scripts/check-coverage.sh`.
+2. Faça você mesmo (o agente principal) uma análise complementar do diff, sem repetir
+   o que os dois agents acima já cobrem:
+   - **Test plan do PR**: os itens do checklist da descrição refletem o que foi
+     verificado nesta revisão? Aponte itens que já podem ser marcados como feitos.
+   - **Escopo e commits**: o PR tem escopo único e coerente? Mensagens de commit em
+     pt-BR e descritivas, seguindo o estilo do histórico?
+   - **Documentação**: a mudança introduz convenções, comandos ou agents novos que
+     deveriam ser refletidos neste arquivo ou em algum skill?
+   - Qualquer outro ponto de consistência/arquitetura fora do alcance dos dois agents.
+3. Apresente um relatório consolidado com três seções — "revisor-padrao", "qa" e
+   "Análise complementar" — terminando em um veredito geral (aprovado / aprovado com
+   ressalvas / reprovado).
+
+Use o `/code-review` (ou `/code-review ultra`) genérico apenas se o usuário pedir
+explicitamente um outro tipo de revisão.
+
 ## Versioning convention
 
 Commits that close out a release are titled `Fechando versão X.Y` and bump the `<version>` in
