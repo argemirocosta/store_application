@@ -169,7 +169,16 @@ Pontos a verificar:
 - Getters e setters ficam agrupados ao final da classe, sob o comentário
   `//GETTERS E SETTERS`.
 
-## 8. Convenções gerais
+## 8. Testes de integração de negócio
+
+Ao adicionar/alterar regra de negócio em um `*DAO` (cálculos, agregações, normalização,
+escopo por usuário), considere cobrir com um teste `dao/*IT` (ex: `VendaDAOIT`,
+`ClienteDAOIT`), que roda contra Postgres real via Testcontainers
+(`mvn verify -P integration-tests`, requer Docker — ver seção "Tests" do `CLAUDE.md`).
+Estendem `integration.PostgresIntegrationTestBase` e usam
+`integration.UsuarioFixture.criarUsuario()` para isolar dados por teste.
+
+## 9. Convenções gerais
 
 - Nomes de classes, métodos, variáveis e comentários em português
   (`listarClientes`, `buscarClientePorNome`, `inserirCliente`, `alterarCliente`,
