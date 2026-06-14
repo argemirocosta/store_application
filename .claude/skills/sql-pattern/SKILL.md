@@ -96,3 +96,7 @@ ORDER BY v.data DESC, v.id DESC
 - Strings longas são concatenadas com `+` (ou `"..."  + "..."`), uma cláusula lógica
   (`SELECT`, `FROM`, `JOIN`, `WHERE`, `GROUP BY`, `ORDER BY`) por linha/segmento,
   indentadas de forma alinhada para ficar legível como SQL.
+- Palavras reservadas do Postgres (`SELECT`, `FROM`, `WHERE`, `AND`, `OR`, `JOIN`,
+  `LEFT JOIN`, `ILIKE`, `BETWEEN`, `IS TRUE`/`IS NOT TRUE`, `ORDER BY`, `GROUP BY`,
+  `RETURNING`, etc.) são sempre em **maiúsculo**. Funções agregadas (`sum`, `count`)
+  ficam em minúsculo, como já é o padrão no projeto.
