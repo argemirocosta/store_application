@@ -63,3 +63,4 @@ nb-configuration.xml
 ## Claude
 ##########################
 .claude/worktrees/
+.claude/scheduled_tasks.lock
