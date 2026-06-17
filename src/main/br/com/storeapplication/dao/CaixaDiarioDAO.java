@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static br.com.storeapplication.shared.queries.CaixaDiarioDAOQueries.INSERT_CAIXA_DIARIO;
+import static br.com.storeapplication.shared.queries.CaixaDiarioDAOQueries.INSERIR_CAIXA_DIARIO;
 
 public class CaixaDiarioDAO {
 
@@ -23,7 +23,7 @@ public class CaixaDiarioDAO {
         Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
-            PreparedStatement ps = conexao.prepareStatement(INSERT_CAIXA_DIARIO);
+            PreparedStatement ps = conexao.prepareStatement(INSERIR_CAIXA_DIARIO);
             ps.setDate(1, DataUtil.converterDateUtilParaDateSql(caixaDiario.getData()));
             ps.setDouble(2, caixaDiario.getValor());
             ps.setInt(3, usuarioSessao.getId());

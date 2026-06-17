@@ -93,6 +93,7 @@ CREATE TABLE vendas.caixa_diario (
     valor   float8   NOT NULL,
     usuario int4     REFERENCES vendas.usuario(id)
 );
+CREATE INDEX caixa_diario_usuario_idx ON vendas.caixa_diario USING btree (usuario);
 
 INSERT INTO vendas.forma_pagamento
 (id, descricao, credito)
