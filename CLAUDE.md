@@ -88,8 +88,7 @@ controller (*MB)  →  service (*Service)  →  dao (*DAO)  →  PostgreSQL (raw
   (PrimeFaces dialog widget IDs), `Builder` (interface for `model.builder.*`).
 - **`util`** — stateless helpers: `SessaoUtil`/`JSFUtil` (JSF/session glue), `DataUtil`,
   `StringUtil`, `IntegerUtil`, `VerificadorUtil` (null/empty checks used pervasively in DAOs),
-  `DocumentosUtil` (CPF/document formatting), `CEPUtil`/`CEPWebService` (address lookup by
-  Brazilian postal code), `RelatorioUtil` (JasperReports report generation — templates in
+  `DocumentosUtil` (CPF/document formatting), `RelatorioUtil` (JasperReports report generation — templates in
   `WebContent/WEB-INF/relatorios`).
 - **`exception.ProjetoException`** — single checked exception type used to wrap `SQLException`s
   thrown out of DAO write operations (insert/update/delete).

@@ -33,13 +33,6 @@ public class VendaBuilderTest {
         when(rs.getString("cpf")).thenReturn("25623561527");
         when(rs.getString("rg")).thenReturn("123456789");
         when(rs.getString("telefone1")).thenReturn("11999998888");
-        when(rs.getString("cep")).thenReturn("01001-000");
-        when(rs.getString("estado")).thenReturn("SP");
-        when(rs.getString("cidade")).thenReturn("São Paulo");
-        when(rs.getString("bairro")).thenReturn("Sé");
-        when(rs.getString("logradouro")).thenReturn("Praça da Sé");
-        when(rs.getInt("numero")).thenReturn(100);
-        when(rs.getInt("cod_ibge")).thenReturn(3550308);
 
         // Colunas lidas pelo FormaPagamentoBuilder
         when(rs.getString("descricao")).thenReturn("Cartão de crédito");
@@ -53,7 +46,6 @@ public class VendaBuilderTest {
         assertEquals(Boolean.TRUE, venda.getDesconto());
         assertEquals(Double.valueOf(10.0), venda.getPercentualDesconto());
         assertEquals("Maria da Silva", venda.getCliente().getNome());
-        assertEquals("SP", venda.getCliente().getEndereco().getEstado());
         assertEquals("Cartão de crédito", venda.getFormaPagamento().getDescricao());
     }
 

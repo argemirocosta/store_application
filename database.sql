@@ -38,13 +38,6 @@ CREATE TABLE vendas.clientes (
                                  data_nascimento date NULL,
                                  cpf varchar(11) NULL,
                                  rg varchar NULL,
-                                 cep varchar(8) NULL,
-                                 estado varchar(2) NULL,
-                                 cidade varchar NULL,
-                                 bairro varchar NULL,
-                                 logradouro varchar NULL,
-                                 numero int4 NULL,
-                                 cod_ibge int4 NULL,
                                  telefone1 varchar NULL,
                                  CONSTRAINT pk_planta_id PRIMARY KEY (id),
                                  CONSTRAINT clientes_usuario_fkey FOREIGN KEY (usuario) REFERENCES vendas.usuario(id)
