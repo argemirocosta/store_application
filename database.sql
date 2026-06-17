@@ -49,6 +49,7 @@ CREATE TABLE vendas.clientes (
                                  CONSTRAINT pk_planta_id PRIMARY KEY (id),
                                  CONSTRAINT clientes_usuario_fkey FOREIGN KEY (usuario) REFERENCES vendas.usuario(id)
 );
+CREATE INDEX clientes_usuario_idx ON vendas.clientes USING btree (usuario);
 
 CREATE TABLE vendas.estoque (
                                 id serial4 NOT NULL,
@@ -58,7 +59,6 @@ CREATE TABLE vendas.estoque (
                                 CONSTRAINT estoque_pk PRIMARY KEY (id),
                                 CONSTRAINT estoque_fk FOREIGN KEY (usuario) REFERENCES vendas.usuario(id)
 );
-CREATE INDEX estoque_id_idx ON vendas.estoque USING btree (id);
 
 CREATE TABLE vendas.forma_pagamento (
                                         id int4 NOT NULL DEFAULT nextval('vendas.newtable_id_seq'::regclass),
@@ -66,7 +66,6 @@ CREATE TABLE vendas.forma_pagamento (
                                         credito bool NULL DEFAULT false,
                                         CONSTRAINT newtable_pk PRIMARY KEY (id)
 );
-CREATE INDEX newtable_id_idx ON vendas.forma_pagamento USING btree (id);
 
 CREATE TABLE vendas.venda (
                               id serial4 NOT NULL,
@@ -86,6 +85,7 @@ CREATE TABLE vendas.venda (
                               CONSTRAINT venda_usuario_fkey FOREIGN KEY (usuario) REFERENCES vendas.usuario(id)
 );
 CREATE INDEX venda_cliente ON vendas.venda USING btree (id_cliente);
+CREATE INDEX venda_usuario_idx ON vendas.venda USING btree (usuario);
 
 INSERT INTO vendas.forma_pagamento
 (id, descricao, credito)
