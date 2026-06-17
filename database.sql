@@ -87,6 +87,13 @@ CREATE TABLE vendas.venda (
 CREATE INDEX venda_cliente ON vendas.venda USING btree (id_cliente);
 CREATE INDEX venda_usuario_idx ON vendas.venda USING btree (usuario);
 
+CREATE TABLE vendas.caixa_diario (
+    id      serial4  PRIMARY KEY,
+    data    date     NOT NULL,
+    valor   float8   NOT NULL,
+    usuario int4     REFERENCES vendas.usuario(id)
+);
+
 INSERT INTO vendas.forma_pagamento
 (id, descricao, credito)
 VALUES(1, 'DINHEIRO', false);

@@ -21,6 +21,10 @@
                              oncomplete="PF('dlgRelatorios').show();"
                              styleClass="btnCabecalho" style="float:right;margin-left:10px;margin-right:20px"/>
 
+            <p:commandButton value="Caixa Diário" icon="calculadorasifrao"
+                             oncomplete="PF('dlgCaixaDiario').show();"
+                             styleClass="btnCabecalho" style="float:right;margin-left:10px;"/>
+
             <p:outputLabel value="Sempre Bella" styleClass="nomePrincipalParteSuperior"/>
 
             <p:separator/>
@@ -568,6 +572,41 @@
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgCaixaDiario" header="Caixa Diário"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formCaixaDiario">
+                <p:growl id="msgCaixaDiario"/>
+                <p:panelGrid columns="2" styleClass="semBorda">
+
+                    <p:outputLabel value="Data: "/>
+                    <p:calendar value="#{caixaDiarioMB.caixaDiario.data}"
+                                showOn="button" pattern="dd/MM/yyyy" locale="pt"
+                                required="true" requiredMessage="Insira a data" size="15"/>
+
+                    <p:outputLabel value="Valor: "/>
+                    <p:inputText value="#{caixaDiarioMB.caixaDiario.valor}"
+                                 maxlength="15" size="15"
+                                 required="true" requiredMessage="Insira o valor"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Adicionar"
+                                         action="#{caixaDiarioMB.inserirCaixaDiario()}"
+                                         update=":formCaixaDiario" icon="novo"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgCaixaDiario').hide();" icon="cancelar"
+                                         immediate="true"/>
+                    </p:panelGrid>
+                </div>
 
             </h:form>
         </p:dialog>
