@@ -26,7 +26,7 @@ public class VendaBuilderTest {
         when(rs.getBoolean("desconto")).thenReturn(true);
         when(rs.getDouble("percentual_desconto")).thenReturn(10.0);
 
-        // Colunas lidas pelo ClienteBuilder (e, por sua vez, pelo EnderecoBuilder)
+        // Colunas lidas pelo ClienteBuilder
         when(rs.getInt("telefone2")).thenReturn(1133334444);
         when(rs.getString("nome")).thenReturn("Maria da Silva");
         when(rs.getDate("data_nascimento")).thenReturn(dataNascimentoCliente);
