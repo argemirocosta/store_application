@@ -44,5 +44,8 @@ public class Mensagens {
 
     public static final String SENHA_INVALIDA = "Senha inválida!";
 
+    public static final String CAIXA_DIARIO_SUCESSO = "Caixa diário adicionado com sucesso!";
+
+    public static final String CAIXA_DIARIO_ERRO = "Erro ao adicionar caixa diário!";
 
 }
