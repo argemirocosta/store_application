@@ -13,10 +13,8 @@ public class Cliente implements Serializable {
     private String rg;
     private String telefone1;
     private Integer telefone2;
-    private Endereco endereco;
 
     public Cliente() {
-        endereco = new Endereco();
     }
 
     public Integer getId() {
@@ -75,14 +73,6 @@ public class Cliente implements Serializable {
         this.rg = rg;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,13 +84,12 @@ public class Cliente implements Serializable {
                 Objects.equals(cpf, cliente.cpf) &&
                 Objects.equals(rg, cliente.rg) &&
                 Objects.equals(telefone1, cliente.telefone1) &&
-                Objects.equals(telefone2, cliente.telefone2) &&
-                Objects.equals(endereco, cliente.endereco);
+                Objects.equals(telefone2, cliente.telefone2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, dataNascimento, cpf, rg, telefone1, telefone2, endereco);
+        return Objects.hash(id, nome, dataNascimento, cpf, rg, telefone1, telefone2);
     }
 
     @Override
@@ -113,7 +102,6 @@ public class Cliente implements Serializable {
                 ", rg='" + rg + '\'' +
                 ", telefone1=" + telefone1 +
                 ", telefone2=" + telefone2 +
-                ", endereco=" + endereco +
                 '}';
     }
 }

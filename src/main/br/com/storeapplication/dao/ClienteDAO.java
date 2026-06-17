@@ -162,55 +162,6 @@ public class ClienteDAO {
 				ps.setString(7, cliente.getRg());
 			}
 
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getCep())){
-				ps.setNull(8, Types.CHAR);
-			}
-			else {
-				ps.setString(8, StringUtil.retirarCaracteresEspeciais(cliente.getEndereco().getCep()));
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getEstado())){
-				ps.setNull(9, Types.CHAR);
-			}
-			else {
-				ps.setString(9, cliente.getEndereco().getEstado());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getCidade())){
-				ps.setNull(10, Types.CHAR);
-			}
-			else {
-				ps.setString(10, cliente.getEndereco().getCidade());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getBairro())){
-				ps.setNull(11, Types.CHAR);
-			}
-			else {
-				ps.setString(11, cliente.getEndereco().getBairro());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getLogradouro())){
-				ps.setNull(12, Types.CHAR);
-			}
-			else {
-				ps.setString(12, cliente.getEndereco().getLogradouro());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getNumero())){
-				ps.setNull(13, Types.NULL);
-			}
-			else {
-				ps.setInt(13, cliente.getEndereco().getNumero());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getCodIBGE())){
-				ps.setNull(14, Types.NULL);
-			}
-			else {
-				ps.setInt(14, cliente.getEndereco().getCodIBGE());
-			}
-
 			ResultSet rs = ps.executeQuery();
 			Integer idCliente = null;
 			if (rs.next()) {
@@ -275,56 +226,7 @@ public class ClienteDAO {
 				ps.setString(6, cliente.getRg());
 			}
 
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getCep())){
-				ps.setNull(7, Types.CHAR);
-			}
-			else {
-				ps.setString(7, StringUtil.retirarCaracteresEspeciais(cliente.getEndereco().getCep()));
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getEstado())){
-				ps.setNull(8, Types.CHAR);
-			}
-			else {
-				ps.setString(8, cliente.getEndereco().getEstado());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getCidade())){
-				ps.setNull(9, Types.CHAR);
-			}
-			else {
-				ps.setString(9, cliente.getEndereco().getCidade());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getBairro())){
-				ps.setNull(10, Types.CHAR);
-			}
-			else {
-				ps.setString(10, cliente.getEndereco().getBairro());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getLogradouro())){
-				ps.setNull(11, Types.CHAR);
-			}
-			else {
-				ps.setString(11, cliente.getEndereco().getLogradouro());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getNumero())){
-				ps.setNull(12, Types.NULL);
-			}
-			else {
-				ps.setInt(12, cliente.getEndereco().getNumero());
-			}
-
-			if(VerificadorUtil.verificarSeObjetoNuloOuVazio(cliente.getEndereco().getCodIBGE())){
-				ps.setNull(13, Types.NULL);
-			}
-			else {
-				ps.setInt(13, cliente.getEndereco().getCodIBGE());
-			}
-
-			ps.setInt(14, cliente.getId());
+			ps.setInt(7, cliente.getId());
 
 			ps.executeUpdate();
 

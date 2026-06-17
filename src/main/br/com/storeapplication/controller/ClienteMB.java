@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.storeapplication.service.ClienteService;
-import br.com.storeapplication.util.CEPUtil;
 import br.com.storeapplication.util.JSFUtil;
 import br.com.storeapplication.util.SessaoUtil;
 
@@ -96,10 +95,6 @@ public class ClienteMB {
 
     public void listarClientes() {
         listaClientes = clienteService.listarClientes();
-    }
-
-    public void buscarEnderecoClientePorCEP(){
-        cliente.setEndereco(CEPUtil.buscarEnderecoPorCEP(cliente.getEndereco().getCep()));
     }
 
     //GETTERS E SETTERS
