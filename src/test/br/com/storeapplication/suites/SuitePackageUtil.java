@@ -1,6 +1,5 @@
 package br.com.storeapplication.suites;
 
-import br.com.storeapplication.util.CEPUtilTest;
 import br.com.storeapplication.util.DataUtilTest;
 import br.com.storeapplication.util.DocumentosUtilTest;
 import br.com.storeapplication.util.IntegerUtilTest;
@@ -12,7 +11,6 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-        CEPUtilTest.class,
         DataUtilTest.class,
         DocumentosUtilTest.class,
         IntegerUtilTest.class,

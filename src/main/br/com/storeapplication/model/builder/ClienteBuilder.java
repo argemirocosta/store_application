@@ -1,7 +1,6 @@
 package br.com.storeapplication.model.builder;
 
 import br.com.storeapplication.model.Cliente;
-import br.com.storeapplication.model.Endereco;
 import br.com.storeapplication.shared.Builder;
 
 import java.sql.ResultSet;
@@ -52,11 +51,6 @@ public class ClienteBuilder implements Builder {
         return this;
     }
 
-    public ClienteBuilder comEndereco(Endereco endereco){
-        cliente.setEndereco(endereco);
-        return this;
-    }
-
     public Cliente construir() {
         return this.cliente;
     }
@@ -70,7 +64,6 @@ public class ClienteBuilder implements Builder {
                 .comRg(rs.getString("rg"))
                 .comTelefone1(rs.getString("telefone1"))
                 .comTelefone2(rs.getInt("telefone2"))
-                .comEndereco(new EnderecoBuilder().mapear(rs))
                 .construir();
     }
 }

@@ -1,0 +1,8 @@
+ALTER TABLE vendas.clientes
+    DROP COLUMN IF EXISTS cep,
+    DROP COLUMN IF EXISTS estado,
+    DROP COLUMN IF EXISTS cidade,
+    DROP COLUMN IF EXISTS bairro,
+    DROP COLUMN IF EXISTS logradouro,
+    DROP COLUMN IF EXISTS numero,
+    DROP COLUMN IF EXISTS cod_ibge;
