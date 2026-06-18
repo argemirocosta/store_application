@@ -52,4 +52,8 @@ public class Mensagens {
 
     public static final String ESTOQUE_ADICIONADO_ERRO = "Erro ao inserir estoque!";
 
+    public static final String RECEBIMENTO_CARTAO_ADICIONADO_SUCESSO = "Recebimento cartão adicionado com sucesso!";
+
+    public static final String RECEBIMENTO_CARTAO_ADICIONADO_ERRO = "Erro ao adicionar recebimento cartão!";
+
 }

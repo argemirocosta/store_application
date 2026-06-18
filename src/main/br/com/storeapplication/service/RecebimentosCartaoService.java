@@ -2,7 +2,9 @@ package br.com.storeapplication.service;
 
 import br.com.storeapplication.dao.RecebimentosCartaoDAO;
 import br.com.storeapplication.dto.DescontoCartaoDTO;
+import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
+import br.com.storeapplication.model.RecebimentoCartao;
 
 public class RecebimentosCartaoService {
 
@@ -10,6 +12,10 @@ public class RecebimentosCartaoService {
 
     public RecebimentosCartaoService() {
         recebimentosCartaoDAO = new RecebimentosCartaoDAO();
+    }
+
+    public void inserirRecebimentoCartao(RecebimentoCartao recebimento) throws ProjetoException {
+        recebimentosCartaoDAO.inserirRecebimentoCartao(recebimento);
     }
 
     public DescontoCartaoDTO consultarDescontoCartao(BuscaRelatorio busca) {

@@ -2,21 +2,28 @@ package br.com.storeapplication.dao;
 
 import br.com.storeapplication.dto.DescontoCartaoDTO;
 import br.com.storeapplication.exception.ProjetoException;
+import br.com.storeapplication.integration.PostgresContainerSupport;
 import br.com.storeapplication.integration.PostgresIntegrationTestBase;
 import br.com.storeapplication.integration.RecebimentosCartaoFixture;
 import br.com.storeapplication.integration.UsuarioFixture;
 import br.com.storeapplication.model.BuscaRelatorio;
 import br.com.storeapplication.model.Cliente;
 import br.com.storeapplication.model.FormaPagamento;
+import br.com.storeapplication.model.RecebimentoCartao;
 import br.com.storeapplication.model.Usuario;
 import br.com.storeapplication.model.Venda;
 import br.com.storeapplication.model.builder.ClienteBuilder;
 import br.com.storeapplication.model.builder.FormaPagamentoBuilder;
+import br.com.storeapplication.model.builder.RecebimentoCartaoBuilder;
 import br.com.storeapplication.model.builder.VendaBuilder;
 import br.com.storeapplication.util.DataUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,6 +73,41 @@ class RecebimentosCartaoDAOIT extends PostgresIntegrationTestBase {
     }
 
     @Test
+    void deveInserirRecebimentoCartao() throws ProjetoException, SQLException {
+        RecebimentoCartao recebimento = new RecebimentoCartaoBuilder()
+                .comData(adicionarDias(DataUtil.retornarDataAtual(), -365))
+                .comValorRecebido(1400.00)
+                .construir();
+
+        recebimentosCartaoDAO.inserirRecebimentoCartao(recebimento);
+
+        assertEquals(1, contarRegistros(usuario.getId()));
+    }
+
+    @Test
+    void naoDeveEnxergarRecebimentoDeOutroUsuario() throws ProjetoException, SQLException {
+        Date dataIsolada = adicionarDias(DataUtil.retornarDataAtual(), -730);
+
+        RecebimentoCartao recebimentoA = new RecebimentoCartaoBuilder()
+                .comData(dataIsolada)
+                .comValorRecebido(500.00)
+                .construir();
+        recebimentosCartaoDAO.inserirRecebimentoCartao(recebimentoA);
+
+        Usuario usuarioB = UsuarioFixture.criarUsuario();
+        loginComoUsuario(usuarioB);
+
+        RecebimentoCartao recebimentoB = new RecebimentoCartaoBuilder()
+                .comData(dataIsolada)
+                .comValorRecebido(250.00)
+                .construir();
+        recebimentosCartaoDAO.inserirRecebimentoCartao(recebimentoB);
+
+        assertEquals(1, contarRegistros(usuario.getId()));
+        assertEquals(1, contarRegistros(usuarioB.getId()));
+    }
+
+    @Test
     void deveRetornarZerosQuandoNaoHaRecebimentosNoPeriodo() {
         BuscaRelatorio busca = new BuscaRelatorio();
         busca.setPeriodoinicial(adicionarDias(DataUtil.retornarDataAtual(), -90));
@@ -105,6 +147,20 @@ class RecebimentosCartaoDAOIT extends PostgresIntegrationTestBase {
                 .construir();
 
         vendaDAO.inserirVenda(venda);
+    }
+
+    private int contarRegistros(int usuarioId) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(
+                PostgresContainerSupport.getContainer().getJdbcUrl(),
+                PostgresContainerSupport.getContainer().getUsername(),
+                PostgresContainerSupport.getContainer().getPassword());
+             PreparedStatement ps = conn.prepareStatement(
+                "SELECT COUNT(*) FROM vendas.\"recebimentos_cartão\" WHERE usuario = ?")) {
+            ps.setInt(1, usuarioId);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        }
     }
 
     private Date adicionarDias(Date data, int dias) {
