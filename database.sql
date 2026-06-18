@@ -88,15 +88,15 @@ CREATE TABLE vendas.caixa_diario (
 );
 CREATE INDEX caixa_diario_usuario_idx ON vendas.caixa_diario USING btree (usuario);
 
-CREATE TABLE vendas.recebimentos_cartao (
+CREATE TABLE vendas."recebimentos_cartão" (
     id serial4 NOT NULL,
     "data" date NOT NULL,
     valor_recebido float8 NOT NULL,
     usuario int4 NULL,
-    CONSTRAINT recebimentos_cartao_pk PRIMARY KEY (id),
-    CONSTRAINT recebimentos_cartao_fk FOREIGN KEY (usuario) REFERENCES vendas.usuario(id)
+    CONSTRAINT "recebimentos_cartão_pk" PRIMARY KEY (id),
+    CONSTRAINT "recebimentos_cartão_fk" FOREIGN KEY (usuario) REFERENCES vendas.usuario(id)
 );
-CREATE INDEX recebimentos_cartao_usuario_idx ON vendas.recebimentos_cartao USING btree (usuario);
+CREATE INDEX "recebimentos_cartão_usuario_idx" ON vendas."recebimentos_cartão" USING btree (usuario);
 
 INSERT INTO vendas.forma_pagamento
 (id, descricao, credito)

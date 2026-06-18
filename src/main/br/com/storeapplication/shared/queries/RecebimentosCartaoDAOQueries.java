@@ -14,7 +14,7 @@ public class RecebimentosCartaoDAOQueries {
             + "AND vv.cancelada IS NOT TRUE AND vv.id_forma_pagamento IN (2,4) AND vv.usuario = ?) AS valor_total, "
             + "rc.valor_recebido, sum(v.valor) - rc.valor_recebido AS taxas_juros, "
             + "v.\"data\" AS data_venda, rc.\"data\" AS data_recebimento "
-            + "FROM vendas.recebimentos_cartao rc "
+            + "FROM vendas.\"recebimentos_cartão\" rc "
             + "INNER JOIN vendas.venda v ON (rc.\"data\" = v.\"data\") "
             + "WHERE v.id_forma_pagamento IN (2,4) "
             + "AND v.usuario = ? "
