@@ -26,15 +26,18 @@ public class EstoqueMB {
         try {
             estoqueService.inserirEstoque(estoque);
             limparCampos();
-            JSFUtil.adicionarMensagemSucesso(ESTOQUE_SUCESSO, SUCESSO);
+            // dialog permanece aberto intencionalmente para permitir múltiplas inserções consecutivas
+            JSFUtil.adicionarMensagemSucesso(ESTOQUE_INSERIDO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
-            JSFUtil.adicionarMensagemErro(ESTOQUE_ERRO, ERRO);
+            JSFUtil.adicionarMensagemErro(ESTOQUE_INSERIDO_ERRO, ERRO);
         }
     }
 
     private void limparCampos() {
         estoque = new Estoque();
     }
+
+    //GETTERS E SETTERS
 
     public Estoque getEstoque() {
         return estoque;

@@ -41,4 +41,5 @@ public class EstoqueBuilder implements Builder {
                 .comValor(rs.getDouble("valor"))
                 .construir();
     }
+
 }

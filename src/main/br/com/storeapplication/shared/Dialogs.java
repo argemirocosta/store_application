@@ -20,4 +20,6 @@ public class Dialogs {
 
     public static final String DIALOG_CAIXA_DIARIO = "dlgCaixaDiario";
 
+    public static final String DIALOG_ESTOQUE = "dlgEstoque";
+
 }

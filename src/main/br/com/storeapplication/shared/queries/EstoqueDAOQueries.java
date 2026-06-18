@@ -6,5 +6,5 @@ public class EstoqueDAOQueries {
     }
 
     public static final String INSERIR_ESTOQUE =
-            "INSERT INTO vendas.estoque (data, valor, usuario) VALUES (?,?,?)";
+            "INSERT INTO vendas.estoque (\"data\", valor, usuario) VALUES (?,?,?)";
 }
