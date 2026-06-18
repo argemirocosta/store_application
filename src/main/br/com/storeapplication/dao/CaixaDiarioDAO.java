@@ -59,6 +59,7 @@ public class CaixaDiarioDAO {
             return 0.0;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            // null sinaliza falha na consulta; o MB usa != null para controlar a renderização do painel de saldo
             return null;
         } finally {
             try {

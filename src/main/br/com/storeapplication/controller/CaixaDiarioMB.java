@@ -27,6 +27,7 @@ public class CaixaDiarioMB {
         try {
             caixaDiarioService.inserirCaixaDiario(caixaDiario);
             limparCampos();
+            // dialog permanece aberto intencionalmente para exibir o saldo atualizado
             diferencaCaixa = caixaDiarioService.buscarDiferencaCaixa();
             JSFUtil.adicionarMensagemSucesso(CAIXA_DIARIO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
