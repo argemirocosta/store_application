@@ -26,4 +26,24 @@ public class RecebimentosCartaoDAOQueries {
             + "GROUP BY v.\"data\", rc.valor_recebido, rc.\"data\" "
             + "ORDER BY rc.\"data\" "
             + ") total";
+
+    public static final String SELECT_CONSULTAR_RECEBIMENTOS_CARTAO =
+            "SELECT data_venda, total_dia, valor_recebido, desconto_juros, "
+            + "(100 * desconto_juros) / total_dia AS percentual_taxas_juros "
+            + "FROM ( "
+            + "SELECT "
+            + "(SELECT sum(vv.valor) FROM vendas.venda vv WHERE vv.\"data\" = v.\"data\" "
+            + "AND vv.cancelada IS NOT TRUE AND vv.id_forma_pagamento IN (2,4) AND vv.usuario = ?) AS total_dia, "
+            + "rc.valor_recebido, "
+            + "sum(v.valor) - rc.valor_recebido AS desconto_juros, "
+            + "v.\"data\" AS data_venda "
+            + "FROM vendas.\"recebimentos_cartão\" rc "
+            + "INNER JOIN vendas.venda v ON (rc.\"data\" = v.\"data\") "
+            + "WHERE v.id_forma_pagamento IN (2,4) "
+            + "AND v.usuario = ? "
+            + "AND rc.\"data\" >= ? AND rc.\"data\" <= ? "
+            + "AND v.cancelada IS NOT TRUE "
+            + "GROUP BY v.\"data\", rc.valor_recebido, rc.\"data\" "
+            + "ORDER BY rc.\"data\" DESC "
+            + ") AS totais";
 }
