@@ -605,9 +605,12 @@
 
                 </p:panelGrid>
 
-                <p:commandButton value="Gerar relatório" action="#{vendaMB.calcularDescontoCartao()}" styleClass="altura10px"
-                                 update=":formRelatorioDescontoCartao" icon="buscar"/>
+                <div align="center" class="altura10px">
+                    <p:commandButton value="Gerar relatório" action="#{vendaMB.calcularDescontoCartao()}"
+                                     update=":formRelatorioDescontoCartao" icon="buscar"/>
+                </div>
 
+                <br></br>
                 <br></br>
 
                 <h:outputLabel value="Valor cartão período: "
