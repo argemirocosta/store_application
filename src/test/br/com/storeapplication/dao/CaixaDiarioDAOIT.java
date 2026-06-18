@@ -64,6 +64,36 @@ class CaixaDiarioDAOIT extends PostgresIntegrationTestBase {
         assertEquals(1, contarRegistros(usuarioB.getId()));
     }
 
+    @Test
+    void deveBuscarDiferencaCaixaSomenteDoUsuarioLogado() throws ProjetoException {
+        CaixaDiario caixaDiarioA = new CaixaDiarioBuilder()
+                .comData(new Date())
+                .comValor(200.00)
+                .construir();
+        caixaDiarioDAO.inserirCaixaDiario(caixaDiarioA);
+
+        CaixaDiario caixaDiarioB = new CaixaDiarioBuilder()
+                .comData(new Date())
+                .comValor(100.00)
+                .construir();
+        caixaDiarioDAO.inserirCaixaDiario(caixaDiarioB);
+
+        Usuario usuarioB = UsuarioFixture.criarUsuario();
+        loginComoUsuario(usuarioB);
+
+        CaixaDiario caixaDiarioC = new CaixaDiarioBuilder()
+                .comData(new Date())
+                .comValor(999.00)
+                .construir();
+        caixaDiarioDAO.inserirCaixaDiario(caixaDiarioC);
+
+        loginComoUsuario(usuario);
+
+        Double diferenca = caixaDiarioDAO.buscarDiferencaCaixa();
+
+        assertEquals(300.00, diferenca, 0.001);
+    }
+
     private int contarRegistros(int usuarioId) throws SQLException {
         try (Connection conn = DriverManager.getConnection(
                 PostgresContainerSupport.getContainer().getJdbcUrl(),

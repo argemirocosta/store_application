@@ -8,7 +8,6 @@ import br.com.storeapplication.util.JSFUtil;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import static br.com.storeapplication.shared.Dialogs.DIALOG_CAIXA_DIARIO;
 import static br.com.storeapplication.shared.Mensagens.*;
 
 @ViewScoped
@@ -17,6 +16,7 @@ public class CaixaDiarioMB {
 
     private CaixaDiario caixaDiario;
     private CaixaDiarioService caixaDiarioService;
+    private Double diferencaCaixa;
 
     public CaixaDiarioMB() {
         caixaDiario = new CaixaDiario();
@@ -27,7 +27,8 @@ public class CaixaDiarioMB {
         try {
             caixaDiarioService.inserirCaixaDiario(caixaDiario);
             limparCampos();
-            JSFUtil.fecharDialog(DIALOG_CAIXA_DIARIO);
+            // dialog permanece aberto intencionalmente para exibir o saldo atualizado
+            diferencaCaixa = caixaDiarioService.buscarDiferencaCaixa();
             JSFUtil.adicionarMensagemSucesso(CAIXA_DIARIO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
             JSFUtil.adicionarMensagemErro(CAIXA_DIARIO_ERRO, ERRO);
@@ -44,5 +45,13 @@ public class CaixaDiarioMB {
 
     public void setCaixaDiario(CaixaDiario caixaDiario) {
         this.caixaDiario = caixaDiario;
+    }
+
+    public Double getDiferencaCaixa() {
+        return diferencaCaixa;
+    }
+
+    public void setDiferencaCaixa(Double diferencaCaixa) {
+        this.diferencaCaixa = diferencaCaixa;
     }
 }

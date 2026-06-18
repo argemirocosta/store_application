@@ -9,8 +9,10 @@ import br.com.storeapplication.util.SessaoUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static br.com.storeapplication.shared.queries.CaixaDiarioDAOQueries.SELECT_CONSULTAR_DIFERENCA_CAIXA;
 import static br.com.storeapplication.shared.queries.CaixaDiarioDAOQueries.INSERIR_CAIXA_DIARIO;
 
 public class CaixaDiarioDAO {
@@ -34,6 +36,31 @@ public class CaixaDiarioDAO {
 
         } catch (SQLException ex) {
             throw new ProjetoException(ex);
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public Double buscarDiferencaCaixa() {
+        conexao = ConnectionFactory.getConnection();
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
+        try {
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_DIFERENCA_CAIXA);
+            ps.setInt(1, usuarioSessao.getId());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double valor = rs.getDouble("diferenca_caixa");
+                return rs.wasNull() ? 0.0 : valor;
+            }
+            return 0.0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // null sinaliza falha na consulta; o MB usa != null para controlar a renderização do painel de saldo
+            return null;
         } finally {
             try {
                 conexao.close();

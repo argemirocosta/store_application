@@ -15,4 +15,8 @@ public class CaixaDiarioService {
     public void inserirCaixaDiario(CaixaDiario caixaDiario) throws ProjetoException {
         caixaDiarioDAO.inserirCaixaDiario(caixaDiario);
     }
+
+    public Double buscarDiferencaCaixa() {
+        return caixaDiarioDAO.buscarDiferencaCaixa();
+    }
 }
