@@ -22,4 +22,6 @@ public class Dialogs {
 
     public static final String DIALOG_ESTOQUE = "dlgEstoque";
 
+    public static final String DIALOG_RECEBIMENTO_CARTAO = "dlgRecebimentoCartao";
+
 }

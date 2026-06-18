@@ -2,7 +2,10 @@ package br.com.storeapplication.service;
 
 import br.com.storeapplication.dao.RecebimentosCartaoDAO;
 import br.com.storeapplication.dto.DescontoCartaoDTO;
+import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
+import br.com.storeapplication.model.RecebimentoCartao;
+import br.com.storeapplication.model.builder.RecebimentoCartaoBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -14,6 +17,25 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class RecebimentosCartaoServiceTest {
+
+    @Test
+    void deveDelegarInsercaoAoDAO() throws NoSuchFieldException, IllegalAccessException, ProjetoException {
+        RecebimentosCartaoDAO daoMock = mock(RecebimentosCartaoDAO.class);
+
+        RecebimentosCartaoService service = new RecebimentosCartaoService();
+        Field campo = RecebimentosCartaoService.class.getDeclaredField("recebimentosCartaoDAO");
+        campo.setAccessible(true);
+        campo.set(service, daoMock);
+
+        RecebimentoCartao recebimento = new RecebimentoCartaoBuilder()
+                .comData(new Date())
+                .comValorRecebido(1400.00)
+                .construir();
+
+        service.inserirRecebimentoCartao(recebimento);
+
+        verify(daoMock).inserirRecebimentoCartao(recebimento);
+    }
 
     @Test
     void deveDelegarConsultaAoDAO() throws NoSuchFieldException, IllegalAccessException {

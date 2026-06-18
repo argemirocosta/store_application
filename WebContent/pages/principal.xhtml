@@ -29,6 +29,10 @@
                              oncomplete="PF('dlgEstoque').show();"
                              styleClass="btnCabecalho" style="float:right;margin-left:10px;"/>
 
+            <p:commandButton value="Recebimento cartão" icon="sifrao"
+                             oncomplete="PF('dlgRecebimentoCartao').show();"
+                             styleClass="btnCabecalho" style="float:right;margin-left:10px;"/>
+
             <p:outputLabel value="Sempre Bella" styleClass="nomePrincipalParteSuperior"/>
 
             <p:separator/>
@@ -671,6 +675,39 @@
                                          update=":formEstoque" icon="novo"/>
                         <p:commandButton value="Fechar"
                                          oncomplete="PF('dlgEstoque').hide();" icon="cancelar"
+                                         immediate="true"/>
+                    </p:panelGrid>
+                </div>
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRecebimentoCartao" header="Recebimento Cartão"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRecebimentoCartao">
+                <p:growl id="msgRecebimentoCartao"/>
+                <p:panelGrid columns="2" styleClass="semBorda">
+
+                    <p:outputLabel value="Data: "/>
+                    <p:calendar value="#{recebimentoCartaoMB.recebimentoCartao.data}"
+                                showOn="button" pattern="dd/MM/yyyy" locale="pt"
+                                required="true" requiredMessage="Insira a data" size="15"/>
+
+                    <p:outputLabel value="Valor: "/>
+                    <p:inputText value="#{recebimentoCartaoMB.recebimentoCartao.valorRecebido}"
+                                 maxlength="15" size="15"
+                                 required="true" requiredMessage="Insira o valor"/>
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Adicionar"
+                                         action="#{recebimentoCartaoMB.inserirRecebimentoCartao()}"
+                                         update=":formRecebimentoCartao" icon="novo"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgRecebimentoCartao').hide();" icon="cancelar"
                                          immediate="true"/>
                     </p:panelGrid>
                 </div>

@@ -1,8 +1,10 @@
 package br.com.storeapplication.dao;
 
 import br.com.storeapplication.dto.DescontoCartaoDTO;
+import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.factory.ConnectionFactory;
 import br.com.storeapplication.model.BuscaRelatorio;
+import br.com.storeapplication.model.RecebimentoCartao;
 import br.com.storeapplication.model.Usuario;
 import br.com.storeapplication.util.DataUtil;
 import br.com.storeapplication.util.SessaoUtil;
@@ -17,6 +19,32 @@ import static br.com.storeapplication.shared.queries.RecebimentosCartaoDAOQuerie
 public class RecebimentosCartaoDAO {
 
     private Connection conexao = null;
+
+    public void inserirRecebimentoCartao(RecebimentoCartao recebimento) throws ProjetoException {
+
+        conexao = ConnectionFactory.getConnection();
+        Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
+
+        try {
+            PreparedStatement ps = conexao.prepareStatement(INSERIR_RECEBIMENTO_CARTAO);
+            ps.setDate(1, DataUtil.converterDateUtilParaDateSql(recebimento.getData()));
+            ps.setDouble(2, recebimento.getValorRecebido());
+            ps.setInt(3, usuarioSessao.getId());
+
+            ps.executeUpdate();
+
+            conexao.commit();
+
+        } catch (SQLException ex) {
+            throw new ProjetoException(ex);
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
     public DescontoCartaoDTO consultarDescontoCartao(BuscaRelatorio busca) {
 

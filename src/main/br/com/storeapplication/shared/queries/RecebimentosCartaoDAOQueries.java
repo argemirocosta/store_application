@@ -5,6 +5,9 @@ public class RecebimentosCartaoDAOQueries {
     private RecebimentosCartaoDAOQueries() {
     }
 
+    public static final String INSERIR_RECEBIMENTO_CARTAO =
+            "INSERT INTO vendas.\"recebimentos_cartão\" (\"data\", valor_recebido, usuario) VALUES (?,?,?)";
+
     public static final String SELECT_CONSULTAR_DESCONTO_CARTAO =
             "SELECT sum(valor_total) AS valor_vendido_cartao, "
             + "sum(valor_recebido) AS valor_recebido_cartao, "
