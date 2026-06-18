@@ -27,7 +27,7 @@ public class RecebimentosCartaoDAOQueries {
             + "ORDER BY rc.\"data\" "
             + ") total";
 
-    public static final String SELECT_RECEBIMENTOS_CARTAO_RELATORIO =
+    public static final String SELECT_CONSULTAR_RECEBIMENTOS_CARTAO =
             "SELECT data_venda, total_dia, valor_recebido, desconto_juros, "
             + "(100 * desconto_juros) / total_dia AS percentual_taxas_juros "
             + "FROM ( "

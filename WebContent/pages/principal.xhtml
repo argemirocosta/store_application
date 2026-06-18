@@ -676,44 +676,44 @@
                 <br></br>
 
                 <p:dataTable id="tabRecebimentosCartao" value="#{vendaMB.listaRecebimentosCartao}"
-                             var="rec" emptyMessage="Nenhum recebimento encontrado no período" rows="20"
+                             var="var" emptyMessage="Nenhum recebimento encontrado no período" rows="20"
                              paginator="true" paginatorPosition="bottom">
 
-                    <p:column headerText="Data Venda">
+                    <p:column headerText="Data Venda" width="20%">
                         <div align="center">
-                            <h:outputText value="#{rec.dataVenda}">
+                            <h:outputText value="#{var.dataVenda}">
                                 <f:convertDateTime pattern="dd/MM/yyyy"/>
                             </h:outputText>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Total do dia">
+                    <p:column headerText="Total do dia" width="20%">
                         <div align="center">
-                            <p:outputLabel value="#{rec.totalDia}">
+                            <p:outputLabel value="#{var.totalDia}">
                                 <f:convertNumber type="currency" currencySymbol="R$"/>
                             </p:outputLabel>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Valor recebido">
+                    <p:column headerText="Valor recebido" width="20%">
                         <div align="center">
-                            <p:outputLabel value="#{rec.valorRecebido}">
+                            <p:outputLabel value="#{var.valorRecebido}">
                                 <f:convertNumber type="currency" currencySymbol="R$"/>
                             </p:outputLabel>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Desconto juros">
+                    <p:column headerText="Desconto juros" width="20%">
                         <div align="center">
-                            <p:outputLabel value="#{rec.descontoJuros}">
+                            <p:outputLabel value="#{var.descontoJuros}">
                                 <f:convertNumber type="currency" currencySymbol="R$"/>
                             </p:outputLabel>
                         </div>
                     </p:column>
 
-                    <p:column headerText="Percentual taxa juros">
+                    <p:column headerText="Percentual taxa juros" width="20%">
                         <div align="center">
-                            <h:outputText value="#{rec.percentualTaxasJuros}">
+                            <h:outputText value="#{var.percentualTaxasJuros}">
                                 <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                             </h:outputText>
                             <h:outputText value="%"/>
