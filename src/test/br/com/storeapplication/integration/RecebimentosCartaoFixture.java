@@ -17,7 +17,7 @@ public final class RecebimentosCartaoFixture {
                 PostgresContainerSupport.getContainer().getUsername(),
                 PostgresContainerSupport.getContainer().getPassword());
              PreparedStatement ps = conexao.prepareStatement(
-                     "INSERT INTO vendas.\"recebimentos_cartão\" (\"data\", valor_recebido, usuario) VALUES (?, ?, ?)")) {
+                     "INSERT INTO vendas.recebimentos_cartao (\"data\", valor_recebido, usuario) VALUES (?, ?, ?)")) {
             ps.setDate(1, new java.sql.Date(data.getTime()));
             ps.setDouble(2, valorRecebido);
             ps.setInt(3, idUsuario);

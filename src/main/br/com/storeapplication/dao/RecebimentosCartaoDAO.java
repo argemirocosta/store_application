@@ -28,7 +28,7 @@ public class RecebimentosCartaoDAO {
         Usuario usuarioSessao = SessaoUtil.resgatarUsuarioDaSessao();
 
         try {
-            PreparedStatement ps = conexao.prepareStatement(SELECT_DESCONTO_CARTAO);
+            PreparedStatement ps = conexao.prepareStatement(SELECT_CONSULTAR_DESCONTO_CARTAO);
             ps.setInt(1, usuarioSessao.getId());
             ps.setInt(2, usuarioSessao.getId());
             ps.setDate(3, new java.sql.Date(busca.getPeriodoinicial().getTime()));
