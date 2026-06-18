@@ -364,6 +364,13 @@
                     <p:commandButton value="Cálculo de Estoque"
                                      oncomplete="PF('dlgRelatorioCalculoEstoque').show();" icon="ui-icon-suitcase"/>
 
+                    <h:panelGroup/>
+
+                    <p:commandButton value="Desconto do cartão"
+                                     oncomplete="PF('dlgRelatorioDescontoCartao').show();" icon="ui-icon-calculator"/>
+
+                    <h:panelGroup/>
+
                 </p:panelGrid>
 
                 <div align="center" class="altura30px">
@@ -573,6 +580,60 @@
                                style="font-size: 14px;margin-left:20px"/>
 
                 <h:outputLabel value="#{vendaMB.valorEstoque}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioDescontoCartao" header="Desconto do cartão"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioDescontoCartao">
+                <p:panelGrid columns="3" styleClass="semBorda">
+
+                    <p:calendar id="buttonDescontoCartao" locale="pt"
+                                value="#{vendaMB.busca.periodoinicial}" size="12"
+                                pattern="dd/MM/yyyy" showOn="button"/>
+
+                    <h:outputText value="a" style="margin-left: 5px"/>
+
+                    <p:calendar value="#{vendaMB.busca.periodofinal}"
+                                style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
+                                showOn="button" locale="pt"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="Gerar relatório" action="#{vendaMB.calcularDescontoCartao()}" styleClass="altura10px"
+                                 update=":formRelatorioDescontoCartao" icon="buscar"/>
+
+                <br></br>
+
+                <h:outputLabel value="Valor cartão período: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.valorCartaoPeriodo}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+                <br></br>
+
+                <h:outputLabel value="Valor recebido: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.valorRecebidoCartao}"
+                               style="font-size: 14px;color:red;margin-left:10px">
+                    <f:convertNumber type="currency" currencySymbol="R$"/>
+                </h:outputLabel>
+
+                <br></br>
+
+                <h:outputLabel value="Valor desconto cartão: "
+                               style="font-size: 14px;margin-left:20px"/>
+
+                <h:outputLabel value="#{vendaMB.valorDescontoCartao}"
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
