@@ -25,6 +25,10 @@
                              oncomplete="PF('dlgCaixaDiario').show();"
                              styleClass="btnCabecalho" style="float:right;margin-left:10px;"/>
 
+            <p:commandButton value="Estoque" icon="carrinho"
+                             oncomplete="PF('dlgEstoque').show();"
+                             styleClass="btnCabecalho" style="float:right;margin-left:10px;"/>
+
             <p:outputLabel value="Sempre Bella" styleClass="nomePrincipalParteSuperior"/>
 
             <p:separator/>
@@ -573,6 +577,39 @@
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
 
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgEstoque" header="Estoque"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formEstoque">
+                <p:growl id="msgEstoque"/>
+                <p:panelGrid columns="2" styleClass="semBorda">
+
+                    <p:outputLabel value="Data: "/>
+                    <p:calendar value="#{estoqueMB.estoque.data}"
+                                showOn="button" pattern="dd/MM/yyyy" locale="pt"
+                                required="true" requiredMessage="Insira a data" size="15"/>
+
+                    <p:outputLabel value="Valor: "/>
+                    <p:inputText value="#{estoqueMB.estoque.valor}"
+                                 maxlength="15" size="15"
+                                 required="true" requiredMessage="Insira o valor"/>
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <div align="center">
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:commandButton value="Adicionar"
+                                         action="#{estoqueMB.inserirEstoque()}"
+                                         update=":formEstoque" icon="novo"/>
+                        <p:commandButton value="Fechar"
+                                         oncomplete="PF('dlgEstoque').hide();" icon="cancelar"
+                                         immediate="true"/>
+                    </p:panelGrid>
+                </div>
             </h:form>
         </p:dialog>
 
