@@ -1,5 +1,6 @@
 package br.com.storeapplication.controller;
 
+import br.com.storeapplication.dto.DescontoCartaoDTO;
 import br.com.storeapplication.dto.VendasComDescontoDTO;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
@@ -16,6 +17,7 @@ import static br.com.storeapplication.shared.Dialogs.*;
 import static br.com.storeapplication.shared.Mensagens.*;
 
 import br.com.storeapplication.service.FormaPagamentoService;
+import br.com.storeapplication.service.RecebimentosCartaoService;
 import br.com.storeapplication.service.VendaService;
 import br.com.storeapplication.util.DataUtil;
 import br.com.storeapplication.util.JSFUtil;
@@ -32,9 +34,13 @@ public class VendaMB {
     private Double mediaDiariaPromocao;
     private Double valorEstoque;
     private Double valorMercadoriaParaRepor;
+    private Double valorCartaoPeriodo;
+    private Double valorRecebidoCartao;
+    private Double valorDescontoCartao;
     private VendaService vendaService;
     private FormaPagamentoService formaPagamentoService;
     private List<FormaPagamento> listaFormasPagamento;
+    private RecebimentosCartaoService recebimentosCartaoService;
     private ArrayList<VendasComDescontoDTO> listaVendasComDesconto;
 
     public VendaMB() {
@@ -48,7 +54,11 @@ public class VendaMB {
         mediaDiariaPromocao = 0.0;
         valorEstoque = 0.0;
         valorMercadoriaParaRepor = 0.0;
+        valorCartaoPeriodo = 0.0;
+        valorRecebidoCartao = 0.0;
+        valorDescontoCartao = 0.0;
         vendaService = new VendaService();
+        recebimentosCartaoService = new RecebimentosCartaoService();
         formaPagamentoService = new FormaPagamentoService();
         listaFormasPagamento = new ArrayList<>();
         listaVendasComDesconto = new ArrayList<>();
@@ -104,6 +114,13 @@ public class VendaMB {
 
     public void calcularValorMercadoriaParaRepor() {
         valorMercadoriaParaRepor = vendaService.consultarValorMercadoriaParaRepor(busca);
+    }
+
+    public void calcularDescontoCartao() {
+        DescontoCartaoDTO dto = recebimentosCartaoService.consultarDescontoCartao(busca);
+        valorCartaoPeriodo = dto.getValorCartaoPeriodo();
+        valorRecebidoCartao = dto.getValorRecebido();
+        valorDescontoCartao = dto.getValorDescontoCartao();
     }
 
     private void listarFormasPagamento() {
@@ -212,5 +229,29 @@ public class VendaMB {
 
     public void setListaVendasComDesconto(ArrayList<VendasComDescontoDTO> listaVendasComDesconto) {
         this.listaVendasComDesconto = listaVendasComDesconto;
+    }
+
+    public Double getValorCartaoPeriodo() {
+        return valorCartaoPeriodo;
+    }
+
+    public void setValorCartaoPeriodo(Double valorCartaoPeriodo) {
+        this.valorCartaoPeriodo = valorCartaoPeriodo;
+    }
+
+    public Double getValorRecebidoCartao() {
+        return valorRecebidoCartao;
+    }
+
+    public void setValorRecebidoCartao(Double valorRecebidoCartao) {
+        this.valorRecebidoCartao = valorRecebidoCartao;
+    }
+
+    public Double getValorDescontoCartao() {
+        return valorDescontoCartao;
+    }
+
+    public void setValorDescontoCartao(Double valorDescontoCartao) {
+        this.valorDescontoCartao = valorDescontoCartao;
     }
 }
