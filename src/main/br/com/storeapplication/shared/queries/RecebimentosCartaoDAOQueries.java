@@ -20,7 +20,6 @@ public class RecebimentosCartaoDAOQueries {
             + "AND v.usuario = ? "
             + "AND rc.\"data\" >= ? AND rc.\"data\" <= ? "
             + "AND v.cancelada IS NOT TRUE "
-            + "AND rc.usuario = ? "
             + "GROUP BY v.\"data\", rc.valor_recebido, rc.\"data\" "
             + "ORDER BY rc.\"data\" "
             + ") total";

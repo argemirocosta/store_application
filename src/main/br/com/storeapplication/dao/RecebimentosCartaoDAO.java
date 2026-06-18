@@ -33,7 +33,6 @@ public class RecebimentosCartaoDAO {
             ps.setInt(2, usuarioSessao.getId());
             ps.setDate(3, new java.sql.Date(busca.getPeriodoinicial().getTime()));
             ps.setDate(4, DataUtil.converterDateUtilParaDateSql(busca.getPeriodofinal()));
-            ps.setInt(5, usuarioSessao.getId());
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {

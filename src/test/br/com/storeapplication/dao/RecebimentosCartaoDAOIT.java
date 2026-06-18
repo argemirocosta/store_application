@@ -51,7 +51,7 @@ class RecebimentosCartaoDAOIT extends PostgresIntegrationTestBase {
         inserirVenda(cliente, 100.0, hoje, CARTAO_CREDITO);
         inserirVenda(cliente, 50.0, hoje, CARTAO_DEBITO);
 
-        RecebimentosCartaoFixture.inserirRecebimentoCartao(hoje, 140.0, usuario.getId());
+        RecebimentosCartaoFixture.inserirRecebimentoCartao(hoje, 140.0);
 
         BuscaRelatorio busca = new BuscaRelatorio();
         busca.setPeriodoinicial(adicionarDias(hoje, -1));
