@@ -90,6 +90,11 @@ body {
 	background-image: url("../imgs/pessoa.png") !important;
 }
 
+.textoSaldoCaixa {
+	color: red;
+	font-weight: bold;
+}
+
 .rowRed td {
 	background-color: rgba(218, 79, 73, 0.3);;
 }

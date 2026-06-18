@@ -49,4 +49,8 @@ public class CaixaDiarioMB {
     public Double getDiferencaCaixa() {
         return diferencaCaixa;
     }
+
+    public void setDiferencaCaixa(Double diferencaCaixa) {
+        this.diferencaCaixa = diferencaCaixa;
+    }
 }

@@ -595,11 +595,11 @@
 
                 </p:panelGrid>
 
-                <p:outputPanel rendered="#{caixaDiarioMB.diferencaCaixa != null}">
+                <p:outputPanel id="panelSaldoCaixa" rendered="#{caixaDiarioMB.diferencaCaixa != null}">
                     <p:separator/>
                     <div align="center">
-                        <h:outputText value="Saldo atual do caixa: " style="color: red; font-weight: bold;"/>
-                        <h:outputText value="#{caixaDiarioMB.diferencaCaixa}" style="color: red; font-weight: bold;">
+                        <h:outputText value="Saldo atual do caixa: " styleClass="textoSaldoCaixa"/>
+                        <h:outputText value="#{caixaDiarioMB.diferencaCaixa}" styleClass="textoSaldoCaixa">
                             <f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR"/>
                         </h:outputText>
                     </div>
