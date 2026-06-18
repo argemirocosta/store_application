@@ -26,15 +26,18 @@ public class RecebimentoCartaoMB {
         try {
             recebimentosCartaoService.inserirRecebimentoCartao(recebimentoCartao);
             limparCampos();
-            JSFUtil.adicionarMensagemSucesso(RECEBIMENTO_CARTAO_SUCESSO, SUCESSO);
+            // dialog permanece aberto intencionalmente para permitir múltiplas inserções consecutivas
+            JSFUtil.adicionarMensagemSucesso(RECEBIMENTO_CARTAO_ADICIONADO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
-            JSFUtil.adicionarMensagemErro(RECEBIMENTO_CARTAO_ERRO, ERRO);
+            JSFUtil.adicionarMensagemErro(RECEBIMENTO_CARTAO_ADICIONADO_ERRO, ERRO);
         }
     }
 
     private void limparCampos() {
         recebimentoCartao = new RecebimentoCartao();
     }
+
+    //GETTERS E SETTERS
 
     public RecebimentoCartao getRecebimentoCartao() {
         return recebimentoCartao;
