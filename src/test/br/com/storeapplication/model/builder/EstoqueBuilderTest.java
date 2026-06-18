@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class EstoqueBuilderTest {
+class EstoqueBuilderTest {
 
     @Test
-    public void testarMapearResultSetParaEstoque() throws Exception {
+    void deveMapearResultSetParaEstoque() throws Exception {
         ResultSet rs = mock(ResultSet.class);
         Date data = Date.valueOf("2024-03-15");
 
@@ -29,7 +29,7 @@ public class EstoqueBuilderTest {
     }
 
     @Test
-    public void testarConstruirEstoque() {
+    void deveConstruirEstoque() {
         Date data = Date.valueOf("2024-03-15");
 
         Estoque estoque = new EstoqueBuilder()

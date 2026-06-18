@@ -12,10 +12,10 @@ import java.util.Date;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class EstoqueServiceTest {
+class EstoqueServiceTest {
 
     @Test
-    public void deveDelegarInsercaoAoDAO() throws ProjetoException, NoSuchFieldException, IllegalAccessException {
+    void deveDelegarInsercaoAoDAO() throws ProjetoException, NoSuchFieldException, IllegalAccessException {
         EstoqueDAO daoMock = mock(EstoqueDAO.class);
 
         EstoqueService service = new EstoqueService();

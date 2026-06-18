@@ -27,9 +27,9 @@ public class EstoqueMB {
             estoqueService.inserirEstoque(estoque);
             limparCampos();
             // dialog permanece aberto intencionalmente para permitir múltiplas inserções consecutivas
-            JSFUtil.adicionarMensagemSucesso(ESTOQUE_INSERIDO_SUCESSO, SUCESSO);
+            JSFUtil.adicionarMensagemSucesso(ESTOQUE_ADICIONADO_SUCESSO, SUCESSO);
         } catch (ProjetoException e) {
-            JSFUtil.adicionarMensagemErro(ESTOQUE_INSERIDO_ERRO, ERRO);
+            JSFUtil.adicionarMensagemErro(ESTOQUE_ADICIONADO_ERRO, ERRO);
         }
     }
 

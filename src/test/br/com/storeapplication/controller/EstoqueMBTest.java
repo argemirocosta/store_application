@@ -15,7 +15,6 @@ import java.util.Date;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 class EstoqueMBTest {
@@ -54,7 +53,7 @@ class EstoqueMBTest {
     }
 
     @Test
-    void naoDevePropagrarExcecaoEmCasoDeFalha() throws ProjetoException {
+    void naoDevePropagarExcecaoEmCasoDeFalha() throws ProjetoException {
         doThrow(new ProjetoException(new RuntimeException("erro"))).when(serviceMock).inserirEstoque(any());
 
         mb.inserirEstoque();

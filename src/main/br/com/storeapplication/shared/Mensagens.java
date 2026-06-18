@@ -48,8 +48,8 @@ public class Mensagens {
 
     public static final String CAIXA_DIARIO_ERRO = "Erro ao adicionar caixa diário!";
 
-    public static final String ESTOQUE_INSERIDO_SUCESSO = "Estoque inserido com sucesso!";
+    public static final String ESTOQUE_ADICIONADO_SUCESSO = "Estoque inserido com sucesso!";
 
-    public static final String ESTOQUE_INSERIDO_ERRO = "Erro ao inserir estoque!";
+    public static final String ESTOQUE_ADICIONADO_ERRO = "Erro ao inserir estoque!";
 
 }
