@@ -373,7 +373,8 @@
                     <p:commandButton value="Desconto do cartão"
                                      oncomplete="PF('dlgRelatorioDescontoCartao').show();" icon="ui-icon-calculator"/>
 
-                    <h:panelGroup/>
+                    <p:commandButton value="Recebimentos cartão"
+                                     oncomplete="PF('dlgRelatorioRecebimentosCartao').show();" icon="ui-icon-calculator"/>
 
                 </p:panelGrid>
 
@@ -644,6 +645,82 @@
                                style="font-size: 14px;color:red;margin-left:10px">
                     <f:convertNumber type="currency" currencySymbol="R$"/>
                 </h:outputLabel>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="dlgRelatorioRecebimentosCartao" header="Recebimentos Cartão"
+                  height="auto" width="auto" draggable="true" resizable="false"
+                  modal="true">
+            <h:form id="formRelatorioRecebimentosCartao">
+                <p:panelGrid columns="3" styleClass="semBorda">
+
+                    <p:calendar id="buttonRecebimentosCartao" locale="pt"
+                                value="#{vendaMB.busca.periodoinicial}" size="12"
+                                pattern="dd/MM/yyyy" showOn="button"/>
+
+                    <h:outputText value="a" style="margin-left: 5px"/>
+
+                    <p:calendar value="#{vendaMB.busca.periodofinal}"
+                                style="margin-left: 5px" size="12" pattern="dd/MM/yyyy"
+                                showOn="button" locale="pt"/>
+
+                </p:panelGrid>
+
+                <div align="center" class="altura10px">
+                    <p:commandButton value="Gerar relatório" action="#{vendaMB.consultarRecebimentosCartao()}"
+                                     update=":formRelatorioRecebimentosCartao" icon="buscar"/>
+                </div>
+
+                <br></br>
+                <br></br>
+
+                <p:dataTable id="tabRecebimentosCartao" value="#{vendaMB.listaRecebimentosCartao}"
+                             var="rec" emptyMessage="Nenhum recebimento encontrado no período" rows="20"
+                             paginator="true" paginatorPosition="bottom">
+
+                    <p:column headerText="Data Venda">
+                        <div align="center">
+                            <h:outputText value="#{rec.dataVenda}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Total do dia">
+                        <div align="center">
+                            <p:outputLabel value="#{rec.totalDia}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Valor recebido">
+                        <div align="center">
+                            <p:outputLabel value="#{rec.valorRecebido}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Desconto juros">
+                        <div align="center">
+                            <p:outputLabel value="#{rec.descontoJuros}">
+                                <f:convertNumber type="currency" currencySymbol="R$"/>
+                            </p:outputLabel>
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="Percentual taxa juros">
+                        <div align="center">
+                            <h:outputText value="#{rec.percentualTaxasJuros}">
+                                <f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                            </h:outputText>
+                            <h:outputText value="%"/>
+                        </div>
+                    </p:column>
+
+                </p:dataTable>
 
             </h:form>
         </p:dialog>

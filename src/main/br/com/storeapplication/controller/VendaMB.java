@@ -1,6 +1,7 @@
 package br.com.storeapplication.controller;
 
 import br.com.storeapplication.dto.DescontoCartaoDTO;
+import br.com.storeapplication.dto.RecebimentoCartaoRelatorioDTO;
 import br.com.storeapplication.dto.VendasComDescontoDTO;
 import br.com.storeapplication.exception.ProjetoException;
 import br.com.storeapplication.model.BuscaRelatorio;
@@ -42,6 +43,7 @@ public class VendaMB {
     private List<FormaPagamento> listaFormasPagamento;
     private RecebimentosCartaoService recebimentosCartaoService;
     private ArrayList<VendasComDescontoDTO> listaVendasComDesconto;
+    private ArrayList<RecebimentoCartaoRelatorioDTO> listaRecebimentosCartao;
 
     public VendaMB() {
         venda = new Venda();
@@ -62,6 +64,7 @@ public class VendaMB {
         formaPagamentoService = new FormaPagamentoService();
         listaFormasPagamento = new ArrayList<>();
         listaVendasComDesconto = new ArrayList<>();
+        listaRecebimentosCartao = new ArrayList<>();
     }
 
     private void limparCampos() {
@@ -114,6 +117,10 @@ public class VendaMB {
 
     public void calcularValorMercadoriaParaRepor() {
         valorMercadoriaParaRepor = vendaService.consultarValorMercadoriaParaRepor(busca);
+    }
+
+    public void consultarRecebimentosCartao() {
+        listaRecebimentosCartao = recebimentosCartaoService.consultarRecebimentosCartao(busca);
     }
 
     public void calcularDescontoCartao() {
@@ -253,5 +260,13 @@ public class VendaMB {
 
     public void setValorDescontoCartao(Double valorDescontoCartao) {
         this.valorDescontoCartao = valorDescontoCartao;
+    }
+
+    public ArrayList<RecebimentoCartaoRelatorioDTO> getListaRecebimentosCartao() {
+        return listaRecebimentosCartao;
+    }
+
+    public void setListaRecebimentosCartao(ArrayList<RecebimentoCartaoRelatorioDTO> listaRecebimentosCartao) {
+        this.listaRecebimentosCartao = listaRecebimentosCartao;
     }
 }
